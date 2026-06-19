@@ -21,17 +21,18 @@
     </style>
     
     <!-- GOOGLE ADSENSE CODE MECHANISM -->
-    <!-- Replace 'ca-pub-XXXXXXXXXXXXXXXX' with your real Google AdSense Publisher ID -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 </head>
 <body class="m-0 p-0 text-xs text-[#111]">
 
     <!-- MAIN NAVBAR BELT -->
     <header class="nav-main text-white flex items-center justify-between px-4 py-2 space-x-3 sticky top-0 z-50">
+        <!-- Logo (Resets everything) -->
         <div onclick="resetSearch()" class="flex items-center border border-transparent hover:border-white p-1 rounded cursor-pointer">
             <span class="text-xl font-bold tracking-tight">amazon<span class="text-[#febd69] font-normal text-sm">.in</span></span>
         </div>
 
+        <!-- Static Location Block -->
         <div class="hidden md:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight">
             <span class="text-[11px] text-[#ccc] pl-3">Deliver to</span>
             <div class="flex items-center text-sm font-bold">
@@ -39,32 +40,41 @@
             </div>
         </div>
 
-        <!-- Search Engine Input -->
+        <!-- Working Integrated Search Engine -->
         <div class="flex flex-1 items-center h-10 bg-white rounded focus-within:ring-2 focus-within:ring-[#f3a847]">
-            <div class="bg-[#f3f3f3] text-gray-600 text-xs px-3 h-full flex items-center rounded-l border-r border-gray-300 hover:bg-gray-200 cursor-pointer">
-                All ▾
-            </div>
-            <input id="searchInput" type="text" placeholder="Search Amazon.in" class="w-full px-3 text-sm text-black focus:outline-none h-full" onkeyup="if(event.key === 'Enter') triggerSearch()">
-            <button onclick="triggerSearch()" class="bg-[#febd69] hover:bg-[#f3a847] h-full px-6 rounded-r flex items-center justify-center cursor-pointer transition">
+            <select id="categorySelect" class="bg-[#f3f3f3] text-gray-700 text-xs px-2 h-full rounded-l border-r border-gray-300 hover:bg-gray-200 focus:outline-none cursor-pointer dynamic-select">
+                <option value="All">All Categories</option>
+                <option value="Mythological Artifacts">Mythological Artifacts</option>
+                <option value="Dragon Taming Gear">Dragon Taming Gear</option>
+                <option value="Time-Travel Gadgets">Time-Travel Gadgets</option>
+                <option value="Intergalactic Hardware">Intergalactic Hardware</option>
+                <option value="Wizardry Essentials">Wizardry Essentials</option>
+                <option value="RPG Hero Weaponry">RPG Hero Weaponry</option>
+            </select>
+            <input id="searchInput" type="text" placeholder="Search Amazon.in" class="w-full px-3 text-sm text-black focus:outline-none h-full" onkeyup="if(event.key === 'Enter') executeSearchEngine()">
+            <button onclick="executeSearchEngine()" class="bg-[#febd69] hover:bg-[#f3a847] h-full px-6 rounded-r flex items-center justify-center cursor-pointer transition">
                 <span class="text-black text-lg">🔍</span>
             </button>
         </div>
 
-        <div class="hidden lg:flex items-center border border-transparent hover:border-white p-2 rounded cursor-pointer font-bold text-sm">
+        <!-- Language Switcher Control -->
+        <div onclick="toggleLanguage()" id="langSwitcher" class="hidden lg:flex items-center border border-transparent hover:border-white p-2 rounded cursor-pointer font-bold text-sm tracking-wide select-none">
             🇮🇳 EN ▾
         </div>
 
-        <div class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight">
+        <!-- Accounts & Lists Link Interception -->
+        <div onclick="triggerAccountAlert()" class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight">
             <span class="text-[11px] text-[#ccc]">Hello, Sign in</span>
             <span class="text-sm font-bold">Account & Lists ▾</span>
         </div>
 
-        <div class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight">
+        <!-- Orders link interception -->
+        <div onclick="triggerOrdersAlert()" class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight">
             <span class="text-[11px] text-[#ccc]">Returns</span>
             <span class="text-sm font-bold">& Orders</span>
         </div>
 
-        <!-- Interactive Shopping Basket -->
+        <!-- Shopping Basket -->
         <div onclick="checkoutCart()" class="flex items-center border border-transparent hover:border-white p-1 rounded cursor-pointer relative transition">
             <div class="flex items-baseline">
                 <span class="text-3xl">🛒</span>
@@ -76,17 +86,17 @@
 
     <!-- SUB-NAVBAR ROW -->
     <nav class="nav-sub text-white text-sm px-4 py-1.5 flex items-center justify-between shadow-sm">
-        <div class="flex items-space space-x-4 font-medium">
+        <div class="flex items-center space-x-4 font-medium">
             <span onclick="resetSearch()" class="font-bold cursor-pointer hover:underline flex items-center">☰ All</span>
-            <span class="cursor-pointer hover:underline">Fresh</span>
-            <span class="cursor-pointer hover:underline">Amazon miniTV</span>
-            <span class="cursor-pointer hover:underline">Sell</span>
-            <span class="cursor-pointer hover:underline">Best Sellers</span>
-            <span class="cursor-pointer hover:underline text-[#febd69] font-bold">Mobiles</span>
-            <span class="cursor-pointer hover:underline">Today's Deals</span>
-            <span class="cursor-pointer hover:underline">Prime ▾</span>
+            <span onclick="filterBySubNav('Fresh')" class="cursor-pointer hover:underline">Fresh</span>
+            <span onclick="filterBySubNav('miniTV')" class="cursor-pointer hover:underline">Amazon miniTV</span>
+            <span onclick="filterBySubNav('Sell')" class="cursor-pointer hover:underline">Sell</span>
+            <span onclick="filterBySubNav('Best Sellers')" class="cursor-pointer hover:underline">Best Sellers</span>
+            <span onclick="filterBySubNav('Mobiles')" class="cursor-pointer hover:underline text-[#febd69] font-bold">Mobiles</span>
+            <span onclick="filterBySubNav('Today\'s Deals')" class="cursor-pointer hover:underline">Today's Deals</span>
+            <span onclick="filterBySubNav('Prime')" class="cursor-pointer hover:underline">Prime ▾</span>
         </div>
-        <div class="hidden md:block text-sm font-bold text-[#febd69]">
+        <div id="statusCampaignText" class="hidden md:block text-sm font-bold text-[#febd69] tracking-wide animate-pulse">
             Shopping Campaign Activated
         </div>
     </nav>
@@ -108,21 +118,31 @@
 
     <!-- MAIN GRID CONTAINER -->
     <main class="max-w-[1500px] mx-auto p-4">
+        <!-- Live Indicator Filter Alert Bar -->
+        <div id="filterIndicatorBar" class="hidden w-full bg-white border p-3 mb-4 rounded-sm items-center justify-between text-sm shadow-xs">
+            <div>Showing results for: <span id="activeFilterLabel" class="font-bold text-[#b12704]"></span></div>
+            <button onclick="resetSearch()" class="text-[#007185] font-semibold hover:underline cursor-pointer">Clear Filter ×</button>
+        </div>
+
         <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <!-- 10,000 algorithmic items + Inline Native Ad Cards automatically build here -->
+            <!-- Items build automatically here -->
         </div>
     </main>
 
-    <!-- REALISTIC EMERGENCY OVERLAY INTERVENTION -->
+    <!-- INTERVENTION MODAL -->
     <div id="memeModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-        <div class="bg-white max-w-sm w-full p-6 text-center rounded shadow-xl border-t-4 border-[#e47911]">
-            <h3 class="text-xl font-bold text-[#b12704] mb-2">Ayyo!! System Intervention! 😭</h3>
-            <p id="memeMessage" class="text-sm text-[#333] font-medium my-3 px-1"></p>
-            <img id="memeGif" src="" alt="System Warning" class="w-full h-48 object-cover rounded mb-4 shadow border">
+        <div class="bg-white max-w-md w-full p-6 text-center rounded-md shadow-2xl border-t-4 border-[#e47911]">
+            <h3 class="text-xl font-bold text-[#b12704] mb-1">Ayyo!! System Intervention! 😭</h3>
+            <p id="memeMessage" class="text-xs text-[#333] font-semibold my-2 bg-amber-50 p-2 rounded border border-amber-200"></p>
+            
+            <div class="w-full h-64 bg-black rounded overflow-hidden flex items-center justify-center my-3 border shadow-inner">
+                <img id="memeImageElement" src="" alt="Intervention System" class="w-full h-full object-contain">
+            </div>
+
             <p class="text-[11px] text-gray-500 italic mb-4 bg-gray-50 p-2 rounded border">
-                "Your card is perfectly safe because this catalog is 100% fictional. Close the tab and rest your eyes."
+                "Your card details are safe because this catalog is 100% mythical. Close the tab and go drink some water."
             </p>
-            <button onclick="closeMeme()" class="amzn-btn text-black text-xs py-2 w-full rounded font-medium shadow cursor-pointer">
+            <button onclick="closeMeme()" class="amzn-btn text-black text-xs py-2.5 w-full rounded font-bold shadow-xs cursor-pointer">
                 Close This Window & Keep Saving Money
             </button>
         </div>
@@ -138,21 +158,26 @@
     <script>
         let realCartCount = 0;
         let allProductsMasterArray = [];
+        let activeLanguage = "EN";
 
         const categories = [
-            { name: "Mythological Artifacts", prefixes: ["Ancient Olympian", "Cursed Divine", "Authentic Atlantean"], objects: ["Zeus's Crackling Lightning Bolt", "Excalibur Sword Replica", "Vial of Pure Elixir of Life"], suffixes: ["(God Mode Active)", "(Requires 500 Mana)"] },
-            { name: "Dragon Taming Gear", prefixes: ["Fireproof Heavy-Duty", "Valyrian Titanium", "Enchanted Mythical"], objects: ["Leather Dragon Saddle", "Phoenix Feather Training Treats", "Ice-Dragon Taming Whip"], suffixes: ["(Fits Most Breeds)", "(100% Heat Resistant)"] },
-            { name: "Time-Travel Gadgets", prefixes: ["Quantum Mechanized", "Looping Paradox", "Chronos Engine"], objects: ["Time Machine Rewind Dial", "Grandfather Paradox Kit", "10-Minute History Skip Remote"], suffixes: ["(Do Not Touch Past Self)", "(Version 8.4)"] },
-            { name: "Intergalactic Hardware", prefixes: ["Antimatter Infused", "Black-Hole Powered", "Cybernetic Plated"], objects: ["Pocket Dimension Box", "Brain Memory Storage Unit", "Alien Teleportation Beacon"], suffixes: ["(Fits Inside Pocket)", "(Spans 5 Galaxies)"] },
-            { name: "Wizardry Essentials", prefixes: ["Levitating Eldritch", "Alchemical Organic", "Runes-Engraved"], objects: ["Automatic Homework Wand", "Infinite Energy Coffee Potion", "Self-Cleaning Flying Broom"], suffixes: ["(Hogwarts Approved)", "(No Side Effects)"] },
-            { name: "RPG Hero Weaponry", prefixes: ["Level 99 Legendary", "Paladin Blessed", "Mythic Tier Boss-Drop"], objects: ["Flame-Enchanted Blade", "Absolute Shield of Deflection", "Berserker Rage Battle Axe"], suffixes: ["(+50 Attack Damage)", "(Blocks Toxic Energy)"] }
+            { name: "Mythological Artifacts", prefixes: ["Ancient Olympian", "Cursed Divine", "Authentic Atlantean"], objects: ["Zeus's Crackling Lightning Bolt", "Excalibur Sword Replica", "Vial of Pure Elixir of Life"], suffixes: ["(God Mode Active)", "(Requires 500 Mana)"], imgKeyword: "lightning-fantasy" },
+            { name: "Dragon Taming Gear", prefixes: ["Fireproof Heavy-Duty", "Valyrian Titanium", "Enchanted Mythical"], objects: ["Leather Dragon Saddle", "Phoenix Feather Training Treats", "Ice-Dragon Taming Whip"], suffixes: ["(Fits Most Breeds)", "(100% Heat Resistant)"], imgKeyword: "dragon-fire" },
+            { name: "Time-Travel Gadgets", prefixes: ["Quantum Mechanized", "Looping Paradox", "Chronos Engine"], objects: ["Time Machine Rewind Dial", "Grandfather Paradox Kit", "10-Minute History Skip Remote"], suffixes: ["(Do Not Touch Past Self)", "(Version 8.4)"], imgKeyword: "cyberpunk-clock" },
+            { name: "Intergalactic Hardware", prefixes: ["Antimatter Infused", "Black-Hole Powered", "Cybernetic Plated"], objects: ["Pocket Dimension Box", "Brain Memory Storage Unit", "Alien Teleportation Beacon"], suffixes: ["(Fits Inside Pocket)", "(Spans 5 Galaxies)"], imgKeyword: "galaxy-space" },
+            { name: "Wizardry Essentials", prefixes: ["Levitating Eldritch", "Alchemical Organic", "Runes-Engraved"], objects: ["Automatic Homework Wand", "Infinite Energy Coffee Potion", "Self-Cleaning Flying Broom"], suffixes: ["(Hogwarts Approved)", "(No Side Effects)"], imgKeyword: "wizard-magic" },
+            { name: "RPG Hero Weaponry", prefixes: ["Level 99 Legendary", "Paladin Blessed", "Mythic Tier Boss-Drop"], objects: ["Flame-Enchanted Blade", "Absolute Shield of Deflection", "Berserker Rage Battle Axe"], suffixes: ["(+50 Attack Damage)", "(Blocks Toxic Energy)"], imgKeyword: "sword-armor" }
         ];
 
-        const gifsPool = [
-            "https://media.giphy.com/media/R51a8oAH7KwbS/giphy.gif",
-            "https://media.giphy.com/media/3o6wNXTwf57TCEX84w/giphy.gif",
-            "https://media.giphy.com/media/l4Ki2obCyAQS5WhFe/giphy.gif",
-            "https://media.giphy.com/media/yNx0wTdaX9u5G/giphy.gif"
+        const uniqueMemesPool = [
+            { text: "Devudaaa! Entha dabbulu dhandaga chestunnav ra nanna?! (Brahmanandam Shocked)", url: "https://media.tenor.com/7gK5Yh4GgwEAAAAM/brahmanandam-shocked.gif" },
+            { text: "Evarra meeranta? Ma dabbulu maku unte chalu kani ee karchulu maku oddu masteru!", url: "https://media.tenor.com/2MvNqOaBv-QAAAAM/evarra-meerantha-evarra-meeranta.gif" },
+            { text: "Aha! Prasantham! No spending, no debt, absolute mental peace!", url: "https://media.tenor.com/Hbyg9K7hB8wAAAAM/brahmanandam-comedy.gif" },
+            { text: "Em matladutunnav ra? Nuvvu nijangane fake details thoti buy kodadam anukunnaava?!", url: "https://media.tenor.com/4h_uDymPNoIAAAAM/babu-mohan-comedy.gif" },
+            { text: "Dabbulu urike ravu tammudu! Hold that absolute urge to purchase nonsense right now.", url: "https://media.tenor.com/9v4M_uJ5F6sAAAAM/dabbulu-urike-ravu-venkatesh.gif" },
+            { text: "Stop it. Get some help. Your bank account is looking at you with tears in its eyes.", url: "https://media.tenor.com/vHtwV_RTh3IAAAAM/stop-it-get-some-help.gif" },
+            { text: "Chustunna... anni గమనిస్తున్నా! Add to cart kotti safe ga escape avudham anukunnava?", url: "https://media.tenor.com/b9i2nL8YVjwAAAAM/brahmanandam-watching.gif" },
+            { text: "Paisa vusool master! You saved exactly 100% of your earnings by not completing this purchase.", url: "https://media.tenor.com/HqU1qWbfe00AAAAM/brahmanandam-dance.gif" }
         ];
 
         function buildDatabase() {
@@ -164,7 +189,7 @@
                 
                 let fakePrice = Math.floor(Math.random() * 850000) + 1299;
                 let fakeReviews = Math.floor(Math.random() * 24000) + 15;
-                let autoImageUrl = `https://picsum.photos/id/${(i % 75) + 25}/500/400`;
+                let autoImageUrl = `https://images.unsplash.com/photo-${1600000000000 + (i * 24321)}?auto=format&fit=crop&w=500&q=80&sig=${i}`;
 
                 allProductsMasterArray.push({
                     id: i,
@@ -185,10 +210,9 @@
             }
 
             let totalHTML = "";
-            let adInjections = []; // To hold initialization code for injected units
+            let adInjections = [];
             
             productsList.forEach((item, index) => {
-                // Render standard product card
                 totalHTML += `
                     <div class="bg-white p-4 flex flex-col justify-between border border-gray-200 shadow-xs hover:shadow-md transition bg-cover rounded-sm">
                         <div>
@@ -196,8 +220,8 @@
                                 <span>${item.category}</span>
                                 <span class="text-gray-400 font-bold">#${item.id}</span>
                             </div>
-                            <div class="w-full h-44 bg-gray-50 flex items-center justify-center overflow-hidden mb-2 rounded-xs">
-                                <img src="${item.img}" alt="Product" class="object-cover h-full w-full">
+                            <div class="w-full h-44 bg-gray-100 flex items-center justify-center overflow-hidden mb-2 rounded-xs">
+                                <img src="${item.img}" alt="${item.title}" class="object-cover h-full w-full" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80';">
                             </div>
                             <h2 class="text-[13px] font-medium text-[#0f1111] leading-tight hover:text-[#c45500] cursor-pointer mb-1">${item.title}</h2>
                             <div class="flex items-center space-x-1 my-1">
@@ -218,7 +242,6 @@
                     </div>
                 `;
 
-                // NATIVE AD PLACEMENT #2: INLINE GRID SQUARE CARD
                 if ((index + 1) % 8 === 0) {
                     totalHTML += `
                         <div class="bg-white p-4 flex flex-col justify-between border border-gray-200 shadow-xs rounded-sm min-h-[380px]">
@@ -239,48 +262,107 @@
             
             grid.innerHTML = totalHTML;
 
-            // Push an ad request initialization after the layout string finishes mounting safely
             adInjections.forEach(() => {
                 try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
             });
         }
 
-        function triggerSearch() {
-            let filterText = document.getElementById('searchInput').value.toLowerCase().trim();
-            let filteredResults = allProductsMasterArray.filter(p => 
-                p.title.toLowerCase().includes(filterText) || 
-                p.category.toLowerCase().includes(filterText)
-            );
-            renderGrid(filteredResults);
+        // REVISED REAL-TIME SEARCH ENGINE ENGINE
+        function executeSearchEngine() {
+            let targetCategory = document.getElementById('categorySelect').value;
+            let queryText = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            let filtered = allProductsMasterArray.filter(product => {
+                let matchCat = (targetCategory === "All" || product.category === targetCategory);
+                let matchQuery = (product.title.toLowerCase().includes(queryText) || product.category.toLowerCase().includes(queryText));
+                return matchCat && matchQuery;
+            });
+
+            // Update UI filter bar layout
+            let labelText = targetCategory !== "All" ? `Category: ${targetCategory}` : "All Categories";
+            if(queryText) labelText += ` matching "${queryText}"`;
+            
+            document.getElementById('activeFilterLabel').innerText = labelText;
+            document.getElementById('filterIndicatorBar').style.display = 'flex';
+            
+            renderGrid(filtered);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // SUB-NAVBAR FILTER ACTUATOR
+        function filterBySubNav(filterKey) {
+            document.getElementById('searchInput').value = ""; // clear plain search
+            let matchedProducts = [];
+
+            if (filterKey === 'Mobiles') {
+                document.getElementById('categorySelect').value = "Time-Travel Gadgets";
+                matchedProducts = allProductsMasterArray.filter(p => p.category === "Time-Travel Gadgets");
+            } else if (filterKey === 'Best Sellers' || filterKey === "Today's Deals") {
+                document.getElementById('categorySelect').value = "All";
+                matchedProducts = allProductsMasterArray.filter(p => p.price > 500000); // high tier items
+            } else {
+                document.getElementById('categorySelect').value = "All";
+                // pick an algorithmic set
+                matchedProducts = allProductsMasterArray.slice(0, 24);
+            }
+
+            document.getElementById('activeFilterLabel').innerText = `Sub-Nav Filter: ${filterKey}`;
+            document.getElementById('filterIndicatorBar').style.display = 'flex';
+            renderGrid(matchedProducts);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function resetSearch() {
             document.getElementById('searchInput').value = "";
+            document.getElementById('categorySelect').value = "All";
+            document.getElementById('filterIndicatorBar').style.display = 'none';
             renderGrid(allProductsMasterArray);
+        }
+
+        // LANGUAGE CONTROLLER TOGGLE
+        function toggleLanguage() {
+            const block = document.getElementById('langSwitcher');
+            if (activeLanguage === "EN") {
+                activeLanguage = "TE";
+                block.innerHTML = "🇮🇳 TE ▾";
+                document.getElementById('statusCampaignText').innerText = "షాపింగ్ ప్రచారం సక్రియం చేయబడింది";
+            } else {
+                activeLanguage = "EN";
+                block.innerHTML = "🇮🇳 EN ▾";
+                document.getElementById('statusCampaignText').innerText = "Shopping Campaign Activated";
+            }
+        }
+
+        // HEADER BUTTON INTERCEPTIONS
+        function triggerAccountAlert() {
+            showMeme("Account login register cheyalani chustunnavu kadha? Login block chesam, safe ga dabbulu dhachuko!", "https://media.tenor.com/4h_uDymPNoIAAAAM/babu-mohan-comedy.gif");
+        }
+
+        function triggerOrdersAlert() {
+            showMeme("Returns and Orders ah? Inka em order cheyaledhu appude return gurinchi aalochistunnavu ra chaari!", "https://media.tenor.com/b9i2nL8YVjwAAAAM/brahmanandam-watching.gif");
         }
 
         function addToCartCount(itemId) {
             realCartCount++;
             document.getElementById('cartCountBadge').innerText = realCartCount;
-            let assignedGif = gifsPool[Math.floor(Math.random() * gifsPool.length)];
-            showMeme(`Inventory Updated! You added Item #${itemId} to your quest pack. Remember, none of this is real—save your cash!`, assignedGif);
+            let matchedMeme = uniqueMemesPool[Math.floor(Math.random() * uniqueMemesPool.length)];
+            showMeme(`[Item #${itemId} Packed] ${matchedMeme.text}`, matchedMeme.url);
         }
 
         function checkoutCart() {
-            let assignedGif = gifsPool[3];
             if (realCartCount === 0) {
-                showMeme("Your shopping cart is currently empty! Excellent job saving your coins.", assignedGif);
+                showMeme("Abbaa.. Cart khali ga undi! Clean sweep, zero spending achieved. Super masteru!", "https://media.tenor.com/2MvNqOaBv-QAAAAM/evarra-meerantha-evarra-meeranta.gif");
             } else {
-                showMeme(`You have accumulated ${realCartCount} fictional items in your cart. Empty it out and enjoy your day!`, assignedGif);
+                showMeme(`Arere! You have accumulated ${realCartCount} fictional items in your cart. Clear it out completely and protect your hard-earned cash!`, "https://media.tenor.com/7gK5Yh4GgwEAAAAM/brahmanandam-shocked.gif");
             }
         }
 
         function showMeme(customText, gifUrl) {
             document.getElementById('memeMessage').innerText = customText;
-            document.getElementById('memeGif').src = gifUrl; 
+            document.getElementById('memeImageElement').src = gifUrl; 
             document.getElementById('memeModal').style.display = 'flex';
         }
+        
         function closeMeme() {
             document.getElementById('memeModal').style.display = 'none';
         }
