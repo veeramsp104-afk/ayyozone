@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Shopping site in India: Shop Online for Mobiles, Books, Apparel & More - Amazon.in Clone</title>
+    <title>Online Shopping site in India: Shop Online for Mobiles, Books, Apparel & More - Ayyozone.in</title>
     <!-- Stable Tailwind CSS link -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
@@ -27,48 +27,38 @@
 
     <!-- MAIN NAVBAR BELT -->
     <header class="nav-main text-white flex items-center justify-between px-4 py-2 space-x-3 sticky top-0 z-50">
-        <!-- Logo (Resets everything) -->
-        <div onclick="resetSearch()" class="flex items-center border border-transparent hover:border-white p-1 rounded cursor-pointer">
-            <span class="text-xl font-bold tracking-tight">amazon<span class="text-[#febd69] font-normal text-sm">.in</span></span>
+        <!-- Brand Logo -->
+        <div onclick="resetSearch()" class="flex items-center border border-transparent hover:border-white p-1 rounded cursor-pointer select-none">
+            <span class="text-xl font-bold tracking-tight">ayyozone<span class="text-[#febd69] font-normal text-sm">.in</span></span>
         </div>
 
-        <!-- Static Location Block -->
-        <div class="hidden md:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight">
-            <span class="text-[11px] text-[#ccc] pl-3">Deliver to</span>
-            <div class="flex items-center text-sm font-bold">
-                <span class="mr-1">📍</span> Kadapa 516001
-            </div>
-        </div>
-
-        <!-- Working Integrated Search Engine -->
+        <!-- Integrated Search Engine -->
         <div class="flex flex-1 items-center h-10 bg-white rounded focus-within:ring-2 focus-within:ring-[#f3a847]">
-            <select id="categorySelect" class="bg-[#f3f3f3] text-gray-700 text-xs px-2 h-full rounded-l border-r border-gray-300 hover:bg-gray-200 focus:outline-none cursor-pointer dynamic-select">
+            <select id="categorySelect" class="bg-[#f3f3f3] text-gray-700 text-xs px-2 h-full rounded-l border-r border-gray-300 hover:bg-gray-200 focus:outline-none cursor-pointer">
                 <option value="All">All Categories</option>
-                <option value="Mythological Artifacts">Mythological Artifacts</option>
-                <option value="Dragon Taming Gear">Dragon Taming Gear</option>
-                <option value="Time-Travel Gadgets">Time-Travel Gadgets</option>
-                <option value="Intergalactic Hardware">Intergalactic Hardware</option>
-                <option value="Wizardry Essentials">Wizardry Essentials</option>
-                <option value="RPG Hero Weaponry">RPG Hero Weaponry</option>
+                <option value="Crazy Deals">Crazy Deals</option>
+                <option value="Movie Props & Relics">Movie Props</option>
+                <option value="Impossible Tech">Impossible Tech</option>
+                <option value="Infinite Food Packs">Infinite Food</option>
             </select>
-            <input id="searchInput" type="text" placeholder="Search Amazon.in" class="w-full px-3 text-sm text-black focus:outline-none h-full" onkeyup="if(event.key === 'Enter') executeSearchEngine()">
+            <input id="searchInput" type="text" placeholder="Search Ayyozone.in for magical deals..." class="w-full px-3 text-sm text-black focus:outline-none h-full" onkeyup="if(event.key === 'Enter') executeSearchEngine()">
             <button onclick="executeSearchEngine()" class="bg-[#febd69] hover:bg-[#f3a847] h-full px-6 rounded-r flex items-center justify-center cursor-pointer transition">
                 <span class="text-black text-lg">🔍</span>
             </button>
         </div>
 
-        <!-- Language Switcher Control -->
+        <!-- Language Switcher -->
         <div onclick="toggleLanguage()" id="langSwitcher" class="hidden lg:flex items-center border border-transparent hover:border-white p-2 rounded cursor-pointer font-bold text-sm tracking-wide select-none">
             🇮🇳 EN ▾
         </div>
 
-        <!-- Accounts & Lists Link Interception -->
+        <!-- Accounts Links -->
         <div onclick="triggerAccountAlert()" class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight">
             <span class="text-[11px] text-[#ccc]">Hello, Sign in</span>
-            <span class="text-sm font-bold">Account & Lists ▾</span>
+            <span class="text-sm font-bold">Account ▾</span>
         </div>
 
-        <!-- Orders link interception -->
+        <!-- Orders Link -->
         <div onclick="triggerOrdersAlert()" class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight">
             <span class="text-[11px] text-[#ccc]">Returns</span>
             <span class="text-sm font-bold">& Orders</span>
@@ -88,33 +78,15 @@
     <nav class="nav-sub text-white text-sm px-4 py-1.5 flex items-center justify-between shadow-sm">
         <div class="flex items-center space-x-4 font-medium">
             <span onclick="resetSearch()" class="font-bold cursor-pointer hover:underline flex items-center">☰ All</span>
-            <span onclick="filterBySubNav('Fresh')" class="cursor-pointer hover:underline">Fresh</span>
-            <span onclick="filterBySubNav('miniTV')" class="cursor-pointer hover:underline">Amazon miniTV</span>
-            <span onclick="filterBySubNav('Sell')" class="cursor-pointer hover:underline">Sell</span>
+            <span onclick="filterBySubNav('Fresh')" class="cursor-pointer hover:underline">Fresh Goods</span>
+            <span onclick="filterBySubNav('miniTV')" class="cursor-pointer hover:underline">Ayyozone miniTV</span>
             <span onclick="filterBySubNav('Best Sellers')" class="cursor-pointer hover:underline">Best Sellers</span>
-            <span onclick="filterBySubNav('Mobiles')" class="cursor-pointer hover:underline text-[#febd69] font-bold">Mobiles</span>
-            <span onclick="filterBySubNav('Today\'s Deals')" class="cursor-pointer hover:underline">Today's Deals</span>
-            <span onclick="filterBySubNav('Prime')" class="cursor-pointer hover:underline">Prime ▾</span>
+            <span onclick="filterBySubNav('Today\'s Deals')" class="cursor-pointer hover:underline text-[#febd69] font-bold">🚨 Epic Price Drops</span>
         </div>
-        <div id="statusCampaignText" class="hidden md:block text-sm font-bold text-[#febd69] tracking-wide animate-pulse">
-            Shopping Campaign Activated
+        <div id="statusCampaignText" class="hidden md:block text-sm font-bold text-[#febd69] tracking-wide">
+            Anti-Spending Campaign Active
         </div>
     </nav>
-
-    <!-- NATIVE AD PLACEMENT #1: TOP LEADERBOARD BANNER -->
-    <div class="max-w-[1500px] mx-auto px-4 pt-4">
-        <div class="bg-white p-2 border border-gray-200 shadow-xs flex justify-center items-center rounded-sm min-h-[90px]">
-            <ins class="adsbygoogle"
-                 style="display:block; width:100%; max-width:1200px; height:90px;"
-                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                 data-ad-slot="YOUR_TOP_BANNER_SLOT_ID"
-                 data-ad-format="horizontal"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    </div>
 
     <!-- MAIN GRID CONTAINER -->
     <main class="max-w-[1500px] mx-auto p-4">
@@ -132,26 +104,26 @@
     <!-- INTERVENTION MODAL -->
     <div id="memeModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
         <div class="bg-white max-w-md w-full p-6 text-center rounded-md shadow-2xl border-t-4 border-[#e47911]">
-            <h3 class="text-xl font-bold text-[#b12704] mb-1">Ayyo!! System Intervention! 😭</h3>
+            <h3 class="text-xl font-bold text-[#b12704] mb-1">Ayyozone System Control! 🛑</h3>
             <p id="memeMessage" class="text-xs text-[#333] font-semibold my-2 bg-amber-50 p-2 rounded border border-amber-200"></p>
             
-            <div class="w-full h-64 bg-black rounded overflow-hidden flex items-center justify-center my-3 border shadow-inner">
-                <img id="memeImageElement" src="" alt="Intervention System" class="w-full h-full object-contain">
+            <div class="w-full h-64 bg-black rounded overflow-hidden my-3 border shadow-inner relative">
+                <iframe id="memeIframeElement" src="" width="100%" height="100%" style="position:absolute;top:0;left:0;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
             </div>
 
             <p class="text-[11px] text-gray-500 italic mb-4 bg-gray-50 p-2 rounded border">
-                "Your card details are safe because this catalog is 100% mythical. Close the tab and go drink some water."
+                "Your card is safe because this catalog is 100% fictional. Close this window and go relax."
             </p>
             <button onclick="closeMeme()" class="amzn-btn text-black text-xs py-2.5 w-full rounded font-bold shadow-xs cursor-pointer">
-                Close This Window & Keep Saving Money
+                Close & Save My Money
             </button>
         </div>
     </div>
 
-    <!-- STANDARD FOOTER -->
+    <!-- FOOTER -->
     <footer class="bg-[#232f3e] text-gray-300 text-center py-10 mt-16 border-t border-gray-700">
-        <div class="text-white font-bold text-base mb-3">amazon<span class="text-[#febd69]">.in</span></div>
-        <p class="text-xs text-gray-400">© 2026 Amazon Mythical Clone Engine - Built for Entertainment & Anti-Spending Awareness.</p>
+        <div class="text-white font-bold text-base mb-3">ayyozone<span class="text-[#febd69]">.in</span></div>
+        <p class="text-xs text-gray-400">© 2026 Ayyozone Mythical Clone - Built for Entertainment & Anti-Spending Awareness.</p>
     </footer>
 
     <!-- AUTOMATION CONTROLLER ENGINE -->
@@ -159,45 +131,71 @@
         let realCartCount = 0;
         let allProductsMasterArray = [];
         let activeLanguage = "EN";
+        let countdownTimersList = [];
 
-        const categories = [
-            { name: "Mythological Artifacts", prefixes: ["Ancient Olympian", "Cursed Divine", "Authentic Atlantean"], objects: ["Zeus's Crackling Lightning Bolt", "Excalibur Sword Replica", "Vial of Pure Elixir of Life"], suffixes: ["(God Mode Active)", "(Requires 500 Mana)"], imgKeyword: "lightning-fantasy" },
-            { name: "Dragon Taming Gear", prefixes: ["Fireproof Heavy-Duty", "Valyrian Titanium", "Enchanted Mythical"], objects: ["Leather Dragon Saddle", "Phoenix Feather Training Treats", "Ice-Dragon Taming Whip"], suffixes: ["(Fits Most Breeds)", "(100% Heat Resistant)"], imgKeyword: "dragon-fire" },
-            { name: "Time-Travel Gadgets", prefixes: ["Quantum Mechanized", "Looping Paradox", "Chronos Engine"], objects: ["Time Machine Rewind Dial", "Grandfather Paradox Kit", "10-Minute History Skip Remote"], suffixes: ["(Do Not Touch Past Self)", "(Version 8.4)"], imgKeyword: "cyberpunk-clock" },
-            { name: "Intergalactic Hardware", prefixes: ["Antimatter Infused", "Black-Hole Powered", "Cybernetic Plated"], objects: ["Pocket Dimension Box", "Brain Memory Storage Unit", "Alien Teleportation Beacon"], suffixes: ["(Fits Inside Pocket)", "(Spans 5 Galaxies)"], imgKeyword: "galaxy-space" },
-            { name: "Wizardry Essentials", prefixes: ["Levitating Eldritch", "Alchemical Organic", "Runes-Engraved"], objects: ["Automatic Homework Wand", "Infinite Energy Coffee Potion", "Self-Cleaning Flying Broom"], suffixes: ["(Hogwarts Approved)", "(No Side Effects)"], imgKeyword: "wizard-magic" },
-            { name: "RPG Hero Weaponry", prefixes: ["Level 99 Legendary", "Paladin Blessed", "Mythic Tier Boss-Drop"], objects: ["Flame-Enchanted Blade", "Absolute Shield of Deflection", "Berserker Rage Battle Axe"], suffixes: ["(+50 Attack Damage)", "(Blocks Toxic Energy)"], imgKeyword: "sword-armor" }
+        // High-temptation simple relatable concepts with specific custom pricing
+        const categoriesData = [
+            { name: "Crazy Deals", items: [
+                { title: "Aladdin Magic Lamp (Original 3 Genies Included)", price: 150, img: "https://images.unsplash.com/photo-1608155686393-8fdd966d784d?w=400&q=80" },
+                { title: "Real Invisibility Cloak (College Exam Edition)", price: 499, img: "https://images.unsplash.com/photo-1519074069444-1ba4ae16741f?w=400&q=80" },
+                { title: "Baba Ramdev Instant Teleportation Powder", price: 20, img: "https://images.unsplash.com/photo-1538370965046-79c0d6907d47?w=400&q=80" }
+            ]},
+            { name: "Movie Props & Relics", items: [
+                { title: "SS Rajamouli Directing Knife (Bahubali Shield Cut)", price: 350, img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400&q=80" },
+                { title: "Thor Stormbreaker Axe (Coconut Cutting Size)", price: 899, img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=400&q=80" },
+                { title: "Iron Man Nano Arc Reactor (Power Bank Edition)", price: 299, img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&q=80" }
+            ]},
+            { name: "Impossible Tech", items: [
+                { title: "Flying Car Upgrade Module (Maruti 800 Dynamic)", price: 50000, img: "https://images.unsplash.com/photo-1558885561-56c2a4e2f3df?w=400&q=80" },
+                { title: "10G Signal Booster (Underground Cellar Edition)", price: 99, img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&q=80" },
+                { title: "Time Machine Pocket Rewind Watch", price: 1200, img: "https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=400&q=80" }
+            ]},
+            { name: "Infinite Food Packs", items: [
+                { title: "Coca-Cola Backyard Water Tank (5000 Liters)", price: 50, img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&q=80" },
+                { title: "Maggi 2-Minute Cooker (Guaranteed 120s Stop)", price: 180, img: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&q=80" },
+                { title: "Unlimited Pani Puri Lifetime VIP Membership Card", price: 999, img: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=400&q=80" }
+            ]}
         ];
 
-        const uniqueMemesPool = [
-            { text: "Devudaaa! Entha dabbulu dhandaga chestunnav ra nanna?! (Brahmanandam Shocked)", url: "https://media.tenor.com/7gK5Yh4GgwEAAAAM/brahmanandam-shocked.gif" },
-            { text: "Evarra meeranta? Ma dabbulu maku unte chalu kani ee karchulu maku oddu masteru!", url: "https://media.tenor.com/2MvNqOaBv-QAAAAM/evarra-meerantha-evarra-meeranta.gif" },
-            { text: "Aha! Prasantham! No spending, no debt, absolute mental peace!", url: "https://media.tenor.com/Hbyg9K7hB8wAAAAM/brahmanandam-comedy.gif" },
-            { text: "Em matladutunnav ra? Nuvvu nijangane fake details thoti buy kodadam anukunnaava?!", url: "https://media.tenor.com/4h_uDymPNoIAAAAM/babu-mohan-comedy.gif" },
-            { text: "Dabbulu urike ravu tammudu! Hold that absolute urge to purchase nonsense right now.", url: "https://media.tenor.com/9v4M_uJ5F6sAAAAM/dabbulu-urike-ravu-venkatesh.gif" },
-            { text: "Stop it. Get some help. Your bank account is looking at you with tears in its eyes.", url: "https://media.tenor.com/vHtwV_RTh3IAAAAM/stop-it-get-some-help.gif" },
-            { text: "Chustunna... anni గమనిస్తున్నా! Add to cart kotti safe ga escape avudham anukunnava?", url: "https://media.tenor.com/b9i2nL8YVjwAAAAM/brahmanandam-watching.gif" },
-            { text: "Paisa vusool master! You saved exactly 100% of your earnings by not completing this purchase.", url: "https://media.tenor.com/HqU1qWbfe00AAAAM/brahmanandam-dance.gif" }
+        const uniqueTollywoodMemes = [
+            { text: "Devudaaa! Entha dabbulu dhandaga chestunnav ra nanna?! (Brahmanandam Shocked)", embedUrl: "https://giphy.com/embed/14u1y0X8H3NBiM" },
+            { text: "Evarra meeranta? Ma dabbulu maku unte chalu kani ee karchulu maku oddu masteru!", embedUrl: "https://giphy.com/embed/UiBmJv6Hh6FfW" },
+            { text: "Aha! Prasantham! No spending, no credit bills, absolute mental peace!", embedUrl: "https://giphy.com/embed/yvDFZ8Wq3fM6A" },
+            { text: "Em matladutunnav ra? Nuvvu nijangane fake card details thoti buy kodadam anukunnaava?!", embedUrl: "https://giphy.com/embed/nU70O3w0O3LJm" },
+            { text: "Dabbulu urike ravu tammudu! Hold that absolute urge to purchase right now.", embedUrl: "https://giphy.com/embed/Y0S4fVJVfscO4" },
+            { text: "Chustunna... anni గమనిస్తున్నా! Add to cart kotti safe ga escape avudham anukunnava?", embedUrl: "https://giphy.com/embed/G6F8An4vKOfU4" },
+            { text: "Paisa vusool master! You saved exactly 100% of your earnings by closing this.", embedUrl: "https://giphy.com/embed/AJ5aSmfJ3OfS0" },
+            { text: "Dhandam ra dootha! Ee shopping aapi yedhaina panikoche pani chesko!", embedUrl: "https://giphy.com/embed/3jcqr6rYP9q12" }
         ];
 
         function buildDatabase() {
-            for (let i = 1; i <= 10000; i++) {
-                let cat = categories[(i - 1) % categories.length];
-                let pref = cat.prefixes[i % cat.prefixes.length];
-                let obj = cat.objects[(i + 2) % cat.objects.length];
-                let suff = cat.suffixes[(i + 5) % cat.suffixes.length];
-                
-                let fakePrice = Math.floor(Math.random() * 850000) + 1299;
-                let fakeReviews = Math.floor(Math.random() * 24000) + 15;
-                let autoImageUrl = `https://images.unsplash.com/photo-${1600000000000 + (i * 24321)}?auto=format&fit=crop&w=500&q=80&sig=${i}`;
+            let idCounter = 1;
+            // Generate distinct listings structured purely from the highly relatable matrix arrays
+            for (let variant = 1; variant <= 100; variant++) {
+                categoriesData.forEach((cat) => {
+                    cat.items.forEach((baseItem) => {
+                        let reviews = Math.floor(Math.random() * 24000) + 850;
+                        
+                        // Prevent identical naming completely across deep scrolling listings
+                        let finalTitle = baseItem.title;
+                        if (variant > 1) {
+                            const packs = ["Mega Combo Bundle", "Ultra Premium Set", "Special Collector Pack", "Super Value Deal"];
+                            finalTitle += ` [${packs[variant % packs.length]}]`;
+                        }
 
-                allProductsMasterArray.push({
-                    id: i,
-                    category: cat.name,
-                    title: `${pref} ${obj} ${suff}`,
-                    price: fakePrice,
-                    reviews: fakeReviews,
-                    img: autoImageUrl
+                        // Assign flash expiring timers to 50% of the generated catalog
+                        let hasActiveTimer = (idCounter % 2 === 0);
+
+                        allProductsMasterArray.push({
+                            id: idCounter++,
+                            category: cat.name,
+                            title: finalTitle,
+                            price: baseItem.price,
+                            reviews: reviews,
+                            img: baseItem.img,
+                            hasTimer: hasActiveTimer
+                        });
+                    });
                 });
             }
         }
@@ -205,111 +203,122 @@
         function renderGrid(productsList) {
             const grid = document.getElementById('productGrid');
             if (productsList.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-16 bg-white border font-bold text-sm text-gray-500 rounded">🔍 No products matched your query.</div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-16 bg-white border font-bold text-sm text-gray-500 rounded">🔍 No magical items found matching your query.</div>`;
                 return;
             }
 
+            // Clean active timing trackers out of application memory
+            countdownTimersList.forEach(t => clearInterval(t));
+            countdownTimersList = [];
+
             let totalHTML = "";
-            let adInjections = [];
-            
-            productsList.forEach((item, index) => {
+            productsList.slice(0, 40).forEach((item) => {
+                let timerSectionHTML = "";
+                
+                if (item.hasTimer) {
+                    timerSectionHTML = `
+                        <div class="mt-1.5 bg-red-50 text-[#b12704] text-[10px] font-bold p-1 rounded border border-red-200 inline-flex items-center space-x-1 animate-pulse">
+                            <span>🚨 Deal Expiring In:</span>
+                            <span id="timer-node-${item.id}">04m 15s</span>
+                        </div>
+                    `;
+                }
+
                 totalHTML += `
-                    <div class="bg-white p-4 flex flex-col justify-between border border-gray-200 shadow-xs hover:shadow-md transition bg-cover rounded-sm">
+                    <div class="bg-white p-4 flex flex-col justify-between border border-gray-200 shadow-xs hover:shadow-md transition rounded-sm relative">
                         <div>
-                            <div class="text-[10px] text-gray-500 uppercase font-medium tracking-tight mb-1 flex justify-between">
+                            <div class="text-[10px] text-gray-400 uppercase font-bold tracking-tight mb-1 flex justify-between">
                                 <span>${item.category}</span>
-                                <span class="text-gray-400 font-bold">#${item.id}</span>
+                                <span class="text-gray-300">#${item.id}</span>
                             </div>
-                            <div class="w-full h-44 bg-gray-100 flex items-center justify-center overflow-hidden mb-2 rounded-xs">
-                                <img src="${item.img}" alt="${item.title}" class="object-cover h-full w-full" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80';">
+                            <div class="w-full h-40 bg-gray-100 flex items-center justify-center overflow-hidden mb-2 rounded-xs">
+                                <img src="${item.img}" alt="${item.title}" class="object-cover h-full w-full transform hover:scale-105 transition duration-300">
                             </div>
-                            <h2 class="text-[13px] font-medium text-[#0f1111] leading-tight hover:text-[#c45500] cursor-pointer mb-1">${item.title}</h2>
+                            <h2 class="text-[13px] font-bold text-[#0f1111] leading-tight hover:text-[#c45500] cursor-pointer mb-0.5">${item.title}</h2>
+                            
+                            ${timerSectionHTML}
+
                             <div class="flex items-center space-x-1 my-1">
-                                <span class="text-amber-500 text-xs font-bold">⭐⭐⭐⭐⭐</span>
-                                <span class="text-[#007185] hover:text-[#c45500] hover:underline cursor-pointer text-[11px]">${item.reviews.toLocaleString()} ratings</span>
+                                <span class="text-amber-500 text-[10px] font-bold">⭐⭐⭐⭐⭐</span>
+                                <span class="text-[#007185] text-[10px]">${item.reviews.toLocaleString()} global votes</span>
                             </div>
-                            <div class="text-[#565959] text-[11px] mb-1">100+ bought in past month</div>
                             <div class="flex items-start text-black mt-1">
                                 <span class="text-xs font-semibold pt-0.5">₹</span>
                                 <span class="text-2xl font-bold tracking-tight">${item.price.toLocaleString()}</span>
-                                <span class="text-xs font-semibold pt-0.5">00</span>
                             </div>
-                            <div class="text-[11px] text-gray-600 mt-0.5">Fulfilled by <span class="text-[#007185] font-semibold">Ayyozone Portal</span></div>
+                            <div class="text-[10px] text-green-700 font-medium mt-0.5">FREE Delivery in 10 Minutes</div>
                         </div>
-                        <button onclick="addToCartCount(${item.id})" class="amzn-btn text-black text-[11px] py-1.5 px-4 rounded-full mt-4 w-full shadow-xs cursor-pointer border transition transform active:scale-95 text-center font-normal">
-                            Add to Quest Inventory
+                        <button onclick="addToCartCount(${item.id})" class="amzn-btn text-black text-[11px] py-1.5 px-4 rounded-full mt-4 w-full cursor-pointer text-center font-bold tracking-wide">
+                            Buy Now before Stock Ends
                         </button>
                     </div>
                 `;
-
-                if ((index + 1) % 8 === 0) {
-                    totalHTML += `
-                        <div class="bg-white p-4 flex flex-col justify-between border border-gray-200 shadow-xs rounded-sm min-h-[380px]">
-                            <div class="text-[10px] text-gray-400 font-bold tracking-wider mb-2">SPONSORED ADVERTISEMENT</div>
-                            <div class="flex-1 flex items-center justify-center bg-gray-50 rounded">
-                                <ins class="adsbygoogle"
-                                     style="display:block; width:100%; height:250px;"
-                                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                                     data-ad-slot="YOUR_GRID_CARD_SLOT_ID"
-                                     data-ad-format="rectangle"
-                                     data-full-width-responsive="true"></ins>
-                            </div>
-                        </div>
-                    `;
-                    adInjections.push(true);
-                }
             });
-            
             grid.innerHTML = totalHTML;
 
-            adInjections.forEach(() => {
-                try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+            // Kick off live counter mechanisms safely
+            productsList.slice(0, 40).forEach((item) => {
+                if (item.hasTimer) {
+                    initiateClockTracker(`timer-node-${item.id}`);
+                }
             });
         }
 
-        // REVISED REAL-TIME SEARCH ENGINE ENGINE
+        function initiateClockTracker(targetElementId) {
+            let limitSeconds = Math.floor(Math.random() * 180) + 90; // random ranges from 90 to 270 seconds
+            
+            let handle = setInterval(() => {
+                limitSeconds--;
+                if (limitSeconds <= 0) {
+                    clearInterval(handle);
+                    let block = document.getElementById(targetElementId);
+                    if (block) block.innerText = "EXPIRED!";
+                    return;
+                }
+                let minutes = Math.floor(limitSeconds / 60);
+                let remainingSecs = limitSeconds % 60;
+                
+                let stringMinutes = minutes < 10 ? "0" + minutes : minutes;
+                let stringSeconds = remainingSecs < 10 ? "0" + remainingSecs : remainingSecs;
+                
+                let block = document.getElementById(targetElementId);
+                if (block) {
+                    block.innerText = `${stringMinutes}m ${stringSeconds}s`;
+                }
+            }, 1000);
+            
+            countdownTimersList.push(handle);
+        }
+
         function executeSearchEngine() {
             let targetCategory = document.getElementById('categorySelect').value;
             let queryText = document.getElementById('searchInput').value.toLowerCase().trim();
             
             let filtered = allProductsMasterArray.filter(product => {
                 let matchCat = (targetCategory === "All" || product.category === targetCategory);
-                let matchQuery = (product.title.toLowerCase().includes(queryText) || product.category.toLowerCase().includes(queryText));
+                let matchQuery = (product.title.toLowerCase().includes(queryText));
                 return matchCat && matchQuery;
             });
 
-            // Update UI filter bar layout
-            let labelText = targetCategory !== "All" ? `Category: ${targetCategory}` : "All Categories";
+            let labelText = targetCategory !== "All" ? `Category: ${targetCategory}` : "All Items";
             if(queryText) labelText += ` matching "${queryText}"`;
             
             document.getElementById('activeFilterLabel').innerText = labelText;
             document.getElementById('filterIndicatorBar').style.display = 'flex';
             
             renderGrid(filtered);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // SUB-NAVBAR FILTER ACTUATOR
         function filterBySubNav(filterKey) {
-            document.getElementById('searchInput').value = ""; // clear plain search
-            let matchedProducts = [];
-
-            if (filterKey === 'Mobiles') {
-                document.getElementById('categorySelect').value = "Time-Travel Gadgets";
-                matchedProducts = allProductsMasterArray.filter(p => p.category === "Time-Travel Gadgets");
-            } else if (filterKey === 'Best Sellers' || filterKey === "Today's Deals") {
-                document.getElementById('categorySelect').value = "All";
-                matchedProducts = allProductsMasterArray.filter(p => p.price > 500000); // high tier items
+            let filtered = [];
+            if (filterKey === "Today's Deals") {
+                filtered = allProductsMasterArray.filter(p => p.hasTimer === true);
             } else {
-                document.getElementById('categorySelect').value = "All";
-                // pick an algorithmic set
-                matchedProducts = allProductsMasterArray.slice(0, 24);
+                filtered = allProductsMasterArray.filter(p => p.price <= 500);
             }
-
-            document.getElementById('activeFilterLabel').innerText = `Sub-Nav Filter: ${filterKey}`;
+            document.getElementById('activeFilterLabel').innerText = `Filter: ${filterKey}`;
             document.getElementById('filterIndicatorBar').style.display = 'flex';
-            renderGrid(matchedProducts);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderGrid(filtered);
         }
 
         function resetSearch() {
@@ -319,52 +328,47 @@
             renderGrid(allProductsMasterArray);
         }
 
-        // LANGUAGE CONTROLLER TOGGLE
         function toggleLanguage() {
             const block = document.getElementById('langSwitcher');
             if (activeLanguage === "EN") {
                 activeLanguage = "TE";
                 block.innerHTML = "🇮🇳 TE ▾";
-                document.getElementById('statusCampaignText').innerText = "షాపింగ్ ప్రచారం సక్రియం చేయబడింది";
+                document.getElementById('statusCampaignText').innerText = "షాపింగ్ ప్రచారం నిలిపివేయబడింది";
             } else {
                 activeLanguage = "EN";
                 block.innerHTML = "🇮🇳 EN ▾";
-                document.getElementById('statusCampaignText').innerText = "Shopping Campaign Activated";
+                document.getElementById('statusCampaignText').innerText = "Anti-Spending Campaign Active";
             }
         }
 
-        // HEADER BUTTON INTERCEPTIONS
         function triggerAccountAlert() {
-            showMeme("Account login register cheyalani chustunnavu kadha? Login block chesam, safe ga dabbulu dhachuko!", "https://media.tenor.com/4h_uDymPNoIAAAAM/babu-mohan-comedy.gif");
+            showMeme("Account login cheyalani chustunnavu kadha? Control loss avvaku, prasantham ga dabbulu dhachuko!", "https://giphy.com/embed/nU70O3w0O3LJm");
         }
 
         function triggerOrdersAlert() {
-            showMeme("Returns and Orders ah? Inka em order cheyaledhu appude return gurinchi aalochistunnavu ra chaari!", "https://media.tenor.com/b9i2nL8YVjwAAAAM/brahmanandam-watching.gif");
+            showMeme("Inka order eh pettaledhu appude return orders gurinchi aalochistunnavu ra chaari!", "https://giphy.com/embed/G6F8An4vKOfU4");
         }
 
         function addToCartCount(itemId) {
             realCartCount++;
             document.getElementById('cartCountBadge').innerText = realCartCount;
-            let matchedMeme = uniqueMemesPool[Math.floor(Math.random() * uniqueMemesPool.length)];
-            showMeme(`[Item #${itemId} Packed] ${matchedMeme.text}`, matchedMeme.url);
+            let matchedMeme = uniqueTollywoodMemes[Math.floor(Math.random() * uniqueTollywoodMemes.length)];
+            showMeme(`[Item #${itemId} Blocked] ${matchedMeme.text}`, matchedMeme.embedUrl);
         }
 
         function checkoutCart() {
-            if (realCartCount === 0) {
-                showMeme("Abbaa.. Cart khali ga undi! Clean sweep, zero spending achieved. Super masteru!", "https://media.tenor.com/2MvNqOaBv-QAAAAM/evarra-meerantha-evarra-meeranta.gif");
-            } else {
-                showMeme(`Arere! You have accumulated ${realCartCount} fictional items in your cart. Clear it out completely and protect your hard-earned cash!`, "https://media.tenor.com/7gK5Yh4GgwEAAAAM/brahmanandam-shocked.gif");
-            }
+            showMeme("Abbaa.. Cart khali! Clean sweep, zero spending achieved. Super masteru!", "https://giphy.com/embed/UiBmJv6Hh6FfW");
         }
 
-        function showMeme(customText, gifUrl) {
+        function showMeme(customText, embedUrl) {
             document.getElementById('memeMessage').innerText = customText;
-            document.getElementById('memeImageElement').src = gifUrl; 
+            document.getElementById('memeIframeElement').src = embedUrl; 
             document.getElementById('memeModal').style.display = 'flex';
         }
         
         function closeMeme() {
             document.getElementById('memeModal').style.display = 'none';
+            document.getElementById('memeIframeElement').src = "";
         }
 
         buildDatabase();
