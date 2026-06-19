@@ -4,47 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ayyozone.in</title>
+    <!-- Include Tailwind for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <!-- Header matching image_1f5380.png -->
-    <header class="bg-[#131921] text-white p-2 flex items-center">
-        <div class="text-xl font-bold">ayyozone.in</div>
-        <div class="mx-4 flex flex-1">
-            <select class="text-black text-xs p-1"><option>All</option></select>
-            <input type="text" id="searchInput" oninput="performSearch()" class="flex-1 text-black p-1" placeholder="Search Ayyozone.in">
-            <button class="bg-[#febd69] text-black px-4"><i class="fa fa-search"></i></button>
-        </div>
+<body class="bg-gray-100">
+
+    <!-- Your Header -->
+    <header class="bg-[#131921] text-white p-4 flex items-center">
+        <div class="text-xl font-bold">ayyozone<span class="text-yellow-500">.in</span></div>
+        <input type="text" id="searchInput" oninput="performSearch()" class="mx-4 flex-1 text-black p-2 rounded" placeholder="Search Ayyozone.in">
     </header>
 
+    <!-- The container for your items -->
     <div id="productGrid" class="grid grid-cols-4 gap-4 p-4"></div>
 
+    <!-- Script goes at the bottom so it can "see" the HTML above -->
     <script>
-        // Generate 5000 items safely
         const allProducts = Array.from({ length: 5000 }, (_, i) => ({
             id: i + 1,
             title: `Product ${i + 1}`,
-            price: Math.floor(Math.random() * 5000) + 100
+            price: Math.floor(Math.random() * 5000) + 100,
+            img: `https://picsum.photos/id/${(i % 1000) + 1}/200/200`
         }));
 
         function performSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             const filtered = allProducts.filter(p => p.title.toLowerCase().includes(query));
-            render(filtered);
+            renderGrid(filtered);
         }
 
-        function render(items) {
+        function renderGrid(items) {
             const grid = document.getElementById('productGrid');
             grid.innerHTML = items.slice(0, 50).map(p => `
-                <div class="border p-2">
-                    <p>${p.title}</p>
-                    <p>₹${p.price}</p>
-                    <button onclick="alert('Dabbulu dhandaga ra!')" class="bg-yellow-400 w-full">Buy Now</button>
+                <div class="bg-white p-4 border border-gray-200 shadow-sm">
+                    <img src="${p.img}" class="w-full h-40 object-cover mb-2">
+                    <p class="font-bold">${p.title}</p>
+                    <p class="text-red-600">₹${p.price}</p>
+                    <button onclick="alert('Dabbulu dhandaga ra!')" class="bg-yellow-400 w-full py-1 mt-2 rounded">Buy Now</button>
                 </div>
             `).join('');
         }
-        
-        render(allProducts);
+
+        // Initial load
+        renderGrid(allProducts);
     </script>
 </body>
 </html>
