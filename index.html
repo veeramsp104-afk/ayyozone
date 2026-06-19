@@ -3,141 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayyozone.in - Clean & Safe Shopping Intervention</title>
-    <!-- Solid, stable Tailwind CSS Version 2/3 delivery link to prevent black screens -->
+    <title>Online Shopping site in India: Shop Online for Mobiles, Books, Apparel & More - Amazon.in Clone</title>
+    <!-- Stable Tailwind CSS link -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        .amazon-bg { background-color: #232f3e !important; }
-        .amazon-yellow { background-color: #ffd814 !important; border-color: #fcd200 !important; }
-        .amazon-yellow:hover { background-color: #f7ca00 !important; }
-        .nav-belt { background-color: #131921 !important; }
+        body { background-color: #eaeded !important; font-family: "Amazon Ember", Arial, sans-serif; }
+        .nav-main { background-color: #131921 !important; }
+        .nav-sub { background-color: #232f3e !important; }
+        .amzn-btn {
+            background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+            border: 1px solid;
+            border-color: #a88734 #9c7e31 #846a29;
+        }
+        .amzn-btn:hover {
+            background: linear-gradient(to bottom, #f5d78e, #eeb933);
+        }
     </style>
+    
+    <!-- GOOGLE ADSENSE CODE MECHANISM -->
+    <!-- Replace 'ca-pub-XXXXXXXXXXXXXXXX' with your real Google AdSense Publisher ID -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 </head>
-<body class="bg-gray-100 font-sans text-gray-900 m-0 p-0 block">
+<body class="m-0 p-0 text-xs text-[#111]">
 
-    <!-- TOP NAV BELT -->
-    <header class="nav-belt text-white text-xs p-2 flex justify-between px-4">
-        <div class="flex space-x-4">
-            <span class="hover:underline cursor-pointer">Ayyozone Pay</span>
-            <span class="hover:underline cursor-pointer">Gift Cards</span>
-            <span class="hover:underline cursor-pointer">Broke Member Area</span>
+    <!-- MAIN NAVBAR BELT -->
+    <header class="nav-main text-white flex items-center justify-between px-4 py-2 space-x-3 sticky top-0 z-50">
+        <div onclick="resetSearch()" class="flex items-center border border-transparent hover:border-white p-1 rounded cursor-pointer">
+            <span class="text-xl font-bold tracking-tight">amazon<span class="text-[#febd69] font-normal text-sm">.in</span></span>
         </div>
-        <div>
-            <span class="text-yellow-400 font-bold">Safe Mode: Strict Active</span>
+
+        <div class="hidden md:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight">
+            <span class="text-[11px] text-[#ccc] pl-3">Deliver to</span>
+            <div class="flex items-center text-sm font-bold">
+                <span class="mr-1">📍</span> Kadapa 516001
+            </div>
+        </div>
+
+        <!-- Search Engine Input -->
+        <div class="flex flex-1 items-center h-10 bg-white rounded focus-within:ring-2 focus-within:ring-[#f3a847]">
+            <div class="bg-[#f3f3f3] text-gray-600 text-xs px-3 h-full flex items-center rounded-l border-r border-gray-300 hover:bg-gray-200 cursor-pointer">
+                All ▾
+            </div>
+            <input id="searchInput" type="text" placeholder="Search Amazon.in" class="w-full px-3 text-sm text-black focus:outline-none h-full" onkeyup="if(event.key === 'Enter') triggerSearch()">
+            <button onclick="triggerSearch()" class="bg-[#febd69] hover:bg-[#f3a847] h-full px-6 rounded-r flex items-center justify-center cursor-pointer transition">
+                <span class="text-black text-lg">🔍</span>
+            </button>
+        </div>
+
+        <div class="hidden lg:flex items-center border border-transparent hover:border-white p-2 rounded cursor-pointer font-bold text-sm">
+            🇮🇳 EN ▾
+        </div>
+
+        <div class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight">
+            <span class="text-[11px] text-[#ccc]">Hello, Sign in</span>
+            <span class="text-sm font-bold">Account & Lists ▾</span>
+        </div>
+
+        <div class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight">
+            <span class="text-[11px] text-[#ccc]">Returns</span>
+            <span class="text-sm font-bold">& Orders</span>
+        </div>
+
+        <!-- Interactive Shopping Basket -->
+        <div onclick="checkoutCart()" class="flex items-center border border-transparent hover:border-white p-1 rounded cursor-pointer relative transition">
+            <div class="flex items-baseline">
+                <span class="text-3xl">🛒</span>
+                <span id="cartCountBadge" class="absolute top-1 left-6 text-[#f08804] text-base font-bold bg-[#131921] px-1 rounded-full">0</span>
+            </div>
+            <span class="text-sm font-bold mt-3 ml-1 hidden md:inline">Cart</span>
         </div>
     </header>
 
-    <!-- MAIN AYYOZONE HEADER -->
-    <header class="amazon-bg text-white p-3 flex items-center justify-between shadow-md sticky top-0 z-40">
-        <div class="flex items-center space-x-4">
-            <div class="flex flex-col cursor-pointer">
-                <span class="text-2xl font-black tracking-wider text-yellow-400">ayyozone</span>
-                <span class="text-[10px] text-gray-400 font-bold tracking-widest -mt-1 text-right">.in</span>
-            </div>
-            <span class="text-xs text-gray-300 hidden md:block">Deliver to<br><span class="font-bold text-white">Reality Check</span></span>
+    <!-- SUB-NAVBAR ROW -->
+    <nav class="nav-sub text-white text-sm px-4 py-1.5 flex items-center justify-between shadow-sm">
+        <div class="flex items-space space-x-4 font-medium">
+            <span onclick="resetSearch()" class="font-bold cursor-pointer hover:underline flex items-center">☰ All</span>
+            <span class="cursor-pointer hover:underline">Fresh</span>
+            <span class="cursor-pointer hover:underline">Amazon miniTV</span>
+            <span class="cursor-pointer hover:underline">Sell</span>
+            <span class="cursor-pointer hover:underline">Best Sellers</span>
+            <span class="cursor-pointer hover:underline text-[#febd69] font-bold">Mobiles</span>
+            <span class="cursor-pointer hover:underline">Today's Deals</span>
+            <span class="cursor-pointer hover:underline">Prime ▾</span>
         </div>
-        
-        <!-- Search Bar -->
-        <div class="flex flex-1 mx-4 max-w-2xl">
-            <input type="text" placeholder="Search through 2,000 safe traps..." class="w-full p-2 rounded-l text-black focus:outline-none text-sm">
-            <button class="bg-yellow-500 text-black px-5 rounded-r font-bold hover:bg-yellow-600 transition">🔍</button>
+        <div class="hidden md:block text-sm font-bold text-[#febd69]">
+            Shopping Campaign Activated
         </div>
-        
-        <div class="text-xs text-right flex items-center space-x-6">
-            <div class="hidden sm:block">
-                <span>Hello, Heavy Spender</span><br>
-                <span class="font-bold text-sm">Regret & Orders</span>
-            </div>
-            <div onclick="showMeme('Your Shopping Cart is an illusion.', 'https://media.giphy.com/media/yNx0wTdaX9u5G/giphy.gif')" class="cursor-pointer relative flex items-center p-2 border border-transparent hover:border-white rounded">
-                <span class="text-2xl">🛒</span>
-                <span class="absolute top-1 right-1 bg-yellow-500 text-black rounded-full text-[10px] font-bold px-1.5">2,000</span>
-            </div>
-        </div>
-    </header>
+    </nav>
 
-    <!-- WARNING BANNER -->
-    <div class="bg-red-700 text-white text-center py-2.5 text-xs sm:text-sm font-bold tracking-wide shadow-inner">
-        🚨 2,000 SAFE & CLEAN INTERVENTION PRODUCTS GENERATED. CLICK ANY TO TEST YOUR WILLPOWER.
+    <!-- NATIVE AD PLACEMENT #1: TOP LEADERBOARD BANNER -->
+    <div class="max-w-[1500px] mx-auto px-4 pt-4">
+        <div class="bg-white p-2 border border-gray-200 shadow-xs flex justify-center items-center rounded-sm min-h-[90px]">
+            <ins class="adsbygoogle"
+                 style="display:block; width:100%; max-width:1200px; height:90px;"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="YOUR_TOP_BANNER_SLOT_ID"
+                 data-ad-format="horizontal"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
 
     <!-- MAIN GRID CONTAINER -->
-    <main id="productGrid" class="max-w-7xl mx-auto p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Products will inject completely fine here -->
+    <main class="max-w-[1500px] mx-auto p-4">
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- 10,000 algorithmic items + Inline Native Ad Cards automatically build here -->
+        </div>
     </main>
 
-    <!-- THE DYNAMIC INTERVENTION POPUP -->
-    <div id="memeModal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-xl max-w-md w-full p-6 text-center shadow-2xl border-4 border-yellow-400">
-            <h3 class="text-2xl font-black text-red-600 tracking-tight mb-1">AYYO!! ARE YOU STUPID?! 😭</h3>
-            <p id="memeMessage" class="text-gray-800 font-semibold my-3 text-sm px-2"></p>
-            <img id="memeGif" src="" alt="Intervention Meme" class="w-full h-56 object-cover rounded-lg mb-4 shadow-md">
-            <p class="text-xs text-gray-500 font-medium italic mb-5 bg-gray-100 p-2.5 rounded border">
-                "Your credit card just sent you a thank-you note for not buying this. Close the window and save your money."
+    <!-- REALISTIC EMERGENCY OVERLAY INTERVENTION -->
+    <div id="memeModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
+        <div class="bg-white max-w-sm w-full p-6 text-center rounded shadow-xl border-t-4 border-[#e47911]">
+            <h3 class="text-xl font-bold text-[#b12704] mb-2">Ayyo!! System Intervention! 😭</h3>
+            <p id="memeMessage" class="text-sm text-[#333] font-medium my-3 px-1"></p>
+            <img id="memeGif" src="" alt="System Warning" class="w-full h-48 object-cover rounded mb-4 shadow border">
+            <p class="text-[11px] text-gray-500 italic mb-4 bg-gray-50 p-2 rounded border">
+                "Your card is perfectly safe because this catalog is 100% fictional. Close the tab and rest your eyes."
             </p>
-            <button onclick="closeMeme()" class="amazon-bg text-white font-bold py-2.5 px-6 rounded-lg hover:bg-slate-800 transition cursor-pointer w-full text-sm tracking-wide">
-                Ayyo My Bad, Closing Tab!
+            <button onclick="closeMeme()" class="amzn-btn text-black text-xs py-2 w-full rounded font-medium shadow cursor-pointer">
+                Close This Window & Keep Saving Money
             </button>
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="amazon-bg text-gray-400 text-xs text-center py-8 mt-12 border-t border-gray-700">
-        <p class="text-white font-bold text-sm mb-2">ayyozone.in</p>
-        <p class="mb-1">© 2026 Ayyozone Intervention Labs. Running strictly clean layouts.</p>
+    <!-- STANDARD FOOTER -->
+    <footer class="bg-[#232f3e] text-gray-300 text-center py-10 mt-16 border-t border-gray-700">
+        <div class="text-white font-bold text-base mb-3">amazon<span class="text-[#febd69]">.in</span></div>
+        <p class="text-xs text-gray-400">© 2026 Amazon Mythical Clone Engine - Built for Entertainment & Anti-Spending Awareness.</p>
     </footer>
 
-    <!-- AUTOMATION ENGINE SCRIPT -->
+    <!-- AUTOMATION CONTROLLER ENGINE -->
     <script>
-        const dynamicTemplates = [
-            { keyword: "vintage-lamp,object", titlePrefix: "Genuine Aladdin's Magic Antique", titleSuffix: "Lamp (Three Wishes Version)" },
-            { keyword: "industrial-button,red", titlePrefix: "The 'Instant Dopamine Spike'", titleSuffix: "Industrial Red Clicker Button" },
-            { keyword: "cardboard-box,package", titlePrefix: "Premium Luxury Packaged Box of", titleSuffix: "Absolute Nothing (Minimalist Edition)" },
-            { keyword: "pocket-watch,metallic", titlePrefix: "Quantum Mechanical Rewind", titleSuffix: "Time Device (Skips 20 Mins)" },
-            { keyword: "glass-bottle,aesthetic", titlePrefix: "Artisanal Deconditioned Organic", titleSuffix: "Air Flask (Luxury Matte Glass)" },
-            { keyword: "fidget-spinner,tech", titlePrefix: "Ergonomic Infinite Rolling Digital", titleSuffix: "Wheel for Chronic Scrollers" }
+        let realCartCount = 0;
+        let allProductsMasterArray = [];
+
+        const categories = [
+            { name: "Mythological Artifacts", prefixes: ["Ancient Olympian", "Cursed Divine", "Authentic Atlantean"], objects: ["Zeus's Crackling Lightning Bolt", "Excalibur Sword Replica", "Vial of Pure Elixir of Life"], suffixes: ["(God Mode Active)", "(Requires 500 Mana)"] },
+            { name: "Dragon Taming Gear", prefixes: ["Fireproof Heavy-Duty", "Valyrian Titanium", "Enchanted Mythical"], objects: ["Leather Dragon Saddle", "Phoenix Feather Training Treats", "Ice-Dragon Taming Whip"], suffixes: ["(Fits Most Breeds)", "(100% Heat Resistant)"] },
+            { name: "Time-Travel Gadgets", prefixes: ["Quantum Mechanized", "Looping Paradox", "Chronos Engine"], objects: ["Time Machine Rewind Dial", "Grandfather Paradox Kit", "10-Minute History Skip Remote"], suffixes: ["(Do Not Touch Past Self)", "(Version 8.4)"] },
+            { name: "Intergalactic Hardware", prefixes: ["Antimatter Infused", "Black-Hole Powered", "Cybernetic Plated"], objects: ["Pocket Dimension Box", "Brain Memory Storage Unit", "Alien Teleportation Beacon"], suffixes: ["(Fits Inside Pocket)", "(Spans 5 Galaxies)"] },
+            { name: "Wizardry Essentials", prefixes: ["Levitating Eldritch", "Alchemical Organic", "Runes-Engraved"], objects: ["Automatic Homework Wand", "Infinite Energy Coffee Potion", "Self-Cleaning Flying Broom"], suffixes: ["(Hogwarts Approved)", "(No Side Effects)"] },
+            { name: "RPG Hero Weaponry", prefixes: ["Level 99 Legendary", "Paladin Blessed", "Mythic Tier Boss-Drop"], objects: ["Flame-Enchanted Blade", "Absolute Shield of Deflection", "Berserker Rage Battle Axe"], suffixes: ["(+50 Attack Damage)", "(Blocks Toxic Energy)"] }
         ];
 
         const gifsPool = [
             "https://media.giphy.com/media/R51a8oAH7KwbS/giphy.gif",
             "https://media.giphy.com/media/3o6wNXTwf57TCEX84w/giphy.gif",
             "https://media.giphy.com/media/l4Ki2obCyAQS5WhFe/giphy.gif",
-            "https://media.giphy.com/media/yNx0wTdaX9u5G/giphy.gif",
-            "https://media.giphy.com/media/l3V0FBxSzgXPn7dqM/giphy.gif"
+            "https://media.giphy.com/media/yNx0wTdaX9u5G/giphy.gif"
         ];
 
-        const grid = document.getElementById('productGrid');
-        let totalHTML = "";
+        function buildDatabase() {
+            for (let i = 1; i <= 10000; i++) {
+                let cat = categories[(i - 1) % categories.length];
+                let pref = cat.prefixes[i % cat.prefixes.length];
+                let obj = cat.objects[(i + 2) % cat.objects.length];
+                let suff = cat.suffixes[(i + 5) % cat.suffixes.length];
+                
+                let fakePrice = Math.floor(Math.random() * 850000) + 1299;
+                let fakeReviews = Math.floor(Math.random() * 24000) + 15;
+                let autoImageUrl = `https://picsum.photos/id/${(i % 75) + 25}/500/400`;
 
-        // Build all strings completely first to prevent loading flickering
-        for (let i = 1; i <= 2000; i++) {
-            let template = dynamicTemplates[(i - 1) % dynamicTemplates.length];
-            let fakePrice = Math.floor(Math.random() * 800000) + 49;
-            let fakeReviews = Math.floor(Math.random() * 24000) + 12;
-            let assignedGif = gifsPool[Math.floor(Math.random() * gifsPool.length)];
-            let autoImageUrl = `https://images.unsplash.com/featured/600x400/?${template.keyword}&sig=${i}&safe=high`;
-
-            totalHTML += `
-                <div class="bg-white p-5 rounded-lg shadow-sm flex flex-col justify-between border border-gray-200" style="display: flex; flex-direction: column; justify-content: space-between;">
-                    <div>
-                        <span class="bg-amber-600 text-white text-[9px] uppercase tracking-wider px-2 py-0.5 font-bold rounded">Item #${i} of 2,000</span>
-                        <img src="${autoImageUrl}" alt="Automated Product" class="w-full h-48 object-cover my-3 rounded bg-gray-100">
-                        <h2 class="text-base font-bold text-gray-900 leading-snug">${template.titlePrefix} ${template.titleSuffix}</h2>
-                        <p class="text-xs text-blue-600 my-1">⭐⭐⭐⭐⭐ (${fakeReviews.toLocaleString()})</p>
-                        <div class="flex items-baseline space-x-1 mt-2">
-                            <span class="text-sm font-semibold">₹</span>
-                            <span class="text-2xl font-bold">${fakePrice.toLocaleString()}</span>
-                            <span class="text-sm font-semibold">.00</span>
-                        </div>
-                        <p class="text-xs text-gray-500 mt-1">Delivery: <span class="text-red-600 font-bold">Never (Anti-Spending Trap)</span></p>
-                    </div>
-                    <button onclick="showMeme('You scrolled past hundreds of options all the way to Item #${i} just to hit buy. Turn off your screen!', '${assignedGif}')" class="amazon-yellow text-black text-xs font-semibold py-2 px-4 rounded-full mt-5 w-full shadow-sm cursor-pointer border transition">
-                        Add to Cart
-                    </button>
-                </div>
-            `;
+                allProductsMasterArray.push({
+                    id: i,
+                    category: cat.name,
+                    title: `${pref} ${obj} ${suff}`,
+                    price: fakePrice,
+                    reviews: fakeReviews,
+                    img: autoImageUrl
+                });
+            }
         }
-        
-        grid.innerHTML = totalHTML;
+
+        function renderGrid(productsList) {
+            const grid = document.getElementById('productGrid');
+            if (productsList.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-16 bg-white border font-bold text-sm text-gray-500 rounded">🔍 No products matched your query.</div>`;
+                return;
+            }
+
+            let totalHTML = "";
+            let adInjections = []; // To hold initialization code for injected units
+            
+            productsList.forEach((item, index) => {
+                // Render standard product card
+                totalHTML += `
+                    <div class="bg-white p-4 flex flex-col justify-between border border-gray-200 shadow-xs hover:shadow-md transition bg-cover rounded-sm">
+                        <div>
+                            <div class="text-[10px] text-gray-500 uppercase font-medium tracking-tight mb-1 flex justify-between">
+                                <span>${item.category}</span>
+                                <span class="text-gray-400 font-bold">#${item.id}</span>
+                            </div>
+                            <div class="w-full h-44 bg-gray-50 flex items-center justify-center overflow-hidden mb-2 rounded-xs">
+                                <img src="${item.img}" alt="Product" class="object-cover h-full w-full">
+                            </div>
+                            <h2 class="text-[13px] font-medium text-[#0f1111] leading-tight hover:text-[#c45500] cursor-pointer mb-1">${item.title}</h2>
+                            <div class="flex items-center space-x-1 my-1">
+                                <span class="text-amber-500 text-xs font-bold">⭐⭐⭐⭐⭐</span>
+                                <span class="text-[#007185] hover:text-[#c45500] hover:underline cursor-pointer text-[11px]">${item.reviews.toLocaleString()} ratings</span>
+                            </div>
+                            <div class="text-[#565959] text-[11px] mb-1">100+ bought in past month</div>
+                            <div class="flex items-start text-black mt-1">
+                                <span class="text-xs font-semibold pt-0.5">₹</span>
+                                <span class="text-2xl font-bold tracking-tight">${item.price.toLocaleString()}</span>
+                                <span class="text-xs font-semibold pt-0.5">00</span>
+                            </div>
+                            <div class="text-[11px] text-gray-600 mt-0.5">Fulfilled by <span class="text-[#007185] font-semibold">Ayyozone Portal</span></div>
+                        </div>
+                        <button onclick="addToCartCount(${item.id})" class="amzn-btn text-black text-[11px] py-1.5 px-4 rounded-full mt-4 w-full shadow-xs cursor-pointer border transition transform active:scale-95 text-center font-normal">
+                            Add to Quest Inventory
+                        </button>
+                    </div>
+                `;
+
+                // NATIVE AD PLACEMENT #2: INLINE GRID SQUARE CARD
+                if ((index + 1) % 8 === 0) {
+                    totalHTML += `
+                        <div class="bg-white p-4 flex flex-col justify-between border border-gray-200 shadow-xs rounded-sm min-h-[380px]">
+                            <div class="text-[10px] text-gray-400 font-bold tracking-wider mb-2">SPONSORED ADVERTISEMENT</div>
+                            <div class="flex-1 flex items-center justify-center bg-gray-50 rounded">
+                                <ins class="adsbygoogle"
+                                     style="display:block; width:100%; height:250px;"
+                                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                                     data-ad-slot="YOUR_GRID_CARD_SLOT_ID"
+                                     data-ad-format="rectangle"
+                                     data-full-width-responsive="true"></ins>
+                            </div>
+                        </div>
+                    `;
+                    adInjections.push(true);
+                }
+            });
+            
+            grid.innerHTML = totalHTML;
+
+            // Push an ad request initialization after the layout string finishes mounting safely
+            adInjections.forEach(() => {
+                try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+            });
+        }
+
+        function triggerSearch() {
+            let filterText = document.getElementById('searchInput').value.toLowerCase().trim();
+            let filteredResults = allProductsMasterArray.filter(p => 
+                p.title.toLowerCase().includes(filterText) || 
+                p.category.toLowerCase().includes(filterText)
+            );
+            renderGrid(filteredResults);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetSearch() {
+            document.getElementById('searchInput').value = "";
+            renderGrid(allProductsMasterArray);
+        }
+
+        function addToCartCount(itemId) {
+            realCartCount++;
+            document.getElementById('cartCountBadge').innerText = realCartCount;
+            let assignedGif = gifsPool[Math.floor(Math.random() * gifsPool.length)];
+            showMeme(`Inventory Updated! You added Item #${itemId} to your quest pack. Remember, none of this is real—save your cash!`, assignedGif);
+        }
+
+        function checkoutCart() {
+            let assignedGif = gifsPool[3];
+            if (realCartCount === 0) {
+                showMeme("Your shopping cart is currently empty! Excellent job saving your coins.", assignedGif);
+            } else {
+                showMeme(`You have accumulated ${realCartCount} fictional items in your cart. Empty it out and enjoy your day!`, assignedGif);
+            }
+        }
 
         function showMeme(customText, gifUrl) {
             document.getElementById('memeMessage').innerText = customText;
@@ -147,6 +284,9 @@
         function closeMeme() {
             document.getElementById('memeModal').style.display = 'none';
         }
+
+        buildDatabase();
+        renderGrid(allProductsMasterArray);
     </script>
 </body>
 </html>
