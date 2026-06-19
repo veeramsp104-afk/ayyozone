@@ -1,38 +1,50 @@
-<script>
-    // 1. Generate 5,000 items dynamically
-    const allProducts = Array.from({ length: 5000 }, (_, i) => ({
-        id: i + 1,
-        title: `Product ${i + 1}`,
-        price: Math.floor(Math.random() * 5000) + 100,
-        img: `https://picsum.photos/id/${(i % 1000) + 1}/400/400`
-    }));
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayyozone.in</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- Header matching image_1f5380.png -->
+    <header class="bg-[#131921] text-white p-2 flex items-center">
+        <div class="text-xl font-bold">ayyozone.in</div>
+        <div class="mx-4 flex flex-1">
+            <select class="text-black text-xs p-1"><option>All</option></select>
+            <input type="text" id="searchInput" oninput="performSearch()" class="flex-1 text-black p-1" placeholder="Search Ayyozone.in">
+            <button class="bg-[#febd69] text-black px-4"><i class="fa fa-search"></i></button>
+        </div>
+    </header>
 
-    // 2. Search Functionality
-    function performSearch() {
-        const query = document.getElementById('searchInput').value.toLowerCase();
-        const filtered = allProducts.filter(p => p.title.toLowerCase().includes(query));
-        renderGrid(filtered);
-    }
+    <div id="productGrid" class="grid grid-cols-4 gap-4 p-4"></div>
 
-    // 3. Render function with lazy-load safety
-    function renderGrid(items) {
-        const grid = document.getElementById('productGrid');
-        grid.innerHTML = items.slice(0, 50).map(p => `
-            <div class="bg-white p-4 border border-gray-200">
-                <img src="${p.img}" class="w-full h-40 object-cover mb-2" onerror="this.src='placeholder.png'">
-                <p class="text-sm line-clamp-1">${p.title}</p>
-                <p class="font-bold">₹${p.price}</p>
-                <button onclick="intercept(${p.id})" class="bg-amz-yellow w-full py-1 mt-2 text-sm rounded">Buy Now</button>
-            </div>
-        `).join('');
-    }
+    <script>
+        // Generate 5000 items safely
+        const allProducts = Array.from({ length: 5000 }, (_, i) => ({
+            id: i + 1,
+            title: `Product ${i + 1}`,
+            price: Math.floor(Math.random() * 5000) + 100
+        }));
 
-    // 4. GIF-Safe Interceptor
-    function intercept(id) {
-        const p = allProducts.find(x => x.id === id);
-        document.getElementById('modalMsg').innerText = `Dabbulu dhandaga ra! Why are you buying ${p.title}? Stay calm.`;
-        // Using direct, reliable CDN links for GIFs
-        document.getElementById('modalGif').src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTA4YXB3eHN3YWFwZXhvdDJmdmdidXBzYXVzdmN2cHd0Z2g5MWpveSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Y0S4fVJVfscO4/giphy.gif";
-        document.getElementById('modal').classList.remove('hidden');
-    }
-</script>
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allProducts.filter(p => p.title.toLowerCase().includes(query));
+            render(filtered);
+        }
+
+        function render(items) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = items.slice(0, 50).map(p => `
+                <div class="border p-2">
+                    <p>${p.title}</p>
+                    <p>₹${p.price}</p>
+                    <button onclick="alert('Dabbulu dhandaga ra!')" class="bg-yellow-400 w-full">Buy Now</button>
+                </div>
+            `).join('');
+        }
+        
+        render(allProducts);
+    </script>
+</body>
+</html>
