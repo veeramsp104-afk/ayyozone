@@ -2,369 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Shopping site in India: Shop Online for Mobiles, Books, Apparel & More - Ayyozone.in</title>
+    <title>Ayyozone.in | Anti-Spending Portal</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        body { background-color: #eaeded !important; font-family: "Amazon Ember", Arial, sans-serif; }
-        .nav-main { background-color: #131921 !important; }
-        .nav-sub { background-color: #232f3e !important; }
-        .amzn-btn {
-            background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
-            border: 1px solid;
-            border-color: #a88734 #9c7e31 #846a29;
-        }
-        .amzn-btn:hover {
-            background: linear-gradient(to bottom, #f5d78e, #eeb933);
-        }
+        body { background: #eaeded; font-family: sans-serif; }
+        .amzn-btn { background: linear-gradient(to bottom, #f7dfa5, #f0c14b); border: 1px solid #a88734; }
     </style>
 </head>
-<body class="m-0 p-0 text-xs text-[#111]">
-
-    <header class="nav-main text-white flex items-center justify-between px-4 py-2 space-x-3 sticky top-0 z-50">
-        <div onclick="resetSearch()" class="flex items-center border border-transparent hover:border-white p-1 rounded cursor-pointer select-none">
-            <span class="text-xl font-bold tracking-tight">ayyozone<span class="text-[#febd69] font-normal text-sm">.in</span></span>
-        </div>
-
-        <div class="flex flex-1 items-center h-10 bg-white rounded focus-within:ring-2 focus-within:ring-[#f3a847]">
-            <select id="categorySelect" class="bg-[#f3f3f3] text-gray-700 text-xs px-2 h-full rounded-l border-r border-gray-300 hover:bg-gray-200 focus:outline-none cursor-pointer">
-                <option value="All">All Categories</option>
-                <option value="Crazy Deals">Crazy Deals</option>
-                <option value="Movie Props & Relics">Movie Props</option>
-                <option value="Impossible Tech">Impossible Tech</option>
-                <option value="Infinite Food Packs">Infinite Food</option>
-            </select>
-            <input id="searchInput" type="text" placeholder="Search Ayyozone for unique items..." class="w-full px-3 text-sm text-black focus:outline-none h-full" onkeyup="if(event.key === 'Enter') executeSearchEngine()">
-            <button onclick="executeSearchEngine()" class="bg-[#febd69] hover:bg-[#f3a847] h-full px-6 rounded-r flex items-center justify-center cursor-pointer transition">
-                <span class="text-black text-lg">🔍</span>
-            </button>
-        </div>
-
-        <div onclick="toggleLanguage()" id="langSwitcher" class="hidden lg:flex items-center border border-transparent hover:border-white p-2 rounded cursor-pointer font-bold text-sm tracking-wide select-none">
-            🇮🇳 EN ▾
-        </div>
-
-        <div class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight" onclick="triggerAccountAlert()">
-            <span class="text-[11px] text-[#ccc]">Hello, Sign in</span>
-            <span class="text-sm font-bold">Account ▾</span>
-        </div>
-
-        <div class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight" onclick="triggerOrdersAlert()">
-            <span class="text-[11px] text-[#ccc]">Returns</span>
-            <span class="text-sm font-bold">& Orders</span>
-        </div>
-
-        <div onclick="checkoutCart()" class="flex items-center border border-transparent hover:border-white p-1 rounded cursor-pointer relative transition">
-            <div class="flex items-baseline">
-                <span class="text-3xl">🛒</span>
-                <span id="cartCountBadge" class="absolute top-1 left-6 text-[#f08804] text-base font-bold bg-[#131921] px-1 rounded-full">0</span>
-            </div>
-            <span class="text-sm font-bold mt-3 ml-1 hidden md:inline">Cart</span>
+<body class="text-xs">
+    <!-- Header -->
+    <header class="bg-[#131921] text-white p-3 flex justify-between items-center sticky top-0 z-50">
+        <span class="text-xl font-bold">ayyozone<span class="text-[#febd69]">.in</span></span>
+        <div class="flex items-center gap-2">
+            <span>🛒 Cart: <span id="cartCount">0</span></span>
         </div>
     </header>
 
-    <nav class="nav-sub text-white text-sm px-4 py-1.5 flex items-center justify-between shadow-sm">
-        <div class="flex items-center space-x-4 font-medium">
-            <span onclick="resetSearch()" class="font-bold cursor-pointer hover:underline flex items-center">☰ All</span>
-            <span onclick="filterBySubNav('Fresh')" class="cursor-pointer hover:underline">Fresh Goods</span>
-            <span onclick="filterBySubNav('Best Sellers')" class="cursor-pointer hover:underline">Best Sellers</span>
-            <span onclick="filterBySubNav('Today\'s Deals')" class="cursor-pointer hover:underline text-[#febd69] font-bold">🚨 Epic Price Drops</span>
-        </div>
-        <div id="statusCampaignText" class="hidden md:block text-sm font-bold text-[#febd69] tracking-wide">
-            Anti-Spending Campaign Active
-        </div>
-    </nav>
-
-    <main class="max-w-[1500px] mx-auto p-4">
-        <div id="filterIndicatorBar" class="hidden w-full bg-white border p-3 mb-4 rounded-sm items-center justify-between text-sm shadow-xs">
-            <div>Showing results for: <span id="activeFilterLabel" class="font-bold text-[#b12704]"></span> <span id="matchCountLabel" class="text-gray-500 ml-2"></span></div>
-            <button onclick="resetSearch()" class="text-[#007185] font-semibold hover:underline cursor-pointer">Clear Filter ×</button>
-        </div>
-
-        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            </div>
-
-        <div id="lazyLoadTrigger" class="w-full text-center py-8 text-gray-500 text-sm font-semibold">
-            Rowing more unique items into view...
-        </div>
+    <!-- Main Grid -->
+    <main class="max-w-[1200px] mx-auto p-4">
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4"></div>
     </main>
 
-    <div id="memeModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-        <div class="bg-white max-w-md w-full p-6 text-center rounded-md shadow-2xl border-t-4 border-[#e47911]">
-            <h3 class="text-xl font-bold text-[#b12704] mb-1">Ayyozone System Control! 🛑</h3>
-            <p id="memeMessage" class="text-xs text-[#333] font-semibold my-2 bg-amber-50 p-2 rounded border border-amber-200"></p>
-            
-            <div id="gifEmbedContainer" class="w-full h-48 rounded overflow-hidden my-3 border shadow-inner flex items-center justify-center bg-gray-100">
-                </div>
-
-            <p class="text-[11px] text-gray-500 italic mb-4 bg-gray-50 p-2 rounded border">
-                "Your card is perfectly safe because this catalog is 100% fictional."
-            </p>
-            <button onclick="closeMeme()" class="amzn-btn text-black text-xs py-2.5 w-full rounded font-bold shadow-xs cursor-pointer">
-                Close & Save My Money
-            </button>
+    <!-- Intercept Modal -->
+    <div id="modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4">
+        <div class="bg-white p-6 rounded shadow-xl text-center max-w-sm">
+            <h2 class="text-lg font-bold text-red-600 mb-2">STOP! 🛑</h2>
+            <p id="modalMsg" class="mb-4"></p>
+            <img id="modalGif" src="" class="w-full h-48 object-cover mb-4">
+            <button onclick="closeModal()" class="amzn-btn w-full py-2 font-bold rounded">Close & Save Money</button>
         </div>
     </div>
 
-    <footer class="bg-[#232f3e] text-gray-300 text-center py-10 mt-16 border-t border-gray-700">
-        <div class="text-white font-bold text-base mb-3">ayyozone<span class="text-[#febd69]">.in</span></div>
-        <p class="text-xs text-gray-400">© 2026 Ayyozone Mythical Clone - Clean Static Dataset Edition.</p>
-    </footer>
-
     <script>
-        let realCartCount = 0;
-        let displayedItemsCount = 0;
-        const itemsPerPage = 20;
-        let currentFilteredCollection = [];
-        let activeLanguage = "EN";
-        let countdownTimersList = [];
-
-        // 1. AN ABSOLUTELY STATIC, PRE-DETERMINED UNIQUE NAME AND IMAGE CATALOG POOL
-        // Every item name is distinct, completely eliminating layout duplication bugs.
-        const masterProductRegistry = [
-            { id: 1, category: "Crazy Deals", title: "Cursed Divine Zeus's Crackling Lightning Bolt (God Mode Active)", price: 300369, img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&auto=format&fit=crop&q=60" },
-            { id: 2, category: "Crazy Deals", title: "Enchanted Mythical Phoenix Feather Training Treats (100% Heat Resistant)", price: 318822, img: "https://images.unsplash.com/photo-1516233758813-a38d024919c5?w=400&auto=format&fit=crop&q=60" },
-            { id: 3, category: "Crazy Deals", title: "Quantum Mechanized 10-Minute History Skip Remote (Do Not Touch Past Self)", price: 618855, img: "https://images.unsplash.com/photo-1558089687-f282ffcbd1d5?w=400&auto=format&fit=crop&q=60" },
-            { id: 4, category: "Movie Props & Relics", title: "Black-Hole Powered Pocket Dimension Box (Spans 5 Galaxies)", price: 257995, img: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=400&auto=format&fit=crop&q=60" },
-            { id: 5, category: "Movie Props & Relics", title: "Runes-Engraved Infinite Energy Coffee Potion (Hogwarts Approved)", price: 260873, img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&auto=format&fit=crop&q=60" },
-            { id: 6, category: "Movie Props & Relics", title: "Level 99 Legendary Berserker Rage Battle Axe (Blocks Toxic Energy)", price: 694919, img: "https://images.unsplash.com/photo-1589254065878-42c9da997008?w=400&auto=format&fit=crop&q=60" },
-            { id: 7, category: "Impossible Tech", title: "Vintage Cyberpunk Invisibility Cloak (Stealth Matriculation Edition)", price: 85400, img: "https://images.unsplash.com/photo-1504333638930-c8787321eff0?w=400&auto=format&fit=crop&q=60" },
-            { id: 8, category: "Impossible Tech", title: "Aladdin's Restored Oil Lamp featuring Triple Option Selection Wishes", price: 15400, img: "https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?w=400&auto=format&fit=crop&q=60" },
-            { id: 9, category: "Impossible Tech", title: "SS Rajamouli Directing Megaphone (Guarantees ₹1000 Crore Box Office)", price: 450000, img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&auto=format&fit=crop&q=60" },
-            { id: 10, category: "Infinite Food Packs", title: "Thor's Lightweight Compact Stormbreaker (Perfect for Cutting Watermelons)", price: 95000, img: "https://images.unsplash.com/photo-1559893088-c0787ebfc084?w=400&auto=format&fit=crop&q=60" },
-            { id: 11, category: "Infinite Food Packs", title: "Iron Man Arc Reactor Hybrid Home Inverter (Runs AC Forever)", price: 720000, img: "https://images.unsplash.com/photo-1548345680-f5475ea5df84?w=400&auto=format&fit=crop&q=60" },
-            { id: 12, category: "Infinite Food Packs", title: "Maruti 800 Anti-Gravity Flying Car Conversion System Module", price: 899999, img: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=400&auto=format&fit=crop&q=60" },
-            { id: 13, category: "Crazy Deals", title: "Subterranean 10G Cellular Booster Ring (Works Inside Vaults)", price: 12400, img: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&auto=format&fit=crop&q=60" },
-            { id: 14, category: "Movie Props & Relics", title: "Chronos Pocket Time Rewind Dial (Fixes Awkward Conversations Instantly)", price: 185000, img: "https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=400&auto=format&fit=crop&q=60" },
-            { id: 15, category: "Impossible Tech", title: "Backyard Coca-Cola Pipeline Tap (Delivers 5000 Liters of Fizz Per Hour)", price: 3500, img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&auto=format&fit=crop&q=60" },
-            { id: 16, category: "Infinite Food Packs", title: "Automated 2-Minute Maggi Precision Pressure Cooker (True 120s Countdown)", price: 1950, img: "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=400&auto=format&fit=crop&q=60" },
-            { id: 17, category: "Crazy Deals", title: "Lifetime VIP Unlimited Premium Pani Puri Pass (All Cities Active)", price: 55000, img: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?w=400&auto=format&fit=crop&q=60" },
-            { id: 18, category: "Movie Props & Relics", title: "Chanakya's Lost Scroll on Supreme Financial Strategy and Wealth Protection", price: 89000, img: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=400&auto=format&fit=crop&q=60" },
-            { id: 19, category: "Impossible Tech", title: "Sub-Zero Air Conditioning Scarf (Keeps You Crisp at 16°C in May)", price: 4200, img: "https://images.unsplash.com/photo-1520903928343-0d4529a6231d?w=400&auto=format&fit=crop&q=60" },
-            { id: 20, category: "Infinite Food Packs", title: "Hyper-Yielding Hydroponic Instant Mango Box (Spawns 1 Fruit Per Day)", price: 14999, img: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&auto=format&fit=crop&q=60" },
-            { id: 21, category: "Crazy Deals", title: "Levitating Wireless Soundbar System (Powered by Himalayan Soundstones)", price: 32000, img: "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400&auto=format&fit=crop&q=60" },
-            { id: 22, category: "Impossible Tech", title: "Biometric Anti-Theft Lunch Box (Zaps Anyone Who Intends to Steal It)", price: 2100, img: "https://images.unsplash.com/photo-1543083477-4f785ae82055?w=400&auto=format&fit=crop&q=60" }
+        // Static Registry: Verified Real-World Products (No Loops/Generators)
+        const products = [
+            { id: 1, name: "Noise-Canceling Wireless Headphones", price: 4499, cat: "Electronics", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
+            { id: 2, name: "Minimalist Cotton T-Shirt Set", price: 899, cat: "Apparel", img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400" },
+            { id: 3, name: "Ergonomic Lumbar Memory Cushion", price: 1250, cat: "Home", img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400" },
+            { id: 4, name: "Stainless Steel Vacuum Tumbler", price: 650, cat: "Kitchen", img: "https://images.unsplash.com/photo-1572480687126-c22262d6b38c?w=400" },
+            { id: 5, name: "Portable Mechanical Keyboard", price: 2999, cat: "Electronics", img: "https://images.unsplash.com/photo-1595225476474-87563907a212?w=400" }
         ];
 
-        // 2. CENTRALIZED SINGLE REGISTRY FOR ALERTS (Tenor Isolated Matrix Mapping)
-        const stableMemeSystem = [
-            { text: "Devudaaa! Entha dabbulu dhandaga chestunnav ra nanna?! (Brahmanandam Shocked)", id: "20448135" },
-            { text: "Evarra meeranta? Ma dabbulu maku unte chalu kani ee karchulu maku oddu masteru!", id: "17242867" },
-            { text: "Aha! Prasantham! No spending, no credit bills, absolute mental peace!", id: "15545524" },
-            { text: "Em matladutunnav ra? Nuvvu nijangane buy kodedham anukunnaava?!", id: "16898822" },
-            { text: "Dabbulu urike ravu tammudu! Hold that absolute urge to purchase right now.", id: "26090543" }
-        ];
-
-        function initApp() {
-            currentFilteredCollection = [...masterProductRegistry];
-            displayedItemsCount = 0;
-            document.getElementById('productGrid').innerHTML = "";
-            loadNextChunk();
-            setupInfiniteScroll();
-        }
-
-        // 3. LAZY LOADING ENGINE TO STOP SYSTEM LAG
-        function loadNextChunk() {
+        function render() {
             const grid = document.getElementById('productGrid');
-            const totalAvailable = currentFilteredCollection.length;
-            
-            if (displayedItemsCount >= totalAvailable) {
-                document.getElementById('lazyLoadTrigger').innerText = "You have explored the entire vault! Stay safe, spend zero.";
-                return;
-            }
-
-            const upcomingLimit = Math.min(displayedItemsCount + itemsPerPage, totalAvailable);
-            let incrementHTML = "";
-
-            for (let i = displayedItemsCount; i < upcomingLimit; i++) {
-                const item = currentFilteredCollection[i];
-                const hasClock = (item.id % 3 === 0);
-                let runtimeClockHTML = "";
-
-                if (hasClock) {
-                    runtimeClockHTML = `
-                        <div class="mt-1.5 bg-red-50 text-[#b12704] text-[10px] font-bold p-1 rounded border border-red-200 inline-flex items-center space-x-1">
-                            <span>🚨 Fast Expiring Deal:</span>
-                            <span id="clock-element-${item.id}">04m 15s</span>
-                        </div>
-                    `;
-                }
-
-                incrementHTML += `
-                    <div class="bg-white p-4 flex flex-col justify-between border border-gray-200 shadow-xs hover:shadow-md transition rounded-sm relative">
-                        <div>
-                            <div class="text-[10px] text-gray-400 uppercase font-bold tracking-tight mb-1 flex justify-between">
-                                <span>${item.category}</span>
-                                <span class="text-gray-300">#${item.id}</span>
-                            </div>
-                            <div class="w-full h-40 bg-gray-100 flex items-center justify-center p-2 overflow-hidden mb-2 rounded-xs">
-                                <img src="${item.img}" alt="Ayyozone Asset" class="object-cover h-full w-full rounded" onerror="this.src='https://images.unsplash.com/photo-1557683316-973673baf926?w=400'">
-                            </div>
-                            <h2 class="text-[13px] font-bold text-[#0f1111] leading-tight hover:text-[#c45500] cursor-pointer mb-0.5">${item.title}</h2>
-                            
-                            ${runtimeClockHTML}
-
-                            <div class="flex items-center space-x-1 my-1">
-                                <span class="text-amber-500 text-[10px] font-bold">⭐⭐⭐⭐⭐</span>
-                                <span class="text-[#007185] text-[10px]">${((item.id * 73) % 900 + 120).toLocaleString()} reviews</span>
-                            </div>
-                            <div class="flex items-start text-black mt-1">
-                                <span class="text-xs font-semibold pt-0.5">₹</span>
-                                <span class="text-2xl font-bold tracking-tight">${item.price.toLocaleString()}</span>
-                            </div>
-                            <div class="text-[10px] text-green-700 font-medium mt-0.5">FREE Delivery inside 10 Minutes</div>
-                        </div>
-                        <button onclick="addToCartCount(${item.id})" class="amzn-btn text-black text-[11px] py-1.5 px-4 rounded-full mt-4 w-full cursor-pointer text-center font-bold tracking-wide">
-                            Buy Now
-                        </button>
+            products.forEach(p => {
+                grid.innerHTML += `
+                    <div class="bg-white p-3 border shadow-sm">
+                        <img src="${p.img}" class="w-full h-32 object-cover mb-2">
+                        <h3 class="font-bold">${p.name}</h3>
+                        <p class="text-lg font-bold my-2">₹${p.price}</p>
+                        <button onclick="intercept(${p.id})" class="amzn-btn w-full py-1 rounded">Buy Now</button>
                     </div>
                 `;
-            }
-
-            grid.insertAdjacentHTML('beforeend', incrementHTML);
-
-            // Hook Clock Handlers safely onto the DOM updates
-            for (let i = displayedItemsCount; i < upcomingLimit; i++) {
-                const item = currentFilteredCollection[i];
-                if (item.id % 3 === 0) {
-                    startClockEngine(`clock-element-${item.id}`);
-                }
-            }
-
-            displayedItemsCount = upcomingLimit;
-        }
-
-        function setupInfiniteScroll() {
-            window.onscroll = function() {
-                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 150) {
-                    loadNextChunk();
-                }
-            };
-        }
-
-        function startClockEngine(domId) {
-            let internalTicks = Math.floor(Math.random() * 100) + 180;
-            let cycle = setInterval(() => {
-                internalTicks--;
-                if (internalTicks <= 0) {
-                    clearInterval(cycle);
-                    let target = document.getElementById(domId);
-                    if (target) target.innerText = "OUT OF STOCK";
-                    return;
-                }
-                let mins = Math.floor(internalTicks / 60);
-                let secs = internalTicks % 60;
-                let target = document.getElementById(domId);
-                if (target) {
-                    target.innerText = `${mins < 10 ? "0" + mins : mins}m ${secs < 10 ? "0" + secs : secs}s`;
-                }
-            }, 1000);
-            countdownTimersList.push(cycle);
-        }
-
-        // 4. PRECISE SEARCH ENGINE CONTROL
-        function executeSearchEngine() {
-            let selectedCategory = document.getElementById('categorySelect').value;
-            let searchPhrase = document.getElementById('searchInput').value.toLowerCase().trim();
-
-            currentFilteredCollection = masterProductRegistry.filter(p => {
-                return (selectedCategory === "All" || p.category === selectedCategory) && 
-                       p.title.toLowerCase().includes(searchPhrase);
             });
-
-            document.getElementById('activeFilterLabel').innerText = searchPhrase ? `"${searchPhrase}" inside ${selectedCategory}` : selectedCategory;
-            document.getElementById('matchCountLabel').innerText = `(${currentFilteredCollection.length} unique items)`;
-            document.getElementById('filterIndicatorBar').style.display = 'flex';
-            
-            displayedItemsCount = 0;
-            document.getElementById('productGrid').innerHTML = "";
-            loadNextChunk();
         }
 
-        function filterBySubNav(label) {
-            if (label === "Today's Deals") {
-                currentFilteredCollection = masterProductRegistry.filter(p => p.id % 3 === 0);
-            } else {
-                currentFilteredCollection = masterProductRegistry.filter(p => p.price <= 100000);
-            }
-            document.getElementById('activeFilterLabel').innerText = label;
-            document.getElementById('matchCountLabel').innerText = `(${currentFilteredCollection.length} unique results)`;
-            document.getElementById('filterIndicatorBar').style.display = 'flex';
-            
-            displayedItemsCount = 0;
-            document.getElementById('productGrid').innerHTML = "";
-            loadNextChunk();
+        function intercept(id) {
+            const p = products.find(x => x.id === id);
+            document.getElementById('modalMsg').innerText = `Dabbulu dhandaga ra! Why are you buying ${p.name} for ₹${p.price}? Stay calm.`;
+            document.getElementById('modalGif').src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTA4YXB3eHN3YWFwZXhvdDJmdmdidXBzYXVzdmN2cHd0Z2g5MWpveSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Y0S4fVJVfscO4/giphy.gif";
+            document.getElementById('modal').classList.remove('hidden');
         }
 
-        function resetSearch() {
-            document.getElementById('searchInput').value = "";
-            document.getElementById('categorySelect').value = "All";
-            document.getElementById('filterIndicatorBar').style.display = 'none';
-            currentFilteredCollection = [...masterProductRegistry];
-            displayedItemsCount = 0;
-            document.getElementById('productGrid').innerHTML = "";
-            loadNextChunk();
-        }
-
-        function toggleLanguage() {
-            const block = document.getElementById('langSwitcher');
-            if (activeLanguage === "EN") {
-                activeLanguage = "TE";
-                block.innerHTML = "🇮🇳 TE ▾";
-                document.getElementById('statusCampaignText').innerText = "షాపింగ్ ప్రచారం నిలిపివేయబడింది";
-            } else {
-                activeLanguage = "EN";
-                block.innerHTML = "🇮🇳 EN ▾";
-                document.getElementById('statusCampaignText').innerText = "Anti-Spending Campaign Active";
-            }
-        }
-
-        function addToCartCount(id) {
-            realCartCount++;
-            document.getElementById('cartCountBadge').innerText = realCartCount;
-            let targetAlert = stableMemeSystem[id % stableMemeSystem.length];
-            showMeme(`[Blocked Securely] ${targetAlert.text}`, targetAlert.id);
-        }
-
-        function triggerAccountAlert() {
-            showMeme("Account logging attempts locked! Stay as a guest and save your cash balances.", "16898822");
-        }
-
-        function triggerOrdersAlert() {
-            showMeme("You have zero previous orders because the anti-spending shield is working perfectly!", "26090543");
-        }
-
-        function checkoutCart() {
-            showMeme("Cart checkout blocked! Fictional items cannot pass our zero-spending filter.", "15545524");
-        }
-
-        // 5. ROCK-SOLID STABLE GIF MOUNT ENGINE
-        function showMeme(alertPhrase, tenorPostId) {
-            document.getElementById('memeMessage').innerText = alertPhrase;
-            const container = document.getElementById('gifEmbedContainer');
-            
-            // Wipe container and insert absolute structural iframe elements cleanly mapping back to Tenor
-            container.innerHTML = `
-                <div class="tenor-gif-embed" data-postid="${tenorPostId}" data-share-method="host" data-aspect-ratio="1" data-width="100%">
-                    <a href="https://tenor.com/view/meme-${tenorPostId}">Ayyozone Alert Platform</a>
-                </div>
-            `;
-
-            const runtimeScript = document.createElement('script');
-            runtimeScript.src = "https://tenor.com/js/embed.js";
-            runtimeScript.async = true;
-            container.appendChild(runtimeScript);
-
-            document.getElementById('memeModal').style.display = 'flex';
-        }
-
-        function closeMeme() {
-            document.getElementById('memeModal').style.display = 'none';
-            document.getElementById('gifEmbedContainer').innerHTML = "";
-        }
-
-        // Initialize execution setup smoothly
-        initApp();
+        function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+        
+        render();
     </script>
 </body>
 </html>
