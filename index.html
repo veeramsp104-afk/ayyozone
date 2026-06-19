@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Shopping site in India: Shop Online for Mobiles, Books, Apparel & More - Ayyozone.in</title>
-    <!-- Stable Tailwind CSS link -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         body { background-color: #eaeded !important; font-family: "Amazon Ember", Arial, sans-serif; }
@@ -22,13 +21,11 @@
 </head>
 <body class="m-0 p-0 text-xs text-[#111]">
 
-    <!-- MAIN NAVBAR BELT -->
     <header class="nav-main text-white flex items-center justify-between px-4 py-2 space-x-3 sticky top-0 z-50">
         <div onclick="resetSearch()" class="flex items-center border border-transparent hover:border-white p-1 rounded cursor-pointer select-none">
             <span class="text-xl font-bold tracking-tight">ayyozone<span class="text-[#febd69] font-normal text-sm">.in</span></span>
         </div>
 
-        <!-- Integrated Search Engine -->
         <div class="flex flex-1 items-center h-10 bg-white rounded focus-within:ring-2 focus-within:ring-[#f3a847]">
             <select id="categorySelect" class="bg-[#f3f3f3] text-gray-700 text-xs px-2 h-full rounded-l border-r border-gray-300 hover:bg-gray-200 focus:outline-none cursor-pointer">
                 <option value="All">All Categories</option>
@@ -37,7 +34,7 @@
                 <option value="Impossible Tech">Impossible Tech</option>
                 <option value="Infinite Food Packs">Infinite Food</option>
             </select>
-            <input id="searchInput" type="text" placeholder="Search Ayyozone.in for 5,000+ mythical items..." class="w-full px-3 text-sm text-black focus:outline-none h-full" onkeyup="if(event.key === 'Enter') executeSearchEngine()">
+            <input id="searchInput" type="text" placeholder="Search Ayyozone for unique items..." class="w-full px-3 text-sm text-black focus:outline-none h-full" onkeyup="if(event.key === 'Enter') executeSearchEngine()">
             <button onclick="executeSearchEngine()" class="bg-[#febd69] hover:bg-[#f3a847] h-full px-6 rounded-r flex items-center justify-center cursor-pointer transition">
                 <span class="text-black text-lg">🔍</span>
             </button>
@@ -47,12 +44,12 @@
             🇮🇳 EN ▾
         </div>
 
-        <div onclick="triggerAccountAlert()" class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight">
+        <div class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight" onclick="triggerAccountAlert()">
             <span class="text-[11px] text-[#ccc]">Hello, Sign in</span>
             <span class="text-sm font-bold">Account ▾</span>
         </div>
 
-        <div onclick="triggerOrdersAlert()" class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight">
+        <div class="hidden sm:flex flex-col border border-transparent hover:border-white p-1 rounded cursor-pointer leading-tight" onclick="triggerOrdersAlert()">
             <span class="text-[11px] text-[#ccc]">Returns</span>
             <span class="text-sm font-bold">& Orders</span>
         </div>
@@ -66,12 +63,10 @@
         </div>
     </header>
 
-    <!-- SUB-NAVBAR ROW -->
     <nav class="nav-sub text-white text-sm px-4 py-1.5 flex items-center justify-between shadow-sm">
         <div class="flex items-center space-x-4 font-medium">
-            <span onclick="resetSearch()" class="font-bold cursor-pointer hover:underline flex items-center">☰ All Items</span>
+            <span onclick="resetSearch()" class="font-bold cursor-pointer hover:underline flex items-center">☰ All</span>
             <span onclick="filterBySubNav('Fresh')" class="cursor-pointer hover:underline">Fresh Goods</span>
-            <span onclick="filterBySubNav('miniTV')" class="cursor-pointer hover:underline">Ayyozone miniTV</span>
             <span onclick="filterBySubNav('Best Sellers')" class="cursor-pointer hover:underline">Best Sellers</span>
             <span onclick="filterBySubNav('Today\'s Deals')" class="cursor-pointer hover:underline text-[#febd69] font-bold">🚨 Epic Price Drops</span>
         </div>
@@ -80,7 +75,6 @@
         </div>
     </nav>
 
-    <!-- MAIN GRID CONTAINER -->
     <main class="max-w-[1500px] mx-auto p-4">
         <div id="filterIndicatorBar" class="hidden w-full bg-white border p-3 mb-4 rounded-sm items-center justify-between text-sm shadow-xs">
             <div>Showing results for: <span id="activeFilterLabel" class="font-bold text-[#b12704]"></span> <span id="matchCountLabel" class="text-gray-500 ml-2"></span></div>
@@ -88,23 +82,23 @@
         </div>
 
         <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <!-- Dynamic non-repeating catalog loads here -->
+            </div>
+
+        <div id="lazyLoadTrigger" class="w-full text-center py-8 text-gray-500 text-sm font-semibold">
+            Rowing more unique items into view...
         </div>
     </main>
 
-    <!-- INTERVENTION MODAL -->
     <div id="memeModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
         <div class="bg-white max-w-md w-full p-6 text-center rounded-md shadow-2xl border-t-4 border-[#e47911]">
             <h3 class="text-xl font-bold text-[#b12704] mb-1">Ayyozone System Control! 🛑</h3>
             <p id="memeMessage" class="text-xs text-[#333] font-semibold my-2 bg-amber-50 p-2 rounded border border-amber-200"></p>
             
-            <!-- STABLE SINGLE SOURCE EMBED BOX -->
             <div id="gifEmbedContainer" class="w-full h-48 rounded overflow-hidden my-3 border shadow-inner flex items-center justify-center bg-gray-100">
-                <!-- Inline Tenor script hooks in dynamically here -->
-            </div>
+                </div>
 
             <p class="text-[11px] text-gray-500 italic mb-4 bg-gray-50 p-2 rounded border">
-                "Your card is safe because this catalog is 100% fictional. Close this window and go relax."
+                "Your card is perfectly safe because this catalog is 100% fictional."
             </p>
             <button onclick="closeMeme()" class="amzn-btn text-black text-xs py-2.5 w-full rounded font-bold shadow-xs cursor-pointer">
                 Close & Save My Money
@@ -114,184 +108,202 @@
 
     <footer class="bg-[#232f3e] text-gray-300 text-center py-10 mt-16 border-t border-gray-700">
         <div class="text-white font-bold text-base mb-3">ayyozone<span class="text-[#febd69]">.in</span></div>
-        <p class="text-xs text-gray-400">© 2026 Ayyozone Mythical Clone - Infinite Catalog Configuration Engine.</p>
+        <p class="text-xs text-gray-400">© 2026 Ayyozone Mythical Clone - Clean Static Dataset Edition.</p>
     </footer>
 
     <script>
         let realCartCount = 0;
-        let allProductsMasterArray = [];
+        let displayedItemsCount = 0;
+        const itemsPerPage = 20;
+        let currentFilteredCollection = [];
         let activeLanguage = "EN";
         let countdownTimersList = [];
 
-        // Matrix component data pools to generate 5,000+ completely unique items
-        const matrixCoreItems = [
-            { base: "Aladdin Magic Lamp", cat: "Crazy Deals", img: "https://undraw.co/api/content/illustrations/ca01e74a-25fa-42e1-8f83-e18987b7a66f?inline=true", basePrice: 150 },
-            { base: "Invisibility Cloak", cat: "Crazy Deals", img: "https://undraw.co/api/content/illustrations/563e414c-1d90-4c27-99e0-10dbdf07cfcb?inline=true", basePrice: 499 },
-            { base: "Teleportation Powder", cat: "Crazy Deals", img: "https://undraw.co/api/content/illustrations/c280f92b-81d3-49d7-83eb-5b5c98e09e05?inline=true", basePrice: 20 },
-            { base: "SS Rajamouli Directing Knife", cat: "Movie Props & Relics", img: "https://undraw.co/api/content/illustrations/1f44047b-124b-4b19-b2db-87c2fb8b273b?inline=true", basePrice: 350 },
-            { base: "Thor Stormbreaker Axe", cat: "Movie Props & Relics", img: "https://undraw.co/api/content/illustrations/e6c1df80-ca02-4ee4-bc8c-42b781da74d3?inline=true", basePrice: 899 },
-            { base: "Iron Man Arc Reactor", cat: "Movie Props & Relics", img: "https://undraw.co/api/content/illustrations/10702d73-207d-419b-a010-003666ee6eb2?inline=true", basePrice: 299 },
-            { base: "Flying Car Upgrade Module", cat: "Impossible Tech", img: "https://undraw.co/api/content/illustrations/a23275e0-1ee7-41ec-b3c9-044238e07cb1?inline=true", basePrice: 50000 },
-            { base: "10G Signal Booster", cat: "Impossible Tech", img: "https://undraw.co/api/content/illustrations/6c9f28df-2495-4670-8bf1-e2eeecfa0cf2?inline=true", basePrice: 99 },
-            { base: "Time Machine Pocket Watch", cat: "Impossible Tech", img: "https://undraw.co/api/content/illustrations/68da1737-29bf-4740-9a2e-cb19c6218da7?inline=true", basePrice: 1200 },
-            { base: "Coca-Cola Backyard Water Tank", cat: "Infinite Food Packs", img: "https://undraw.co/api/content/illustrations/cb2f643e-72df-424d-b6a4-7833ccf0b7bc?inline=true", basePrice: 50 },
-            { base: "Maggi 2-Minute Cooker", cat: "Infinite Food Packs", img: "https://undraw.co/api/content/illustrations/f6534570-fc53-48b4-82a1-e0e9bcfa3972?inline=true", basePrice: 180 },
-            { base: "Unlimited Pani Puri Card", cat: "Infinite Food Packs", img: "https://undraw.co/api/content/illustrations/821f8da4-1b03-4f9e-bc43-22df6ee91277?inline=true", basePrice: 999 }
+        // 1. AN ABSOLUTELY STATIC, PRE-DETERMINED UNIQUE NAME AND IMAGE CATALOG POOL
+        // Every item name is distinct, completely eliminating layout duplication bugs.
+        const masterProductRegistry = [
+            { id: 1, category: "Crazy Deals", title: "Cursed Divine Zeus's Crackling Lightning Bolt (God Mode Active)", price: 300369, img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&auto=format&fit=crop&q=60" },
+            { id: 2, category: "Crazy Deals", title: "Enchanted Mythical Phoenix Feather Training Treats (100% Heat Resistant)", price: 318822, img: "https://images.unsplash.com/photo-1516233758813-a38d024919c5?w=400&auto=format&fit=crop&q=60" },
+            { id: 3, category: "Crazy Deals", title: "Quantum Mechanized 10-Minute History Skip Remote (Do Not Touch Past Self)", price: 618855, img: "https://images.unsplash.com/photo-1558089687-f282ffcbd1d5?w=400&auto=format&fit=crop&q=60" },
+            { id: 4, category: "Movie Props & Relics", title: "Black-Hole Powered Pocket Dimension Box (Spans 5 Galaxies)", price: 257995, img: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=400&auto=format&fit=crop&q=60" },
+            { id: 5, category: "Movie Props & Relics", title: "Runes-Engraved Infinite Energy Coffee Potion (Hogwarts Approved)", price: 260873, img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&auto=format&fit=crop&q=60" },
+            { id: 6, category: "Movie Props & Relics", title: "Level 99 Legendary Berserker Rage Battle Axe (Blocks Toxic Energy)", price: 694919, img: "https://images.unsplash.com/photo-1589254065878-42c9da997008?w=400&auto=format&fit=crop&q=60" },
+            { id: 7, category: "Impossible Tech", title: "Vintage Cyberpunk Invisibility Cloak (Stealth Matriculation Edition)", price: 85400, img: "https://images.unsplash.com/photo-1504333638930-c8787321eff0?w=400&auto=format&fit=crop&q=60" },
+            { id: 8, category: "Impossible Tech", title: "Aladdin's Restored Oil Lamp featuring Triple Option Selection Wishes", price: 15400, img: "https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?w=400&auto=format&fit=crop&q=60" },
+            { id: 9, category: "Impossible Tech", title: "SS Rajamouli Directing Megaphone (Guarantees ₹1000 Crore Box Office)", price: 450000, img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&auto=format&fit=crop&q=60" },
+            { id: 10, category: "Infinite Food Packs", title: "Thor's Lightweight Compact Stormbreaker (Perfect for Cutting Watermelons)", price: 95000, img: "https://images.unsplash.com/photo-1559893088-c0787ebfc084?w=400&auto=format&fit=crop&q=60" },
+            { id: 11, category: "Infinite Food Packs", title: "Iron Man Arc Reactor Hybrid Home Inverter (Runs AC Forever)", price: 720000, img: "https://images.unsplash.com/photo-1548345680-f5475ea5df84?w=400&auto=format&fit=crop&q=60" },
+            { id: 12, category: "Infinite Food Packs", title: "Maruti 800 Anti-Gravity Flying Car Conversion System Module", price: 899999, img: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=400&auto=format&fit=crop&q=60" },
+            { id: 13, category: "Crazy Deals", title: "Subterranean 10G Cellular Booster Ring (Works Inside Vaults)", price: 12400, img: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&auto=format&fit=crop&q=60" },
+            { id: 14, category: "Movie Props & Relics", title: "Chronos Pocket Time Rewind Dial (Fixes Awkward Conversations Instantly)", price: 185000, img: "https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=400&auto=format&fit=crop&q=60" },
+            { id: 15, category: "Impossible Tech", title: "Backyard Coca-Cola Pipeline Tap (Delivers 5000 Liters of Fizz Per Hour)", price: 3500, img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&auto=format&fit=crop&q=60" },
+            { id: 16, category: "Infinite Food Packs", title: "Automated 2-Minute Maggi Precision Pressure Cooker (True 120s Countdown)", price: 1950, img: "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=400&auto=format&fit=crop&q=60" },
+            { id: 17, category: "Crazy Deals", title: "Lifetime VIP Unlimited Premium Pani Puri Pass (All Cities Active)", price: 55000, img: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?w=400&auto=format&fit=crop&q=60" },
+            { id: 18, category: "Movie Props & Relics", title: "Chanakya's Lost Scroll on Supreme Financial Strategy and Wealth Protection", price: 89000, img: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=400&auto=format&fit=crop&q=60" },
+            { id: 19, category: "Impossible Tech", title: "Sub-Zero Air Conditioning Scarf (Keeps You Crisp at 16°C in May)", price: 4200, img: "https://images.unsplash.com/photo-1520903928343-0d4529a6231d?w=400&auto=format&fit=crop&q=60" },
+            { id: 20, category: "Infinite Food Packs", title: "Hyper-Yielding Hydroponic Instant Mango Box (Spawns 1 Fruit Per Day)", price: 14999, img: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&auto=format&fit=crop&q=60" },
+            { id: 21, category: "Crazy Deals", title: "Levitating Wireless Soundbar System (Powered by Himalayan Soundstones)", price: 32000, img: "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400&auto=format&fit=crop&q=60" },
+            { id: 22, category: "Impossible Tech", title: "Biometric Anti-Theft Lunch Box (Zaps Anyone Who Intends to Steal It)", price: 2100, img: "https://images.unsplash.com/photo-1543083477-4f785ae82055?w=400&auto=format&fit=crop&q=60" }
         ];
 
-        const matrixPrefixes = ["Authentic", "Vintage", "Cyberpunk", "Limited Edition", "Next-Gen", "Mythical", "Hyper-Efficient", "Custom-Built", "Galactic", "Secret-Recipe", "Pro-Level", "Premium", "Exotic", "Classic", "Deluxe", "Industrial", "Futuristic", "Retro", "Supercharged", "Pocket-Sized"];
-        const matrixEditions = ["Bahubali Cut", "Maruti 800 Special", "College Exam Edition", "3 Genies Pack", "5000 Liters Capacity", "120s Stop Guarantee", "VIP Lifetime Access", "Coconut Cutting Size", "Power Bank Edition", "Underground Cellar Variant", "Time Loop Rewind", "Ultra Saver Bundle", "Gold Foil Platinum", "Director's Cut Signature", "Overclocked Speed", "Endless Refill", "Masterpiece Collection", "Anniversary Edition", "Heavy-Duty Build", "Zero-Latency Pack"];
-        const matrixSpecs = ["with Smart Sync", "including Carbon Fiber Case", "Pack of 1", "Pack of 3", "Series-B Generation", "with Anti-Gravity Shield", "optimized for Fast Delivery", "Bundle Kit Pro", "featuring Turbo Charge", "with Holographic Interface", "with Multi-Core Boost", "including Extra Adapters", "with Enhanced Stability", "Waterproof Variant", "with Lifetime System Support", "Eco-Friendly Edition", "with Noise-Isolating Seal", "including Hardcover Guide", "with Quick-Release Clamp", "featuring AI Automation"];
-
-        // Centralized Single Source for reliable modal embeds (Tenor Single Source IDs)
-        const singleSourceMemeEmbeds = [
+        // 2. CENTRALIZED SINGLE REGISTRY FOR ALERTS (Tenor Isolated Matrix Mapping)
+        const stableMemeSystem = [
             { text: "Devudaaa! Entha dabbulu dhandaga chestunnav ra nanna?! (Brahmanandam Shocked)", id: "20448135" },
             { text: "Evarra meeranta? Ma dabbulu maku unte chalu kani ee karchulu maku oddu masteru!", id: "17242867" },
             { text: "Aha! Prasantham! No spending, no credit bills, absolute mental peace!", id: "15545524" },
-            { text: "Em matladutunnav ra? Nuvvu nijangane fake card details thoti buy kodedham anukunnaava?!", id: "16898822" },
+            { text: "Em matladutunnav ra? Nuvvu nijangane buy kodedham anukunnaava?!", id: "16898822" },
             { text: "Dabbulu urike ravu tammudu! Hold that absolute urge to purchase right now.", id: "26090543" }
         ];
 
-        function buildDatabase() {
-            let totalTarget = 5100; // Over 5000 unique mathematical iterations
-            let idCounter = 1;
-
-            // Generate items completely dynamically so names never repeat or make formatting errors
-            for (let i = 0; i < totalTarget; i++) {
-                let baseItem = matrixCoreItems[i % matrixCoreItems.length];
-                let prefix = matrixPrefixes[Math.floor(i / matrixCoreItems.length) % matrixPrefixes.length];
-                let edition = matrixEditions[Math.floor(i / (matrixCoreItems.length * matrixPrefixes.length)) % matrixEditions.length];
-                let spec = matrixSpecs[Math.floor(i / (matrixCoreItems.length * matrixPrefixes.length * matrixEditions.length)) % matrixSpecs.length];
-
-                // Build a completely clear, highly descriptive title
-                let uniqueTitle = `${prefix} ${baseItem.base} [${edition}] - ${spec}`;
-                let uniquePrice = baseItem.basePrice + (i % 25) * 5; // Adds clean realistic price variation
-                let ratingVotes = Math.floor(Math.random() * 45000) + 120;
-                let needsTimer = (idCounter % 3 === 0);
-
-                allProductsMasterArray.push({
-                    id: idCounter++,
-                    category: baseItem.cat,
-                    title: uniqueTitle,
-                    price: uniquePrice,
-                    reviews: ratingVotes,
-                    img: baseItem.img,
-                    hasTimer: needsTimer
-                });
-            }
+        function initApp() {
+            currentFilteredCollection = [...masterProductRegistry];
+            displayedItemsCount = 0;
+            document.getElementById('productGrid').innerHTML = "";
+            loadNextChunk();
+            setupInfiniteScroll();
         }
 
-        // Render limited clean blocks onto viewport layout to protect DOM rendering speeds
-        function renderGrid(productsList) {
+        // 3. LAZY LOADING ENGINE TO STOP SYSTEM LAG
+        function loadNextChunk() {
             const grid = document.getElementById('productGrid');
-            if (productsList.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-16 bg-white border font-bold text-sm text-gray-500 rounded">🔍 No magical items found matching your query.</div>`;
+            const totalAvailable = currentFilteredCollection.length;
+            
+            if (displayedItemsCount >= totalAvailable) {
+                document.getElementById('lazyLoadTrigger').innerText = "You have explored the entire vault! Stay safe, spend zero.";
                 return;
             }
 
-            countdownTimersList.forEach(t => clearInterval(t));
-            countdownTimersList = [];
+            const upcomingLimit = Math.min(displayedItemsCount + itemsPerPage, totalAvailable);
+            let incrementHTML = "";
 
-            let totalHTML = "";
-            // Slice the massive catalog to load the first 40 immediate matches smoothly
-            productsList.slice(0, 40).forEach((item) => {
-                let timerSectionHTML = "";
-                if (item.hasTimer) {
-                    timerSectionHTML = `
+            for (let i = displayedItemsCount; i < upcomingLimit; i++) {
+                const item = currentFilteredCollection[i];
+                const hasClock = (item.id % 3 === 0);
+                let runtimeClockHTML = "";
+
+                if (hasClock) {
+                    runtimeClockHTML = `
                         <div class="mt-1.5 bg-red-50 text-[#b12704] text-[10px] font-bold p-1 rounded border border-red-200 inline-flex items-center space-x-1">
-                            <span>🚨 Deal Expiring In:</span>
-                            <span id="timer-node-${item.id}">05m 00s</span>
+                            <span>🚨 Fast Expiring Deal:</span>
+                            <span id="clock-element-${item.id}">04m 15s</span>
                         </div>
                     `;
                 }
 
-                totalHTML += `
+                incrementHTML += `
                     <div class="bg-white p-4 flex flex-col justify-between border border-gray-200 shadow-xs hover:shadow-md transition rounded-sm relative">
                         <div>
                             <div class="text-[10px] text-gray-400 uppercase font-bold tracking-tight mb-1 flex justify-between">
                                 <span>${item.category}</span>
                                 <span class="text-gray-300">#${item.id}</span>
                             </div>
-                            <div class="w-full h-40 bg-gray-50 flex items-center justify-center p-4 overflow-hidden mb-2 rounded-xs">
-                                <img src="${item.img}" alt="${item.title}" class="object-contain h-full w-full">
+                            <div class="w-full h-40 bg-gray-100 flex items-center justify-center p-2 overflow-hidden mb-2 rounded-xs">
+                                <img src="${item.img}" alt="Ayyozone Asset" class="object-cover h-full w-full rounded" onerror="this.src='https://images.unsplash.com/photo-1557683316-973673baf926?w=400'">
                             </div>
                             <h2 class="text-[13px] font-bold text-[#0f1111] leading-tight hover:text-[#c45500] cursor-pointer mb-0.5">${item.title}</h2>
                             
-                            ${timerSectionHTML}
+                            ${runtimeClockHTML}
 
                             <div class="flex items-center space-x-1 my-1">
                                 <span class="text-amber-500 text-[10px] font-bold">⭐⭐⭐⭐⭐</span>
-                                <span class="text-[#007185] text-[10px]">${item.reviews.toLocaleString()} global votes</span>
+                                <span class="text-[#007185] text-[10px]">${((item.id * 73) % 900 + 120).toLocaleString()} reviews</span>
                             </div>
                             <div class="flex items-start text-black mt-1">
                                 <span class="text-xs font-semibold pt-0.5">₹</span>
                                 <span class="text-2xl font-bold tracking-tight">${item.price.toLocaleString()}</span>
                             </div>
-                            <div class="text-[10px] text-green-700 font-medium mt-0.5">FREE Delivery in 10 Minutes</div>
+                            <div class="text-[10px] text-green-700 font-medium mt-0.5">FREE Delivery inside 10 Minutes</div>
                         </div>
                         <button onclick="addToCartCount(${item.id})" class="amzn-btn text-black text-[11px] py-1.5 px-4 rounded-full mt-4 w-full cursor-pointer text-center font-bold tracking-wide">
-                            Buy Now before Stock Ends
+                            Buy Now
                         </button>
                     </div>
                 `;
-            });
-            grid.innerHTML = totalHTML;
+            }
 
-            // Trigger clock cycles
-            productsList.slice(0, 40).forEach((item) => {
-                if (item.hasTimer) {
-                    initiateClockTracker(`timer-node-${item.id}`);
+            grid.insertAdjacentHTML('beforeend', incrementHTML);
+
+            // Hook Clock Handlers safely onto the DOM updates
+            for (let i = displayedItemsCount; i < upcomingLimit; i++) {
+                const item = currentFilteredCollection[i];
+                if (item.id % 3 === 0) {
+                    startClockEngine(`clock-element-${item.id}`);
                 }
-            });
+            }
+
+            displayedItemsCount = upcomingLimit;
         }
 
-        function initiateClockTracker(targetElementId) {
-            let limitSeconds = Math.floor(Math.random() * 120) + 120; 
-            let handle = setInterval(() => {
-                limitSeconds--;
-                if (limitSeconds <= 0) {
-                    clearInterval(handle);
-                    let block = document.getElementById(targetElementId);
-                    if (block) block.innerText = "EXPIRED!";
+        function setupInfiniteScroll() {
+            window.onscroll = function() {
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 150) {
+                    loadNextChunk();
+                }
+            };
+        }
+
+        function startClockEngine(domId) {
+            let internalTicks = Math.floor(Math.random() * 100) + 180;
+            let cycle = setInterval(() => {
+                internalTicks--;
+                if (internalTicks <= 0) {
+                    clearInterval(cycle);
+                    let target = document.getElementById(domId);
+                    if (target) target.innerText = "OUT OF STOCK";
                     return;
                 }
-                let minutes = Math.floor(limitSeconds / 60);
-                let remainingSecs = limitSeconds % 60;
-                let block = document.getElementById(targetElementId);
-                if (block) {
-                    block.innerText = `${minutes < 10 ? "0" + minutes : minutes}m ${remainingSecs < 10 ? "0" + remainingSecs : remainingSecs}s`;
+                let mins = Math.floor(internalTicks / 60);
+                let secs = internalTicks % 60;
+                let target = document.getElementById(domId);
+                if (target) {
+                    target.innerText = `${mins < 10 ? "0" + mins : mins}m ${secs < 10 ? "0" + secs : secs}s`;
                 }
             }, 1000);
-            countdownTimersList.push(handle);
+            countdownTimersList.push(cycle);
         }
 
+        // 4. PRECISE SEARCH ENGINE CONTROL
         function executeSearchEngine() {
-            let targetCategory = document.getElementById('categorySelect').value;
-            let queryText = document.getElementById('searchInput').value.toLowerCase().trim();
-            
-            let filtered = allProductsMasterArray.filter(p => {
-                return (targetCategory === "All" || p.category === targetCategory) && p.title.toLowerCase().includes(queryText);
+            let selectedCategory = document.getElementById('categorySelect').value;
+            let searchPhrase = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            currentFilteredCollection = masterProductRegistry.filter(p => {
+                return (selectedCategory === "All" || p.category === selectedCategory) && 
+                       p.title.toLowerCase().includes(searchPhrase);
             });
 
-            document.getElementById('activeFilterLabel').innerText = queryText ? `"${queryText}" in ${targetCategory}` : targetCategory;
-            document.getElementById('matchCountLabel').innerText = `(${filtered.length.toLocaleString()} items found)`;
+            document.getElementById('activeFilterLabel').innerText = searchPhrase ? `"${searchPhrase}" inside ${selectedCategory}` : selectedCategory;
+            document.getElementById('matchCountLabel').innerText = `(${currentFilteredCollection.length} unique items)`;
             document.getElementById('filterIndicatorBar').style.display = 'flex';
-            renderGrid(filtered);
+            
+            displayedItemsCount = 0;
+            document.getElementById('productGrid').innerHTML = "";
+            loadNextChunk();
         }
 
-        function filterBySubNav(filterKey) {
-            let filtered = filterKey === "Today's Deals" ? allProductsMasterArray.filter(p => p.hasTimer) : allProductsMasterArray.filter(p => p.price <= 500);
-            document.getElementById('activeFilterLabel').innerText = filterKey;
-            document.getElementById('matchCountLabel').innerText = `(${filtered.length.toLocaleString()} items found)`;
+        function filterBySubNav(label) {
+            if (label === "Today's Deals") {
+                currentFilteredCollection = masterProductRegistry.filter(p => p.id % 3 === 0);
+            } else {
+                currentFilteredCollection = masterProductRegistry.filter(p => p.price <= 100000);
+            }
+            document.getElementById('activeFilterLabel').innerText = label;
+            document.getElementById('matchCountLabel').innerText = `(${currentFilteredCollection.length} unique results)`;
             document.getElementById('filterIndicatorBar').style.display = 'flex';
-            renderGrid(filtered);
+            
+            displayedItemsCount = 0;
+            document.getElementById('productGrid').innerHTML = "";
+            loadNextChunk();
         }
 
         function resetSearch() {
             document.getElementById('searchInput').value = "";
             document.getElementById('categorySelect').value = "All";
             document.getElementById('filterIndicatorBar').style.display = 'none';
-            renderGrid(allProductsMasterArray);
+            currentFilteredCollection = [...masterProductRegistry];
+            displayedItemsCount = 0;
+            document.getElementById('productGrid').innerHTML = "";
+            loadNextChunk();
         }
 
         function toggleLanguage() {
@@ -307,50 +319,52 @@
             }
         }
 
+        function addToCartCount(id) {
+            realCartCount++;
+            document.getElementById('cartCountBadge').innerText = realCartCount;
+            let targetAlert = stableMemeSystem[id % stableMemeSystem.length];
+            showMeme(`[Blocked Securely] ${targetAlert.text}`, targetAlert.id);
+        }
+
         function triggerAccountAlert() {
-            showMeme("Account login cheyalani chustunnavu kadha? Control loss avvaku!", "16898822");
+            showMeme("Account logging attempts locked! Stay as a guest and save your cash balances.", "16898822");
         }
 
         function triggerOrdersAlert() {
-            showMeme("Inka order eh pettaledhu appude return orders gurinchi aalochistunnavu ra chaari!", "26090543");
-        }
-
-        function addToCartCount(itemId) {
-            realCartCount++;
-            document.getElementById('cartCountBadge').innerText = realCartCount;
-            let matchedMeme = singleSourceMemeEmbeds[Math.floor(Math.random() * singleSourceMemeEmbeds.length)];
-            showMeme(`[Item #${itemId} Blocked] ${matchedMeme.text}`, matchedMeme.id);
+            showMeme("You have zero previous orders because the anti-spending shield is working perfectly!", "26090543");
         }
 
         function checkoutCart() {
-            showMeme("Abbaa.. Cart khali! Clean sweep, zero spending achieved. Super masteru!", "15545524");
+            showMeme("Cart checkout blocked! Fictional items cannot pass our zero-spending filter.", "15545524");
         }
 
-        function showMeme(customText, tenorId) {
-            document.getElementById('memeMessage').innerText = customText;
+        // 5. ROCK-SOLID STABLE GIF MOUNT ENGINE
+        function showMeme(alertPhrase, tenorPostId) {
+            document.getElementById('memeMessage').innerText = alertPhrase;
             const container = document.getElementById('gifEmbedContainer');
+            
+            // Wipe container and insert absolute structural iframe elements cleanly mapping back to Tenor
             container.innerHTML = `
-                <div class="tenor-gif-embed" data-postid="${tenorId}" data-share-method="host" data-aspect-ratio="1" data-width="100%">
-                    <a href="https://tenor.com/view/meme-${tenorId}">Ayyozone Alert GIF</a>
+                <div class="tenor-gif-embed" data-postid="${tenorPostId}" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+                    <a href="https://tenor.com/view/meme-${tenorPostId}">Ayyozone Alert Platform</a>
                 </div>
             `;
-            
-            const script = document.createElement('script');
-            script.src = "https://tenor.com/js/embed.js";
-            script.async = true;
-            container.appendChild(script);
+
+            const runtimeScript = document.createElement('script');
+            runtimeScript.src = "https://tenor.com/js/embed.js";
+            runtimeScript.async = true;
+            container.appendChild(runtimeScript);
 
             document.getElementById('memeModal').style.display = 'flex';
         }
-        
+
         function closeMeme() {
             document.getElementById('memeModal').style.display = 'none';
             document.getElementById('gifEmbedContainer').innerHTML = "";
         }
 
-        // Initialize engine setup
-        buildDatabase();
-        renderGrid(allProductsMasterArray);
+        // Initialize execution setup smoothly
+        initApp();
     </script>
 </body>
 </html>
