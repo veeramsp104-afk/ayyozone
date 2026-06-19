@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayyozone.in - Clean & Safe Shopping Intervention</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .amazon-bg { background-color: #232f3e; }
+        .amazon-yellow { background-color: #ffd814; border-color: #fcd200; }
+        .amazon-yellow:hover { background-color: #f7ca00; }
+        .nav-belt { background-color: #131921; }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans text-gray-900">
+
+    <!-- TOP NAV BELT -->
+    <header class="nav-belt text-white text-xs p-2 flex justify-between px-4">
+        <div class="flex space-x-4">
+            <span class="hover:underline cursor-pointer">Ayyozone Pay</span>
+            <span class="hover:underline cursor-pointer">Gift Cards</span>
+            <span class="hover:underline cursor-pointer">Broke Member Area</span>
+        </div>
+        <div>
+            <span class="text-yellow-400 font-bold">Safe Mode: Strict Active</span>
+        </div>
+    </header>
+
+    <!-- MAIN AYYOZONE HEADER -->
+    <header class="amazon-bg text-white p-3 flex items-center justify-between shadow-md sticky top-0 z-40">
+        <div class="flex items-center space-x-4">
+            <div class="flex flex-col cursor-pointer">
+                <span class="text-2xl font-black tracking-wider text-yellow-400">ayyozone</span>
+                <span class="text-[10px] text-gray-400 font-bold tracking-widest -mt-1 text-right">.in</span>
+            </div>
+            <span class="text-xs text-gray-300 hidden md:block">Deliver to<br><span class="font-bold text-white">Reality Check</span></span>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="flex flex-1 mx-4 max-w-2xl">
+            <input type="text" placeholder="Search through 2,000 safe traps..." class="w-full p-2 rounded-l text-black focus:outline-none text-sm">
+            <button class="bg-yellow-500 text-black px-5 rounded-r font-bold hover:bg-yellow-600 transition">🔍</button>
+        </div>
+        
+        <div class="text-xs text-right flex items-center space-x-6">
+            <div class="hidden sm:block">
+                <span>Hello, Heavy Spender</span><br>
+                <span class="font-bold text-sm">Regret & Orders</span>
+            </div>
+            <div onclick="showMeme('Your Shopping Cart is an illusion.', 'https://media.giphy.com/media/yNx0wTdaX9u5G/giphy.gif')" class="cursor-pointer relative flex items-center p-2 border border-transparent hover:border-white rounded">
+                <span class="text-2xl">🛒</span>
+                <span class="absolute top-1 right-1 bg-yellow-500 text-black rounded-full text-[10px] font-bold px-1.5">2,000</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- WARNING BANNER -->
+    <div class="bg-gradient-to-r from-red-700 to-amber-700 text-white text-center py-2.5 text-xs sm:text-sm font-bold tracking-wide shadow-inner">
+        🚨 2,000 SAFE & CLEAN INTERVENTION PRODUCTS GENERATED. CLICK ANY TO TEST YOUR WILLPOWER.
+    </div>
+
+    <!-- MAIN GRID CONTAINER -->
+    <main id="productGrid" class="max-w-7xl mx-auto p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Products load here dynamically -->
+    </main>
+
+    <!-- THE DYNAMIC INTERVENTION POPUP -->
+    <div id="memeModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 backdrop-blur-xs">
+        <div class="bg-white rounded-xl max-w-md w-full p-6 text-center shadow-2xl border-4 border-yellow-400">
+            <h3 class="text-2xl font-black text-red-600 tracking-tight mb-1">AYYO!! ARE YOU STUPID?! 😭</h3>
+            
+            <p id="memeMessage" class="text-gray-800 font-semibold my-3 text-sm px-2"></p>
+            
+            <img id="memeGif" src="" alt="Intervention Meme" class="w-full h-56 object-cover rounded-lg mb-4 shadow-md">
+            
+            <p class="text-xs text-gray-500 font-medium italic mb-5 bg-gray-100 p-2.5 rounded border">
+                "Your credit card just sent you a thank-you note for not buying this. Close the window and save your money."
+            </p>
+            
+            <button onclick="closeMeme()" class="amazon-bg text-white font-bold py-2.5 px-6 rounded-lg hover:bg-slate-800 transition cursor-pointer w-full text-sm tracking-wide">
+                Ayyo My Bad, Closing Tab!
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="amazon-bg text-gray-400 text-xs text-center py-8 mt-12 border-t border-gray-700">
+        <p class="text-white font-bold text-sm mb-2">ayyozone.in</p>
+        <p class="mb-1">© 2026 Ayyozone Intervention Labs. Running strictly clean layouts.</p>
+    </footer>
+
+    <!-- AUTOMATION ENGINE SCRIPT -->
+    <script>
+        // Clean product-safe keywords only
+        const dynamicTemplates = [
+            { keyword: "vintage-lamp,object", titlePrefix: "Genuine Aladdin's Magic Antique", titleSuffix: "Lamp (Three Wishes Version)" },
+            { keyword: "industrial-button,red", titlePrefix: "The 'Instant Dopamine Spike'", titleSuffix: "Industrial Red Clicker Button" },
+            { keyword: "cardboard-box,package", titlePrefix: "Premium Luxury Packaged Box of", titleSuffix: "Absolute Nothing (Minimalist Edition)" },
+            { keyword: "pocket-watch,metallic", titlePrefix: "Quantum Mechanical Rewind", titleSuffix: "Time Device (Skips 20 Mins)" },
+            { keyword: "glass-bottle,aesthetic", titlePrefix: "Artisanal Deconditioned Organic", titleSuffix: "Air Flask (Luxury Matte Glass)" },
+            { keyword: "fidget-spinner,tech", titlePrefix: "Ergonomic Infinite Rolling Digital", titleSuffix: "Wheel for Chronic Scrollers" }
+        ];
+
+        const gifsPool = [
+            "https://media.giphy.com/media/R51a8oAH7KwbS/giphy.gif", // Batman Are you stupid
+            "https://media.giphy.com/media/3o6wNXTwf57TCEX84w/giphy.gif", // Family Guy where is money
+            "https://media.giphy.com/media/l4Ki2obCyAQS5WhFe/giphy.gif", // Michael Jordan stop it
+            "https://media.giphy.com/media/yNx0wTdaX9u5G/giphy.gif", // Spongebob empty wallet
+            "https://media.giphy.com/media/l3V0FBxSzgXPn7dqM/giphy.gif"  // Thinking guy reality check
+        ];
+
+        const grid = document.getElementById('productGrid');
+
+        for (let i = 1; i <= 2000; i++) {
+            let template = dynamicTemplates[(i - 1) % dynamicTemplates.length];
+            
+            let fakePrice = Math.floor(Math.random() * 800000) + 49;
+            let fakeReviews = Math.floor(Math.random() * 24000) + 12;
+            let assignedGif = gifsPool[Math.floor(Math.random() * gifsPool.length)];
+            
+            // STRICT SAFE SEARCH URL: Pulls purely featured commercial object photos
+            let autoImageUrl = `https://images.unsplash.com/featured/600x400/?${template.keyword}&sig=${i}&safe=high`;
+
+            let cardHTML = `
+                <div class="bg-white p-5 rounded-lg shadow-sm hover:shadow-md transition flex flex-col justify-between border border-gray-200">
+                    <div>
+                        <span class="bg-amber-600 text-white text-[9px] uppercase tracking-wider px-2 py-0.5 font-bold rounded">Item #${i} of 2,000</span>
+                        <img src="${autoImageUrl}" alt="Automated Product" class="w-full h-48 object-cover my-3 rounded bg-gray-100">
+                        <h2 class="text-base font-bold text-gray-900 leading-snug">${template.titlePrefix} ${template.titleSuffix}</h2>
+                        <p class="text-xs text-blue-600 my-1">⭐⭐⭐⭐⭐ (${fakeReviews.toLocaleString()} reviews)</p>
+                        <div class="flex items-baseline space-x-1 mt-2">
+                            <span class="text-sm font-semibold">₹</span>
+                            <span class="text-2xl font-bold">${fakePrice.toLocaleString()}</span>
+                            <span class="text-sm font-semibold">.00</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Delivery: <span class="text-red-600 font-bold">Never (Anti-Spending Trap)</span></p>
+                    </div>
+                    <button onclick="showMeme('You scrolled past hundreds of options all the way to Item #${i} just to hit buy. Turn off your screen!', '${assignedGif}')" class="amazon-yellow text-black text-xs font-semibold py-2 px-4 rounded-full mt-5 w-full shadow-sm cursor-pointer border transition">
+                        Add to Cart
+                    </button>
+                </div>
+            `;
+            
+            grid.innerHTML += cardHTML;
+        }
+
+        function showMeme(customText, gifUrl) {
+            document.getElementById('memeMessage').innerText = customText;
+            document.getElementById('memeGif').src = gifUrl; 
+            document.getElementById('memeModal').classList.remove('hidden');
+        }
+        function closeModal() { // Fallback standard close
+            document.getElementById('memeModal').classList.add('hidden');
+        }
+        function closeMeme() {
+            document.getElementById('memeModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
