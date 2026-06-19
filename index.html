@@ -1,258 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayyozone.in</title>
-    <!-- Tailwind CSS for structural fidelity -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #e3e6e6; }
-        .bg-nav-main { background-color: #131921; }
-        .bg-nav-sub { background-color: #232f3e; }
-        .bg-amz-yellow { background-color: #ffd814; }
-        .bg-amz-yellow:hover { background-color: #f7ca00; }
-        .bg-amz-orange { background-color: #febd69; }
-        .bg-amz-orange:hover { background-color: #f3a847; }
-        .link-hover:hover { border: 1px solid white; border-radius: 2px; }
-        
-        /* Modal Styles */
-        .modal-overlay { background: rgba(0, 0, 0, 0.75); }
-        .hidden { display: none; }
-        
-        /* Hero Gradient Fade */
-        .hero-gradient {
-            background: linear-gradient(to bottom, transparent 50%, #e3e6e6 100%);
-        }
-    </style>
-</head>
-<body>
+<script>
+    // 1. Generate 5,000 items dynamically
+    const allProducts = Array.from({ length: 5000 }, (_, i) => ({
+        id: i + 1,
+        title: `Product ${i + 1}`,
+        price: Math.floor(Math.random() * 5000) + 100,
+        img: `https://picsum.photos/id/${(i % 1000) + 1}/400/400`
+    }));
 
-    <!-- Header Section -->
-    <header class="bg-nav-main text-white flex flex-col">
-        <!-- Top Nav -->
-        <div class="flex items-center justify-between px-4 py-2 h-16">
-            <!-- Logo -->
-            <div class="flex items-center link-hover p-1 cursor-pointer">
-                <span class="text-2xl font-bold tracking-tighter">ayyozone<span class="text-yellow-400">.in</span></span>
+    // 2. Search Functionality
+    function performSearch() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = allProducts.filter(p => p.title.toLowerCase().includes(query));
+        renderGrid(filtered);
+    }
+
+    // 3. Render function with lazy-load safety
+    function renderGrid(items) {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = items.slice(0, 50).map(p => `
+            <div class="bg-white p-4 border border-gray-200">
+                <img src="${p.img}" class="w-full h-40 object-cover mb-2" onerror="this.src='placeholder.png'">
+                <p class="text-sm line-clamp-1">${p.title}</p>
+                <p class="font-bold">₹${p.price}</p>
+                <button onclick="intercept(${p.id})" class="bg-amz-yellow w-full py-1 mt-2 text-sm rounded">Buy Now</button>
             </div>
-            
-            <!-- Location -->
-            <div class="hidden md:flex items-center link-hover p-1 cursor-pointer ml-4">
-                <i class="fa-solid fa-location-dot mt-2 mr-1"></i>
-                <div class="flex flex-col leading-tight">
-                    <span class="text-xs text-gray-300">Delivering to Narasaraopeta</span>
-                    <span class="text-sm font-bold">Update location</span>
-                </div>
-            </div>
+        `).join('');
+    }
 
-            <!-- Search Bar -->
-            <div class="flex flex-1 mx-6 h-10 rounded overflow-hidden">
-                <select class="bg-gray-100 text-black text-xs px-2 border-r border-gray-300 outline-none w-16">
-                    <option>All</option>
-                </select>
-                <input type="text" class="flex-1 px-3 text-black outline-none placeholder-gray-500" placeholder="Search Ayyozone.in">
-                <button class="bg-amz-orange text-black px-4 flex items-center justify-center">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </div>
-
-            <!-- Right Nav Links -->
-            <div class="flex items-center space-x-4">
-                <div class="link-hover p-1 cursor-pointer hidden lg:flex flex-col leading-tight">
-                    <span class="text-xs">Hello, sign in</span>
-                    <span class="text-sm font-bold">Account & Lists <i class="fa-solid fa-caret-down text-gray-400 text-xs"></i></span>
-                </div>
-                <div class="link-hover p-1 cursor-pointer hidden lg:flex flex-col leading-tight">
-                    <span class="text-xs">Returns</span>
-                    <span class="text-sm font-bold">& Orders</span>
-                </div>
-                <div class="link-hover p-1 cursor-pointer flex items-center">
-                    <div class="relative">
-                        <i class="fa-solid fa-cart-shopping text-2xl"></i>
-                        <span class="absolute -top-1 -right-2 text-amz-orange font-bold text-sm bg-nav-main rounded-full px-1">0</span>
-                    </div>
-                    <span class="text-sm font-bold mt-2 ml-1 hidden sm:block">Cart</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sub Nav -->
-        <div class="bg-nav-sub h-10 flex items-center px-4 space-x-4 text-sm whitespace-nowrap overflow-x-auto hide-scrollbar">
-            <div class="link-hover p-1 cursor-pointer font-bold flex items-center"><i class="fa-solid fa-bars mr-1"></i> All</div>
-            <div class="link-hover p-1 cursor-pointer">Today's Deals</div>
-            <div class="link-hover p-1 cursor-pointer">Electronics</div>
-            <div class="link-hover p-1 cursor-pointer">Home & Kitchen</div>
-            <div class="link-hover p-1 cursor-pointer">Fashion</div>
-            <div class="link-hover p-1 cursor-pointer">Mobiles</div>
-            <div class="link-hover p-1 cursor-pointer">Ayyozone Pay</div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="relative w-full max-w-[1500px] mx-auto mb-10">
-        <!-- Hero Banner (1920x1080 Photorealistic placeholder) -->
-        <div class="relative w-full h-[600px]">
-            <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=1920&h=1080&auto=format&fit=crop" class="w-full h-full object-cover object-top" alt="Sale Banner">
-            <div class="absolute inset-0 hero-gradient"></div>
-        </div>
-
-        <!-- Product Grids (Positioned over the hero gradient) -->
-        <div class="relative z-10 -mt-[350px] px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="productGrid">
-            <!-- Dynamic Content Injected Here -->
-        </div>
-
-        <!-- Amazon Live Placeholder Row -->
-        <div class="mt-8 px-4 md:px-8">
-            <div class="bg-white p-4 h-64 flex items-center justify-center border border-gray-200">
-                <div class="text-center">
-                    <h2 class="text-xl font-bold mb-2">Ayyozone LIVE - Watch, Chat & Shop LIVE</h2>
-                    <p class="text-gray-500">Live stream component unavailable. Save your money instead.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-nav-sub text-white mt-10">
-        <div class="bg-[#37475a] text-center py-4 cursor-pointer hover:bg-gray-600 transition" onclick="window.scrollTo(0,0)">
-            <span class="text-sm font-bold">Back to top</span>
-        </div>
-        <div class="max-w-[1000px] mx-auto py-10 px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
-            <div>
-                <h3 class="font-bold mb-3">Get to Know Us</h3>
-                <ul class="space-y-2 text-gray-300">
-                    <li class="hover:underline cursor-pointer">About Us</li>
-                    <li class="hover:underline cursor-pointer">Careers</li>
-                    <li class="hover:underline cursor-pointer">Press Releases</li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-bold mb-3">Connect with Us</h3>
-                <ul class="space-y-2 text-gray-300">
-                    <li class="hover:underline cursor-pointer">Facebook</li>
-                    <li class="hover:underline cursor-pointer">Twitter</li>
-                    <li class="hover:underline cursor-pointer">Instagram</li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-bold mb-3">Make Money with Us</h3>
-                <ul class="space-y-2 text-gray-300">
-                    <li class="hover:underline cursor-pointer">Sell on Ayyozone</li>
-                    <li class="hover:underline cursor-pointer">Protect Your Brand</li>
-                    <li class="hover:underline cursor-pointer">Become an Affiliate</li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-bold mb-3">Let Us Help You</h3>
-                <ul class="space-y-2 text-gray-300">
-                    <li class="hover:underline cursor-pointer">Your Account</li>
-                    <li class="hover:underline cursor-pointer">Returns Centre</li>
-                    <li class="hover:underline cursor-pointer">Help</li>
-                </ul>
-            </div>
-        </div>
-        <div class="bg-nav-main py-6 text-center text-xs text-gray-400">
-            <p>&copy; 2026, Ayyozone.in - Save your money.</p>
-        </div>
-    </footer>
-
-    <!-- Anti-Spending Modal -->
-    <div id="modal" class="fixed inset-0 modal-overlay z-50 flex items-center justify-center hidden" onclick="closeModal(event)">
-        <div class="bg-white rounded-lg shadow-2xl p-6 w-11/12 max-w-lg text-center transform transition-all relative border-t-8 border-red-600" onclick="event.stopPropagation()">
-            <!-- Close Button -->
-            <button onclick="closeModal(event, true)" class="absolute top-2 right-4 text-gray-400 hover:text-gray-800 text-2xl font-bold">&times;</button>
-            
-            <h2 class="text-3xl font-extrabold text-red-600 mb-2 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-octagon-exclamation"></i> STOP!
-            </h2>
-            <p id="modalMsg" class="text-lg font-medium text-gray-800 mb-6 px-4"></p>
-            
-            <div class="bg-black rounded overflow-hidden mb-6 flex items-center justify-center" style="min-height: 250px;">
-                <img id="modalGif" src="" alt="Reaction" class="w-full h-auto max-h-[300px] object-contain">
-            </div>
-            
-            <button onclick="closeModal(event, true)" class="w-full bg-amz-yellow text-black font-bold py-3 rounded-md border border-yellow-500 shadow-sm hover:bg-yellow-500 transition text-lg">
-                Close & Save Money
-            </button>
-        </div>
-    </div>
-
-    <!-- Logic Script -->
-    <script>
-        // High-Quality Photorealistic Products 
-        const products = [
-            { id: 1, category: "Appliances for your home", title: "Smart Refrigerator", price: "45,999", img: "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?q=80&w=400&h=400&fit=crop" },
-            { id: 2, category: "Appliances for your home", title: "Washing Machine", price: "24,500", img: "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?q=80&w=400&h=400&fit=crop" },
-            { id: 3, category: "Revamp your home in style", title: "Memory Foam Sofa", price: "18,990", img: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=400&h=400&fit=crop" },
-            { id: 4, category: "Up to 75% off | Headphones", title: "Noise-Canceling Wireless", price: "4,499", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=400&h=400&fit=crop" },
-            { id: 5, category: "Automotive Essentials", title: "Premium Car Wax", price: "850", img: "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?q=80&w=400&h=400&fit=crop" },
-            { id: 6, category: "Starting ₹199 | Home Essentials", title: "Minimalist Coffee Mug", price: "350", img: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=400&h=400&fit=crop" },
-            { id: 7, category: "Up to 50% off | Baby Care", title: "Organic Cotton Blankets", price: "1,200", img: "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?q=80&w=400&h=400&fit=crop" },
-            { id: 8, category: "Electronics Deals", title: "Portable Mechanical Keyboard", price: "2,999", img: "https://images.unsplash.com/photo-1595225476474-87563907a212?q=80&w=400&h=400&fit=crop" }
-        ];
-
-        // Direct-load, CDN-safe GIFs
-        const safeGifs = [
-            "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTA4YXB3eHN3YWFwZXhvdDJmdmdidXBzYXVzdmN2cHd0Z2g5MWpveSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Y0S4fVJVfscO4/giphy.gif",
-            "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnAwM244cjM3czl0Y3V0cXR0OHB0MGR5aHF3Zm84ejV4ajU4a3N0MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/G6F8An4vKOfU4/giphy.gif"
-        ];
-
-        // Render the Grid Dynamically
-        function renderGrid() {
-            const grid = document.getElementById('productGrid');
-            let html = '';
-            
-            // Group by arbitrary logic to form cards
-            for(let i=0; i<products.length; i+=2) {
-                const item1 = products[i];
-                const item2 = products[i+1] ? products[i+1] : products[i];
-                
-                html += `
-                <div class="bg-white p-5 flex flex-col justify-between">
-                    <h2 class="text-xl font-bold mb-4">${item1.category}</h2>
-                    <div class="flex-1 flex flex-col justify-between mb-2 cursor-pointer">
-                        <img src="${item1.img}" class="w-full h-40 object-cover mb-2" alt="${item1.title}">
-                        <p class="text-sm text-gray-800 line-clamp-2">${item1.title}</p>
-                        <p class="text-lg text-red-700 font-semibold mb-2">₹${item1.price}</p>
-                        <button onclick="intercept(${item1.id})" class="w-full bg-amz-yellow hover:bg-yellow-500 py-1 rounded text-sm font-medium border border-yellow-500">Buy Now</button>
-                    </div>
-                </div>
-                `;
-            }
-            grid.innerHTML = html;
-        }
-
-        // Intercept function for the Modal
-        function intercept(id) {
-            const p = products.find(x => x.id === id);
-            document.getElementById('modalMsg').innerText = `Dabbulu dhandaga ra! Why are you trying to buy a ${p.title} for ₹${p.price}? Stay calm.`;
-            
-            const randomGif = safeGifs[Math.floor(Math.random() * safeGifs.length)];
-            document.getElementById('modalGif').src = randomGif;
-            
-            document.getElementById('modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Stop background scrolling
-        }
-
-        // Close modal function
-        function closeModal(event, force = false) {
-            if (force || event.target === document.getElementById('modal')) {
-                document.getElementById('modal').classList.add('hidden');
-                document.body.style.overflow = 'auto'; // Restore scrolling
-            }
-        }
-
-        // Escape key to close modal
-        document.addEventListener('keydown', function(event){
-            if(event.key === "Escape"){
-                closeModal(event, true);
-            }
-        });
-
-        // Initialize on load
-        window.onload = renderGrid;
-    </script>
-</body>
-</html>
+    // 4. GIF-Safe Interceptor
+    function intercept(id) {
+        const p = allProducts.find(x => x.id === id);
+        document.getElementById('modalMsg').innerText = `Dabbulu dhandaga ra! Why are you buying ${p.title}? Stay calm.`;
+        // Using direct, reliable CDN links for GIFs
+        document.getElementById('modalGif').src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTA4YXB3eHN3YWFwZXhvdDJmdmdidXBzYXVzdmN2cHd0Z2g5MWpveSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Y0S4fVJVfscO4/giphy.gif";
+        document.getElementById('modal').classList.remove('hidden');
+    }
+</script>
