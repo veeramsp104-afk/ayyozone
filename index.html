@@ -3,70 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayyozone.in</title>
+    <title>Ayyozone.in | Shopping Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .nav-bg { background-color: #131921; }
+        .subnav-bg { background-color: #232f3e; }
+        .btn-orange { background-color: #febd69; }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-200">
 
-    <!-- Header Section -->
-    <header class="bg-[#131921] text-white p-3 flex items-center">
-        <div class="text-xl font-bold cursor-pointer">ayyozone<span class="text-yellow-500">.in</span></div>
-        <div class="flex-1 mx-4 flex">
-            <input type="text" id="searchInput" oninput="performSearch()" class="w-full p-2 text-black rounded" placeholder="Search Ayyozone.in">
+    <!-- 1. GLOBAL NAVIGATION & HEADER -->
+    <header class="nav-bg text-white">
+        <div class="flex items-center p-2 space-x-4">
+            <div class="text-2xl font-bold italic px-2 border border-transparent hover:border-white">ayyozone.in</div>
+            <div class="flex flex-col px-2 border border-transparent hover:border-white cursor-pointer">
+                <span class="text-xs text-gray-300">Deliver to</span>
+                <span class="text-sm font-bold"><i class="fa fa-map-marker"></i> Narasaraopeta</span>
+            </div>
+            <div class="flex flex-1 bg-white rounded overflow-hidden">
+                <select class="text-black text-sm p-2 bg-gray-100 border-r border-gray-300"><option>All</option></select>
+                <input type="text" class="flex-1 p-2 text-black outline-none" placeholder="Search Ayyozone.in">
+                <button class="btn-orange text-black px-4"><i class="fa fa-search"></i></button>
+            </div>
+            <div class="text-sm px-2 cursor-pointer">Hello, sign in<br><span class="font-bold">Account & Lists</span></div>
+            <div class="text-sm px-2 cursor-pointer">Returns<br><span class="font-bold">& Orders</span></div>
+            <div class="text-lg font-bold px-2 cursor-pointer"><i class="fa fa-shopping-cart"></i> Cart</div>
         </div>
+        <!-- Primary Nav -->
+        <nav class="subnav-bg p-2 text-sm space-x-4 flex">
+            <span class="font-bold border border-transparent hover:border-white p-1"><i class="fa fa-bars"></i> All</span>
+            <span>MX Player</span><span>Sell</span><span>Bestsellers</span><span>Today's Deals</span><span>Prime</span><span>Mobiles</span>
+        </nav>
     </header>
 
-    <!-- Product Grid -->
-    <div id="productGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4"></div>
-
-    <!-- Custom Modal -->
-    <div id="modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden">
-        <div class="bg-white p-8 rounded-lg shadow-xl text-center max-w-sm">
-            <h2 class="text-2xl font-bold text-red-600 mb-4">STOP!</h2>
-            <p id="modalMsg" class="mb-6"></p>
-            <button onclick="closeModal()" class="bg-yellow-400 w-full py-2 rounded font-bold">Close & Save Money</button>
+    <!-- 2. HERO & PROMOTIONAL CONTENT -->
+    <section class="relative">
+        <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1920&q=80" class="w-full h-80 object-cover">
+        <div class="absolute top-10 left-10 bg-white p-6 rounded shadow-lg">
+            <h2 class="text-3xl font-bold">Prime Day 4-6 July</h2>
+            <button class="mt-4 bg-yellow-400 px-6 py-2 rounded font-bold">Join Prime now</button>
+            <p class="mt-2 text-sm">10% Instant Discount on SBI/Axis cards</p>
         </div>
-    </div>
+    </section>
 
-    <script>
-        // Generate 5000 items
-        const allProducts = Array.from({ length: 5000 }, (_, i) => ({
-            id: i + 1,
-            title: `Product ${i + 1}`,
-            price: Math.floor(Math.random() * 5000) + 100,
-            img: `https://picsum.photos/id/${(i % 1000) + 1}/300/300`
-        }));
+    <!-- 3. MAIN CONTENT GRID -->
+    <main class="p-6 grid grid-cols-4 gap-6 -mt-20 z-10 relative">
+        <div class="bg-white p-4 h-80">
+            <h3 class="font-bold text-lg mb-4">Appliances for your home</h3>
+            <div class="grid grid-cols-2 gap-2"><div class="bg-gray-100 h-24"></div><div class="bg-gray-100 h-24"></div><div class="bg-gray-100 h-24"></div><div class="bg-gray-100 h-24"></div></div>
+            <a href="#" class="text-blue-600 text-sm mt-4 block">See more</a>
+        </div>
+        <!-- Repeat similar cards for other segments -->
+    </main>
 
-        function performSearch() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allProducts.filter(p => p.title.toLowerCase().includes(query));
-            renderGrid(filtered);
-        }
+    <!-- 4. AMAZON LIVE -->
+    <section class="px-6 pb-6">
+        <div class="bg-white p-6 border flex items-center">
+            <div class="w-1/3 bg-black h-60 text-white flex items-center justify-center">VIDEO PLAYER</div>
+            <div class="w-2/3 pl-6">
+                <h2 class="text-2xl font-bold">Ayyozone LIVE</h2>
+                <p>Watch, Chat & Shop LIVE. Get it by Monday, June 22.</p>
+            </div>
+        </div>
+    </section>
 
-        function renderGrid(items) {
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = items.slice(0, 50).map(p => `
-                <div class="bg-white p-3 border rounded shadow-sm">
-                    <img src="${p.img}" class="w-full h-40 object-cover mb-2 rounded">
-                    <p class="font-bold text-sm truncate">${p.title}</p>
-                    <p class="text-red-600 font-bold">₹${p.price}</p>
-                    <button onclick="intercept(${p.id})" class="bg-yellow-400 w-full py-1 mt-2 text-sm rounded font-bold">Buy Now</button>
-                </div>
-            `).join('');
-        }
-
-        function intercept(id) {
-            const p = allProducts.find(x => x.id === id);
-            document.getElementById('modalMsg').innerText = `Dabbulu dhandaga ra! Why are you trying to buy ${p.title} for ₹${p.price}?`;
-            document.getElementById('modal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.add('hidden');
-        }
-
-        // Initialize
-        renderGrid(allProducts);
-    </script>
+    <!-- 5. FOOTER -->
+    <footer class="nav-bg text-white p-10 grid grid-cols-4 gap-10 text-sm">
+        <div><h4 class="font-bold mb-2">Get to Know Us</h4><p>About Us</p><p>Careers</p></div>
+        <div><h4 class="font-bold mb-2">Connect with Us</h4><p>Facebook</p><p>Twitter</p></div>
+        <div><h4 class="font-bold mb-2">Make Money with Us</h4><p>Sell on Ayyozone</p><p>Affiliate</p></div>
+        <div><h4 class="font-bold mb-2">Let Us Help You</h4><p>Your Account</p><p>Help</p></div>
+    </footer>
 </body>
 </html>
