@@ -146,63 +146,69 @@
 
     <!-- Logic Script -->
     <script>
-        // Highly descriptive pools representing low-cost, trending Amazon India items
-        const brands = ["BoAt", "Mivi", "Portronics", "Zebronics", "Noise", "Anker", "SanDisk", "Ambrane", "pTron", "Boult", "OnePlus", "Realme", "Mi", "Philips", "Syska", "Logitech", "HP", "Lenovo", "Duracell", "AmazonBasics"];
+        // High-volume brand variations across different product areas
+        const brands = [
+            "BoAt", "Noise", "Mivi", "SanDisk", "Logitech", "Giva", "Zaveri Pearls", 
+            "LEGO", "Hot Wheels", "Barbie", "Penguin Books", "HarperCollins", 
+            "Philips", "Prestige", "Puma", "Red Tape", "OnePlus", "Realme", "Samsung", "Mi"
+        ];
         
+        // Expanded 20 trending product sets covering Jewelry, Kids, Books, Tech, Kitchen & Fashion
         const products = [
-            { name: "Wireless Earbuds", tag: "earphones" },
-            { name: "Fast Charging Cable", tag: "cable" },
-            { name: "10000mAh Power Bank", tag: "powerbank" },
-            { name: "Smart Fitness Band", tag: "smartwatch" },
-            { name: "RGB Gaming Mouse", tag: "mouse" },
-            { name: "Mini Bluetooth Speaker", tag: "speaker" },
-            { name: "Magnetic Car Dashboard Mount", tag: "phone-holder" },
-            { name: "High-Speed 4K HDMI Cable", tag: "hdmi" },
-            { name: "64GB MicroSD Memory Card", tag: "sd-card" },
-            { name: "Mini Desktop Humidifier", tag: "humidifier" },
-            { name: "USB Desktop Ring Light", tag: "ringlight" },
-            { name: "Digital Kitchen Weight Scale", tag: "scale" },
-            { name: "Heavy Duty Surge Protector", tag: "spike-guard" },
-            { name: "Rechargeable Beard Trimmer", tag: "trimmer" },
-            { name: "Anti-Theft Laptop Backpack", tag: "backpack" },
-            { name: "Polarized Sports Sunglasses", tag: "sunglasses" },
-            { name: "RFID Blocking Leather Wallet", tag: "wallet" },
-            { name: "10-Piece Resistance Bands Set", tag: "fitness" },
-            { name: "Automatic Water Bottle Pump", tag: "dispenser" },
-            { name: "Multi-Angle Tablet Stand", tag: "stand" }
+            { name: "Wireless Earbuds", tag: "earphones", cat: "ELECTRONICS" },
+            { name: "18k Gold Plated Pendant Necklace", tag: "pendant", cat: "JEWELRY" },
+            { name: "Educational Building Blocks Set", tag: "toyblocks", cat: "KIDS" },
+            { name: "The Silent Patient (Paperback)", tag: "novel", cat: "BOOKS" },
+            { name: "Smart Fitness Watch", tag: "smartwatch", cat: "MOBILES" },
+            { name: "Premium Crystal Drop Earrings", tag: "earrings", cat: "JEWELRY" },
+            { name: "Remote Control High-Speed Racing Car", tag: "rccar", cat: "KIDS" },
+            { name: "Atomic Habits (Hardcover Edition)", tag: "book", cat: "BOOKS" },
+            { name: "RGB Mechanical Gaming Mouse", tag: "gamingmouse", cat: "ELECTRONICS" },
+            { name: "Silver Adjustable Couple Rings Pack", tag: "silverring", cat: "JEWELRY" },
+            { name: "Plush Soft Teddy Bear (Large)", tag: "teddybear", cat: "KIDS" },
+            { name: "Rich Dad Poor Dad Deluxe", tag: "financebook", cat: "BOOKS" },
+            { name: "Automatic Water Bottle Dispenser Pump", tag: "waterpump", cat: "HOME & KITCHEN" },
+            { name: "Lightweight Ergonomic Running Sneakers", tag: "sneakers", cat: "FASHION" },
+            { name: "10000mAh Compact Power Bank", tag: "powerbank", cat: "MOBILES" },
+            { name: "Non-Stick Die-Cast Deep Kadhai", tag: "kadhai", cat: "HOME & KITCHEN" },
+            { name: "Polarized Retro Sunglasses", tag: "sunglasses", cat: "FASHION" },
+            { name: "High-Speed 4K HDMI Braided Cable", tag: "hdmicable", cat: "ELECTRONICS" },
+            { name: "Stainless Steel Vacuum Insulated Flask", tag: "flask", cat: "HOME & KITCHEN" },
+            { name: "RFID Blocking Leather Wallet", tag: "wallet", cat: "FASHION" }
         ];
 
-        const variants = ["Pro Edition", "Max Ultra", "Turbo-GT", "Gen-4 Upgrade", "Slim Stealth", "Premium Pack", "Plus Variant", "X-Series", "Smart Elite", "Neo-Classic"];
+        const variants = ["Classic Edition", "Pro Ultra", "Turbo-GT Series", "Limited Bundle", "Gen-3 Upgrade", "Premium Pack", "Special Drop", "X-Stealth", "Elite Series", "Neo Edition"];
 
-        // Generate 2000 completely unique low-cost trending products
+        // Generate 2000 completely unique trending low-cost items
         const allProducts = Array.from({ length: 2000 }, (_, i) => {
-            // Using distinct math indexes guarantees absolutely zero string combinations repeat
-            const brand = brands[i % brands.length];
-            const product = products[(Math.floor(i / brands.length)) % products.length];
-            const variant = variants[(Math.floor(i / (brands.length * products.length))) % variants.length];
+            // Using a cleanly structured interleaved index pattern ensures adjacent slots are distinct categories
+            const product = products[i % products.length];
+            const brand = brands[(Math.floor(i / products.length) + i) % brands.length];
+            const variant = variants[(Math.floor(i / (products.length * brands.length)) + i) % variants.length];
             
-            const dealPrice = Math.floor(Math.random() * 400) + 149; // Keeps prices highly attractive (₹149 - ₹549)
-            const discountPercentage = Math.floor(Math.random() * 21) + 60; // 60% to 80% off
+            const dealPrice = Math.floor(Math.random() * 380) + 169; // Attractive pocket-friendly deals (₹169 - ₹549)
+            const discountPercentage = Math.floor(Math.random() * 21) + 60; // Huge realistic 60% to 80% margins
             const originalPrice = Math.floor(dealPrice / (1 - (discountPercentage / 100)));
 
             return {
                 id: i + 1,
-                category: "LIGHTNING DEAL",
+                category: product.cat + " DEAL",
                 title: `${brand} ${product.name} (${variant}, Multi-Color)`,
                 price: dealPrice.toLocaleString('en-IN'),
                 oldPrice: originalPrice.toLocaleString('en-IN'),
                 discount: discountPercentage,
+                // Refined tags match specific targets cleanly inside loremflickr's 1920x1080 resolution template
                 img: `https://loremflickr.com/1920/1080/${product.tag}?lock=${i + 1}`
             };
         });
 
-        // 5 Permanent, working, free reaction links for rich random variety
+        // Bypasses Giphy's restricted token filters using the public direct delivery format
         const safeGifs = [
-            "https://media.giphy.com/media/3o85xwxr06YNoFdSbm/giphy.gif", 
-            "https://media.giphy.com/media/l41lOugA0qYlO3Wqk/giphy.gif",
-            "https://media.giphy.com/media/26hkhKd2Cp5WMWU1O/giphy.gif",
-            "https://media.giphy.com/media/1T96TRBBGYThC/giphy.gif",
-            "https://media.giphy.com/media/wYyTHMm50f4CbJQGuM/giphy.gif"
+            "https://i.giphy.com/3o85xwxr06YNoFdSbm.gif", 
+            "https://i.giphy.com/l41lOugA0qYlO3Wqk.gif",
+            "https://i.giphy.com/26hkhKd2Cp5WMWU1O.gif",
+            "https://i.giphy.com/1T96TRBBGYThC.gif",
+            "https://i.giphy.com/wYyTHMm50f4CbJQGuM.gif"
         ];
 
         function performSearch() {
@@ -214,7 +220,7 @@
         function renderGrid(itemsToRender = allProducts) {
             const grid = document.getElementById('productGrid');
             
-            // Limit output slice strictly to 8 slots to prevent browser lagging
+            // Displays first 8 mixed matching items to guarantee instant performance
             grid.innerHTML = itemsToRender.slice(0, 8).map(item => `
             <div class="bg-white p-5 flex flex-col justify-between shadow-sm relative rounded-sm hover:shadow-md transition">
                 <div class="absolute top-2 left-2 bg-red-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-tight z-10">
