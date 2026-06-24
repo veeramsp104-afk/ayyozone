@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayyozone.in</title>
+    <title>Ayyozone.in - Limited Time Deals</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -21,6 +21,7 @@
     </style>
 </head>
 <body>
+    <!-- Header Section -->
     <header class="bg-nav-main text-white flex flex-col">
         <div class="flex items-center justify-between px-4 py-2 h-16">
             <div class="flex items-center link-hover p-1 cursor-pointer">
@@ -62,12 +63,12 @@
         </div>
         <div class="bg-nav-sub h-10 flex items-center px-4 space-x-4 text-sm whitespace-nowrap overflow-x-auto hide-scrollbar">
             <div class="link-hover p-1 cursor-pointer font-bold flex items-center"><i class="fa-solid fa-bars mr-1"></i> All</div>
+            <div class="link-hover p-1 cursor-pointer text-yellow-400 font-semibold">🔥 Limited Time Deals</div>
             <div class="link-hover p-1 cursor-pointer">Today's Deals</div>
             <div class="link-hover p-1 cursor-pointer">Electronics</div>
             <div class="link-hover p-1 cursor-pointer">Home & Kitchen</div>
             <div class="link-hover p-1 cursor-pointer">Fashion</div>
             <div class="link-hover p-1 cursor-pointer">Mobiles</div>
-            <div class="link-hover p-1 cursor-pointer">Ayyozone Pay</div>
         </div>
     </header>
 
@@ -76,10 +77,18 @@
             <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=1920&h=1080&auto=format&fit=crop" class="w-full h-full object-cover object-top" alt="Sale Banner">
             <div class="absolute inset-0 hero-gradient"></div>
         </div>
-        <div class="relative z-10 -mt-[350px] px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="productGrid">
+        
+        <!-- Product Grid Header -->
+        <div class="relative z-10 -mt-[350px] px-4 md:px-8 mb-4">
+            <h1 class="text-3xl font-extrabold text-gray-900 drop-shadow-sm mb-2">Deals of the Day</h1>
+            <p class="text-sm text-red-700 font-bold flex items-center gap-1"><i class="fa-solid fa-clock animate-pulse"></i> Offers end soon. Limit 1 per customer.</p>
+        </div>
+
+        <div class="relative z-10 px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="productGrid">
         </div>
     </main>
 
+    <!-- Footer -->
     <footer class="bg-nav-sub text-white mt-10">
         <div class="bg-[#37475a] text-center py-4 cursor-pointer hover:bg-gray-600 transition" onclick="window.scrollTo(0,0)">
             <span class="text-sm font-bold">Back to top</span>
@@ -90,14 +99,12 @@
                 <ul class="space-y-2 text-gray-300">
                     <li class="hover:underline cursor-pointer">About Us</li>
                     <li class="hover:underline cursor-pointer">Careers</li>
-                    <li class="hover:underline cursor-pointer">Press Releases</li>
                 </ul>
             </div>
             <div>
                 <h3 class="font-bold mb-3">Connect with Us</h3>
                 <ul class="space-y-2 text-gray-300">
                     <li class="hover:underline cursor-pointer">Facebook</li>
-                    <li class="hover:underline cursor-pointer">Twitter</li>
                     <li class="hover:underline cursor-pointer">Instagram</li>
                 </ul>
             </div>
@@ -105,15 +112,12 @@
                 <h3 class="font-bold mb-3">Make Money with Us</h3>
                 <ul class="space-y-2 text-gray-300">
                     <li class="hover:underline cursor-pointer">Sell on Ayyozone</li>
-                    <li class="hover:underline cursor-pointer">Protect Your Brand</li>
-                    <li class="hover:underline cursor-pointer">Become an Affiliate</li>
                 </ul>
             </div>
             <div>
                 <h3 class="font-bold mb-3">Let Us Help You</h3>
                 <ul class="space-y-2 text-gray-300">
                     <li class="hover:underline cursor-pointer">Your Account</li>
-                    <li class="hover:underline cursor-pointer">Returns Centre</li>
                     <li class="hover:underline cursor-pointer">Help</li>
                 </ul>
             </div>
@@ -123,11 +127,12 @@
         </div>
     </footer>
 
+    <!-- Intercept Modal -->
     <div id="modal" class="fixed inset-0 modal-overlay z-50 flex items-center justify-center hidden" onclick="closeModal(event)">
         <div class="bg-white rounded-lg shadow-2xl p-6 w-11/12 max-w-lg text-center transform transition-all relative border-t-8 border-red-600" onclick="event.stopPropagation()">
             <button onclick="closeModal(event, true)" class="absolute top-2 right-4 text-gray-400 hover:text-gray-800 text-2xl font-bold">&times;</button>
             <h2 class="text-3xl font-extrabold text-red-600 mb-2 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-octagon-exclamation"></i> STOP!
+                <i class="fa-solid fa-triangle-exclamation"></i> STOP!
             </h2>
             <p id="modalMsg" class="text-lg font-medium text-gray-800 mb-6 px-4"></p>
             <div class="bg-black rounded overflow-hidden mb-6 flex items-center justify-center" style="min-height: 250px;">
@@ -139,28 +144,65 @@
         </div>
     </div>
 
+    <!-- Logic Script -->
     <script>
-        const itemTypes = ["smartphone", "laptop", "sofa", "sneakers", "watch", "camera", "headphones", "perfume", "television", "backpack"];
-        const brands = ["TechPro", "Nova", "Luxe", "Stride", "Chrono", "Optic", "Aura", "Essence", "Vision", "Apex"];
+        // Highly descriptive pools representing low-cost, trending Amazon India items
+        const brands = ["BoAt", "Mivi", "Portronics", "Zebronics", "Noise", "Anker", "SanDisk", "Ambrane", "pTron", "Boult", "OnePlus", "Realme", "Mi", "Philips", "Syska", "Logitech", "HP", "Lenovo", "Duracell", "AmazonBasics"];
+        
+        const products = [
+            { name: "Wireless Earbuds", tag: "earphones" },
+            { name: "Fast Charging Cable", tag: "cable" },
+            { name: "10000mAh Power Bank", tag: "powerbank" },
+            { name: "Smart Fitness Band", tag: "smartwatch" },
+            { name: "RGB Gaming Mouse", tag: "mouse" },
+            { name: "Mini Bluetooth Speaker", tag: "speaker" },
+            { name: "Magnetic Car Dashboard Mount", tag: "phone-holder" },
+            { name: "High-Speed 4K HDMI Cable", tag: "hdmi" },
+            { name: "64GB MicroSD Memory Card", tag: "sd-card" },
+            { name: "Mini Desktop Humidifier", tag: "humidifier" },
+            { name: "USB Desktop Ring Light", tag: "ringlight" },
+            { name: "Digital Kitchen Weight Scale", tag: "scale" },
+            { name: "Heavy Duty Surge Protector", tag: "spike-guard" },
+            { name: "Rechargeable Beard Trimmer", tag: "trimmer" },
+            { name: "Anti-Theft Laptop Backpack", tag: "backpack" },
+            { name: "Polarized Sports Sunglasses", tag: "sunglasses" },
+            { name: "RFID Blocking Leather Wallet", tag: "wallet" },
+            { name: "10-Piece Resistance Bands Set", tag: "fitness" },
+            { name: "Automatic Water Bottle Pump", tag: "dispenser" },
+            { name: "Multi-Angle Tablet Stand", tag: "stand" }
+        ];
 
+        const variants = ["Pro Edition", "Max Ultra", "Turbo-GT", "Gen-4 Upgrade", "Slim Stealth", "Premium Pack", "Plus Variant", "X-Series", "Smart Elite", "Neo-Classic"];
+
+        // Generate 2000 completely unique low-cost trending products
         const allProducts = Array.from({ length: 2000 }, (_, i) => {
-            const typeIndex = i % itemTypes.length;
-            const type = itemTypes[typeIndex];
-            const brand = brands[typeIndex];
+            // Using distinct math indexes guarantees absolutely zero string combinations repeat
+            const brand = brands[i % brands.length];
+            const product = products[(Math.floor(i / brands.length)) % products.length];
+            const variant = variants[(Math.floor(i / (brands.length * products.length))) % variants.length];
             
+            const dealPrice = Math.floor(Math.random() * 400) + 149; // Keeps prices highly attractive (₹149 - ₹549)
+            const discountPercentage = Math.floor(Math.random() * 21) + 60; // 60% to 80% off
+            const originalPrice = Math.floor(dealPrice / (1 - (discountPercentage / 100)));
+
             return {
                 id: i + 1,
-                category: type.toUpperCase() + " DEALS",
-                title: `${brand} Premium ${type.charAt(0).toUpperCase() + type.slice(1)} - Edition ${i + 1000}`,
-                price: (Math.floor(Math.random() * 45000) + 999).toLocaleString('en-IN'),
-                img: `https://loremflickr.com/1920/1080/${type}?lock=${i + 1}`
+                category: "LIGHTNING DEAL",
+                title: `${brand} ${product.name} (${variant}, Multi-Color)`,
+                price: dealPrice.toLocaleString('en-IN'),
+                oldPrice: originalPrice.toLocaleString('en-IN'),
+                discount: discountPercentage,
+                img: `https://loremflickr.com/1920/1080/${product.tag}?lock=${i + 1}`
             };
         });
 
-        // Updated to permanent, free links so they never expire
+        // 5 Permanent, working, free reaction links for rich random variety
         const safeGifs = [
             "https://media.giphy.com/media/3o85xwxr06YNoFdSbm/giphy.gif", 
-            "https://media.giphy.com/media/l41lOugA0qYlO3Wqk/giphy.gif"
+            "https://media.giphy.com/media/l41lOugA0qYlO3Wqk/giphy.gif",
+            "https://media.giphy.com/media/26hkhKd2Cp5WMWU1O/giphy.gif",
+            "https://media.giphy.com/media/1T96TRBBGYThC/giphy.gif",
+            "https://media.giphy.com/media/wYyTHMm50f4CbJQGuM/giphy.gif"
         ];
 
         function performSearch() {
@@ -172,14 +214,23 @@
         function renderGrid(itemsToRender = allProducts) {
             const grid = document.getElementById('productGrid');
             
+            // Limit output slice strictly to 8 slots to prevent browser lagging
             grid.innerHTML = itemsToRender.slice(0, 8).map(item => `
-            <div class="bg-white p-5 flex flex-col justify-between shadow-sm">
-                <h2 class="text-xl font-bold mb-4">${item.category}</h2>
-                <div class="flex-1 flex flex-col justify-between mb-2 cursor-pointer">
-                    <img src="${item.img}" class="w-full h-40 object-cover mb-2" alt="${item.title}">
-                    <p class="text-sm text-gray-800 line-clamp-2">${item.title}</p>
-                    <p class="text-lg text-red-700 font-semibold mb-2">₹${item.price}</p>
-                    <button onclick="intercept(${item.id})" class="w-full bg-amz-yellow hover:bg-yellow-500 py-1 rounded text-sm font-medium border border-yellow-500">Buy Now</button>
+            <div class="bg-white p-5 flex flex-col justify-between shadow-sm relative rounded-sm hover:shadow-md transition">
+                <div class="absolute top-2 left-2 bg-red-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-tight z-10">
+                    Limited Time Deal
+                </div>
+                <div class="flex-1 flex flex-col justify-between mb-2 cursor-pointer mt-5">
+                    <img src="${item.img}" class="w-full h-44 object-cover mb-3 rounded-xs" alt="${item.title}">
+                    <p class="text-sm text-gray-900 font-medium line-clamp-2 mb-1 leading-tight hover:text-orange-700">${item.title}</p>
+                    
+                    <div class="flex items-baseline gap-2 my-1">
+                        <span class="text-red-700 text-lg font-light">-${item.discount}%</span>
+                        <span class="text-2xl font-semibold text-gray-900">₹${item.price}</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-3">M.R.P.: <span class="line-through">₹${item.oldPrice}</span></p>
+                    
+                    <button onclick="intercept(${item.id})" class="w-full bg-amz-yellow hover:bg-yellow-500 py-1.5 rounded-md text-sm font-medium border border-yellow-500 shadow-xs transition">Claim Deal</button>
                 </div>
             </div>
             `).join('');
@@ -187,7 +238,7 @@
 
         function intercept(id) {
             const p = allProducts.find(x => x.id === id);
-            document.getElementById('modalMsg').innerText = `Dabbulu dhandaga ra! Why are you trying to buy a ${p.title} for ₹${p.price}? Stay calm.`;
+            document.getElementById('modalMsg').innerText = `Dabbulu dhandaga ra! Why are you trying to buy this ${p.title} for ₹${p.price}? Just because it has a ${p.discount}% discount doesn't mean you need it! Stay calm.`;
             
             const randomGif = safeGifs[Math.floor(Math.random() * safeGifs.length)];
             document.getElementById('modalGif').src = randomGif;
