@@ -15,7 +15,7 @@
         .bg-amz-orange { background-color: #febd69; }
         .bg-amz-orange:hover { background-color: #f3a847; }
         .link-hover:hover { border: 1px solid white; border-radius: 2px; }
-        .modal-overlay { background: rgba(0, 0, 0, 0.75); }
+        .modal-overlay { background: rgba(0, 0, 0, 0.85); }
         .hidden { display: none; }
         .hero-gradient { background: linear-gradient(to bottom, transparent 50%, #e3e6e6 100%); }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -39,7 +39,7 @@
                 <select class="bg-gray-100 text-black text-xs px-2 border-r border-gray-300 outline-none w-16">
                     <option>All</option>
                 </select>
-                <input type="text" id="searchInput" oninput="performSearch()" class="flex-1 px-3 text-black outline-none placeholder-gray-500" placeholder="Search Ayyozone.in for deals...">
+                <input type="text" id="searchInput" oninput="performSearch()" class="flex-1 px-3 text-black outline-none placeholder-gray-500" placeholder="Search Ayyozone.in for over 2,000+ lightning deals...">
                 <button class="bg-amz-orange text-black px-4 flex items-center justify-center">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
@@ -76,58 +76,28 @@
     </header>
 
     <main class="relative w-full max-w-[1500px] mx-auto mb-10">
-        <div class="relative w-full h-[600px]">
+        <div class="relative w-full h-[500px]">
             <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=1920&fit=crop" class="w-full h-full object-cover object-top" alt="Sale Banner">
             <div class="absolute inset-0 hero-gradient"></div>
         </div>
         
-        <div class="relative z-10 -mt-[350px] px-4 md:px-8 mb-4">
+        <div class="relative z-10 -mt-[280px] px-4 md:px-8 mb-4">
             <h1 id="gridTitle" class="text-3xl font-extrabold text-gray-900 drop-shadow-sm mb-2">Deals of the Day</h1>
             <p class="text-sm text-red-700 font-bold flex items-center gap-1"><i class="fa-solid fa-clock animate-pulse"></i> Offers end soon. Limit 1 per customer.</p>
         </div>
 
-        <div class="relative z-10 px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="productGrid">
-        </div>
+        <div class="relative z-10 px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="productGrid"></div>
 
-        <div class="text-center mt-10 relative z-10" id="loadMoreContainer">
-            <button onclick="loadMoreDeals()" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 px-10 border border-gray-400 rounded shadow-xs transition inline-flex items-center gap-2">
-                Show More Deals <i class="fa-solid fa-chevron-down text-xs"></i>
+        <div class="text-center mt-12 relative z-10" id="loadMoreSection">
+            <button onclick="loadNextBatch()" class="bg-white hover:bg-gray-100 text-gray-800 font-bold py-3 px-12 border border-gray-400 rounded shadow-xs transition inline-flex items-center gap-2">
+                Show More Unique Deals <i class="fa-solid fa-chevron-down text-xs"></i>
             </button>
         </div>
     </main>
 
-    <footer class="bg-nav-sub text-white mt-10">
+    <footer class="bg-nav-sub text-white mt-20">
         <div class="bg-[#37475a] text-center py-4 cursor-pointer hover:bg-gray-600 transition" onclick="window.scrollTo(0,0)">
             <span class="text-sm font-bold">Back to top</span>
-        </div>
-        <div class="max-w-[1000px] mx-auto py-10 px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
-            <div>
-                <h3 class="font-bold mb-3">Get to Know Us</h3>
-                <ul class="space-y-2 text-gray-300">
-                    <li class="hover:underline cursor-pointer">About Us</li>
-                    <li class="hover:underline cursor-pointer">Careers</li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-bold mb-3">Connect with Us</h3>
-                <ul class="space-y-2 text-gray-300">
-                    <li class="hover:underline cursor-pointer">Facebook</li>
-                    <li class="hover:underline cursor-pointer">Instagram</li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-bold mb-3">Make Money with Us</h3>
-                <ul class="space-y-2 text-gray-300">
-                    <li class="hover:underline cursor-pointer">Sell on Ayyozone</li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-bold mb-3">Let Us Help You</h3>
-                <ul class="space-y-2 text-gray-300">
-                    <li class="hover:underline cursor-pointer">Your Account</li>
-                    <li class="hover:underline cursor-pointer">Help</li>
-                </ul>
-            </div>
         </div>
         <div class="bg-nav-main py-6 text-center text-xs text-gray-400">
             <p>&copy; 2026, Ayyozone.in - Save your money.</p>
@@ -135,15 +105,15 @@
     </footer>
 
     <div id="modal" class="fixed inset-0 modal-overlay z-50 flex items-center justify-center hidden" onclick="closeModal(event)">
-        <div class="bg-white rounded-lg shadow-2xl p-6 w-11/12 max-w-lg text-center transform transition-all relative border-t-8 border-red-600" onclick="event.stopPropagation()">
+        <div class="bg-white rounded-lg shadow-2xl p-6 w-11/12 max-w-lg text-center relative border-t-8 border-red-600" onclick="event.stopPropagation()">
             <button onclick="closeModal(event, true)" class="absolute top-2 right-4 text-gray-400 hover:text-gray-800 text-2xl font-bold">&times;</button>
             <h2 class="text-3xl font-extrabold text-red-600 mb-2 flex items-center justify-center gap-2">
                 <i class="fa-solid fa-triangle-exclamation"></i> STOP!
             </h2>
             <p id="modalMsg" class="text-lg font-medium text-gray-800 mb-6 px-4"></p>
             
-            <div class="bg-black rounded overflow-hidden mb-6 relative w-full" style="padding-top: 56.25%;">
-                <iframe id="modalEmbed" src="" width="100%" height="100%" style="position:absolute; top:0; left:0;" frameborder="0" class="giphy-embed" allowfullscreen></iframe>
+            <div class="bg-black rounded overflow-hidden mb-6 flex items-center justify-center border" style="min-height: 250px;">
+                <img id="modalGif" src="" class="w-full h-auto max-h-[300px] object-contain" alt="Savings Alert">
             </div>
 
             <button onclick="closeModal(event, true)" class="w-full bg-amz-yellow text-black font-bold py-3 rounded-md border border-yellow-500 shadow-sm hover:bg-yellow-500 transition text-lg">
@@ -153,170 +123,90 @@
     </div>
 
     <script>
-        let allProducts = [];
-        let currentActiveSet = [];
-        let visibleCount = 16;
+        let databaseRaw = [];
+        let viewFilteredSet = [];
+        let itemsLimit = 16;
 
-        // High-level matrix variables to build exactly 2,000 distinct items programmatically
-        const matrixBrands = ["BoAt", "Noise", "Mivi", "SanDisk", "Logitech", "Giva", "Zaveri Pearls", "LEGO", "Hot Wheels", "Barbie", "Penguin Books", "HarperCollins", "Philips", "Prestige", "Puma", "Red Tape", "OnePlus", "Realme", "Samsung", "Xiaomi", "Boult", "Zebronics", "Ambrane", "Portronics", "Sony", "JBL"];
-        const matrixColors = ["Carbon Black", "Pro Blue", "Crimson Red", "Platinum Grey", "Deep Forest Green", "Metallic Gold", "Rose Gold", "Starlight Silver", "Mystic White", "Midnight Tan"];
-        const matrixSpecs = ["Ultra Edition", "Gen-3 Core", "Turbo Speed Series", "Limited Pack", "Premium Cross", "Elite Stealth Bundle", "X-Pro Lineup", "Signature Series", "Smart-Touch Upgraded", "Special Import"];
-
-        const coreTemplates = [
-            { name: "Wireless ANC Earbuds", cat: "ELECTRONICS", query: "earbuds" },
-            { name: "925 Sterling Silver Adjustable Crystal Ring", cat: "JEWELRY", query: "ring" },
-            { name: "Premium Kundan Stone Choker Set with Earrings", cat: "JEWELRY", query: "jewelry" },
-            { name: "Creative Stem Educational Building Blocks Set", cat: "KIDS", query: "toys" },
-            { name: "Atomic Habits - Transformative Success Guide", cat: "BOOKS", query: "book" },
-            { name: "The Silent Patient Psychological Thriller", cat: "BOOKS", query: "books" },
-            { name: "Fitness Smartwatch with AMOLED Display", cat: "MOBILES", query: "smartwatch" },
-            { name: "750W Heavy Duty Mixer Grinder Matrix", cat: "HOME & KITCHEN", query: "mixer" },
-            { name: "Lightweight Breathable Mesh Sports Running Shoes", cat: "FASHION", query: "sneakers" },
-            { name: "10000mAh Compact Fast Charging Power Bank", cat: "MOBILES", query: "powerbank" },
-            { name: "Non-Stick Induction Base Cooking Kadhai", cat: "HOME & KITCHEN", query: "kitchen" },
-            { name: "Polarized UV400 Protection Retro Sunglasses", cat: "FASHION", query: "sunglasses" },
-            { name: "High Speed Gold-Plated 4K HDMI Braided Cable", cat: "ELECTRONICS", query: "cable" },
-            { name: "Double Walled Stainless Steel Vacuum Insulated Flask", cat: "HOME & KITCHEN", query: "flask" },
-            { name: "Genuine Leather RFID Blocking Slim Wallet", cat: "FASHION", query: "wallet" }
-        ];
-
-        // Bulletproof cross-origin embedded Giphy IDs (Works perfectly on Github domains inside iframes)
-        const embedGifs = [
-            "https://giphy.com/embed/3o85xwxr06YNoFdSbm",
-            "https://giphy.com/embed/l41lOugA0qYlO3Wqk",
-            "https://giphy.com/embed/26hkhKd2Cp5WMWU1O",
-            "https://giphy.com/embed/1T96TRBBGYThC",
-            "https://giphy.com/embed/wYyTHMm50f4CbJQGuM"
-        ];
-
-        // Builds 2,000 uniquely customized products with distinct image seeds, titles, and item IDs
-        function assembleProductMatrix() {
-            allProducts = Array.from({ length: 2000 }, (_, i) => {
-                const template = coreTemplates[i % coreTemplates.length];
-                const brand = matrixBrands[(Math.floor(i / coreTemplates.length) + i) % matrixBrands.length];
-                const color = matrixColors[(Math.floor(i / 11) + i) % matrixColors.length];
-                const spec = matrixSpecs[(Math.floor(i / 7) + i) % matrixSpecs.length];
-                
-                const uniqueId = i + 1;
-                const dealPrice = 149 + ((i * 7) % 850); 
-                const discount = 45 + (i % 35); 
-                const originalPrice = Math.floor(dealPrice / (1 - (discount / 100)));
-
-                // Seeded keyword injection ensures unblocked, crisp, context-relevant Unsplash items
-                const uniqueImg = `https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop&sig=${uniqueId}`;
-                const unsuppressedImages = {
-                    "ELECTRONICS": `https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=600&auto=format&fit=crop&sig=${uniqueId}`,
-                    "JEWELRY": `https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=600&auto=format&fit=crop&sig=${uniqueId}`,
-                    "KIDS": `https://images.unsplash.com/photo-1515488042361-404e9250afef?q=80&w=600&auto=format&fit=crop&sig=${uniqueId}`,
-                    "BOOKS": `https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=600&auto=format&fit=crop&sig=${uniqueId}`,
-                    "MOBILES": `https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=600&auto=format&fit=crop&sig=${uniqueId}`,
-                    "HOME & KITCHEN": `https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?q=80&w=600&auto=format&fit=crop&sig=${uniqueId}`
-                };
-
-                return {
-                    id: uniqueId,
-                    category: template.cat,
-                    title: `${brand} ${template.name} (${spec}, ${color})`,
-                    price: dealPrice.toLocaleString('en-IN'),
-                    oldPrice: originalPrice.toLocaleString('en-IN'),
-                    discount: discount,
-                    img: unsuppressedImages[template.cat] || uniqueImg
-                };
-            });
-            currentActiveSet = allProducts;
-        }
-
-        async function initDatabase() {
-            // First step checks repository database pipeline safely
+        async function fetchLocalDatabase() {
             try {
-                const response = await fetch('./products.json');
-                if(response.ok) {
-                    const loadedData = await response.json();
-                    if(loadedData && loadedData.length > 0) {
-                        allProducts = loadedData;
-                        currentActiveSet = allProducts;
-                        renderGrid();
-                        return;
-                    }
-                }
-            } catch (e) {
-                console.log("Reading raw database backup map layers directly.");
+                const res = await fetch('./products.json');
+                if (!res.ok) throw new Error("File could not be parsed.");
+                databaseRaw = await res.json();
+                viewFilteredSet = databaseRaw;
+                renderProductGrid();
+            } catch (err) {
+                console.error("Local database error. Please verify products.json deployment setup.", err);
             }
-            
-            // Constructs internal matrix to output 2,000 completely custom products safely
-            assembleProductMatrix();
-            renderGrid();
         }
 
-        function renderGrid() {
+        function renderProductGrid() {
             const grid = document.getElementById('productGrid');
-            const targetSlice = currentActiveSet.slice(0, visibleCount);
+            const recordsToDisplay = viewFilteredSet.slice(0, itemsLimit);
 
-            if(targetSlice.length === 0) {
-                grid.innerHTML = `<p class="col-span-full text-center py-12 text-gray-500 font-medium">No matching lightning deals located right now.</p>`;
-                document.getElementById('loadMoreContainer').classList.add('hidden');
+            if (recordsToDisplay.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center py-16 text-gray-500 font-medium">No active discount blocks matched your query.</p>`;
+                document.getElementById('loadMoreSection').classList.add('hidden');
                 return;
             }
 
-            grid.innerHTML = targetSlice.map(item => `
-            <div class="bg-white p-5 flex flex-col justify-between shadow-sm relative rounded-sm hover:shadow-md transition">
+            grid.innerHTML = recordsToDisplay.map(product => `
+            <div class="bg-white p-5 flex flex-col justify-between shadow-xs relative rounded-sm hover:shadow-md transition">
                 <div class="absolute top-2 left-2 bg-red-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-tight z-10">
                     Limited Time Deal
                 </div>
-                <div class="flex-1 flex flex-col justify-between mb-2 cursor-pointer mt-5">
-                    <img src="${item.img}" referrerpolicy="no-referrer" class="w-full h-44 object-cover mb-3 rounded-xs" alt="${item.title}" onerror="this.src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=600'">
-                    <p class="text-sm text-gray-900 font-medium line-clamp-2 mb-1 leading-tight hover:text-orange-700">${item.title}</p>
+                <div class="flex-1 flex flex-col justify-between mb-2 mt-4">
+                    <img src="${product.img}" class="w-full h-44 object-cover mb-3 rounded-xs border-b border-gray-100" alt="Item Image">
+                    <p class="text-sm text-gray-900 font-medium line-clamp-2 mb-1 leading-tight">${product.title}</p>
                     
                     <div class="flex items-baseline gap-2 my-1">
-                        <span class="text-red-700 text-lg font-light">-${item.discount}%</span>
-                        <span class="text-2xl font-semibold text-gray-900">₹${item.price}</span>
+                        <span class="text-red-700 text-lg font-light">-${product.discount}%</span>
+                        <span class="text-2xl font-semibold text-gray-900">₹${product.price}</span>
                     </div>
-                    <p class="text-xs text-gray-500 mb-3">M.R.P.: <span class="line-through">₹${item.oldPrice}</span></p>
+                    <p class="text-xs text-gray-500 mb-4">M.R.P.: <span class="line-through">₹${product.oldPrice}</span></p>
                     
-                    <button onclick="intercept(${item.id})" class="w-full bg-amz-yellow hover:bg-yellow-500 py-1.5 rounded-md text-sm font-medium border border-yellow-500 shadow-xs transition">Claim Deal</button>
+                    <button onclick="interceptPurchase(${product.id})" class="w-full bg-amz-yellow hover:bg-yellow-500 py-2 rounded-md text-sm font-medium border border-yellow-500 shadow-xs transition">Claim Deal</button>
                 </div>
             </div>
             `).join('');
 
-            // Controls visibility configurations on the incremental display node
-            if (visibleCount >= currentActiveSet.length) {
-                document.getElementById('loadMoreContainer').classList.add('hidden');
+            if (itemsLimit >= viewFilteredSet.length) {
+                document.getElementById('loadMoreSection').classList.add('hidden');
             } else {
-                document.getElementById('loadMoreContainer').classList.remove('hidden');
+                document.getElementById('loadMoreSection').classList.remove('hidden');
             }
         }
 
-        function loadMoreDeals() {
-            visibleCount += 16;
-            renderGrid();
+        function loadNextBatch() {
+            itemsLimit += 16;
+            renderProductGrid();
         }
 
         function performSearch() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            currentActiveSet = allProducts.filter(p => p.title.toLowerCase().includes(query));
-            visibleCount = 16; 
-            renderGrid();
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+            viewFilteredSet = databaseRaw.filter(item => item.title.toLowerCase().includes(searchVal));
+            itemsLimit = 16;
+            renderProductGrid();
         }
 
-        function filterCategory(category) {
-            if (category === 'ALL') {
-                currentActiveSet = allProducts;
+        function filterCategory(cat) {
+            if (cat === 'ALL') {
+                viewFilteredSet = databaseRaw;
                 document.getElementById('gridTitle').innerText = "Deals of the Day";
             } else {
-                currentActiveSet = allProducts.filter(p => p.category === category);
-                document.getElementById('gridTitle').innerText = `${category.charAt(0) + category.slice(1).toLowerCase()} Deals`;
+                viewFilteredSet = databaseRaw.filter(item => item.category === cat);
+                document.getElementById('gridTitle').innerText = `${cat.charAt(0) + cat.slice(1).toLowerCase()} Deals`;
             }
-            document.getElementById('searchInput').value = ""; 
-            visibleCount = 16; 
-            renderGrid();
+            document.getElementById('searchInput').value = "";
+            itemsLimit = 16;
+            renderProductGrid();
         }
 
-        function intercept(id) {
-            const p = allProducts.find(x => x.id === id);
-            document.getElementById('modalMsg').innerText = `Dabbulu dhandaga ra! Why are you trying to buy this ${p.title} for ₹${p.price}? Just because it has a ${p.discount}% discount doesn't mean you need it! Stay calm.`;
+        function interceptPurchase(id) {
+            const match = databaseRaw.find(x => x.id === id);
+            document.getElementById('modalMsg').innerText = `Dabbulu dhandaga ra! Why are you trying to buy this ${match.title} for ₹${match.price}? Just because it has a ${match.discount}% discount doesn't mean you need it! Stay calm.`;
             
-            const randomEmbed = embedGifs[Math.floor(Math.random() * embedGifs.length)];
-            document.getElementById('modalEmbed').src = randomEmbed;
+            // Uses local repository file system directly to guarantee 100% successful rendering
+            document.getElementById('modalGif').src = match.gif;
             
             document.getElementById('modal').classList.remove('hidden');
             document.body.style.overflow = 'hidden'; 
@@ -325,18 +215,12 @@
         function closeModal(event, force = false) {
             if (force || event.target === document.getElementById('modal')) {
                 document.getElementById('modal').classList.add('hidden');
-                document.getElementById('modalEmbed').src = ""; // Flush frame resource safely
                 document.body.style.overflow = 'auto'; 
             }
         }
 
-        document.addEventListener('keydown', function(event){
-            if(event.key === "Escape"){
-                closeModal(event, true);
-            }
-        });
-
-        window.onload = initDatabase;
+        document.addEventListener('keydown', e => { if(e.key === "Escape") closeModal(null, true); });
+        window.onload = fetchLocalDatabase;
     </script>
 </body>
 </html>
