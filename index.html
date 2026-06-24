@@ -18,13 +18,15 @@
         .modal-overlay { background: rgba(0, 0, 0, 0.75); }
         .hidden { display: none; }
         .hero-gradient { background: linear-gradient(to bottom, transparent 50%, #e3e6e6 100%); }
+        /* Smooth scrolling inside categories */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body>
-    <!-- Header Section -->
     <header class="bg-nav-main text-white flex flex-col">
         <div class="flex items-center justify-between px-4 py-2 h-16">
-            <div class="flex items-center link-hover p-1 cursor-pointer">
+            <div class="flex items-center link-hover p-1 cursor-pointer" onclick="filterCategory('ALL')">
                 <span class="text-2xl font-bold tracking-tighter">ayyozone<span class="text-yellow-400">.in</span></span>
             </div>
             <div class="hidden md:flex items-center link-hover p-1 cursor-pointer ml-4">
@@ -61,26 +63,27 @@
                 </div>
             </div>
         </div>
-        <div class="bg-nav-sub h-10 flex items-center px-4 space-x-4 text-sm whitespace-nowrap overflow-x-auto hide-scrollbar">
-            <div class="link-hover p-1 cursor-pointer font-bold flex items-center"><i class="fa-solid fa-bars mr-1"></i> All</div>
-            <div class="link-hover p-1 cursor-pointer text-yellow-400 font-semibold">🔥 Limited Time Deals</div>
-            <div class="link-hover p-1 cursor-pointer">Today's Deals</div>
-            <div class="link-hover p-1 cursor-pointer">Electronics</div>
-            <div class="link-hover p-1 cursor-pointer">Home & Kitchen</div>
-            <div class="link-hover p-1 cursor-pointer">Fashion</div>
-            <div class="link-hover p-1 cursor-pointer">Mobiles</div>
+        <div class="bg-nav-sub h-10 flex items-center px-4 space-x-4 text-sm whitespace-nowrap overflow-x-auto hide-scrollbar text-gray-200">
+            <div onclick="filterCategory('ALL')" class="link-hover p-1 cursor-pointer font-bold flex items-center text-white"><i class="fa-solid fa-bars mr-1"></i> All</div>
+            <div onclick="filterCategory('ALL')" class="link-hover p-1 cursor-pointer text-yellow-400 font-semibold">🔥 Limited Time Deals</div>
+            <div onclick="filterCategory('ELECTRONICS')" class="link-hover p-1 cursor-pointer">Electronics</div>
+            <div onclick="filterCategory('HOME & KITCHEN')" class="link-hover p-1 cursor-pointer">Home & Kitchen</div>
+            <div onclick="filterCategory('FASHION')" class="link-hover p-1 cursor-pointer">Fashion</div>
+            <div onclick="filterCategory('MOBILES')" class="link-hover p-1 cursor-pointer">Mobiles</div>
+            <div onclick="filterCategory('JEWELRY')" class="link-hover p-1 cursor-pointer">Jewelry</div>
+            <div onclick="filterCategory('KIDS')" class="link-hover p-1 cursor-pointer">Kids</div>
+            <div onclick="filterCategory('BOOKS')" class="link-hover p-1 cursor-pointer">Books</div>
         </div>
     </header>
 
     <main class="relative w-full max-w-[1500px] mx-auto mb-10">
         <div class="relative w-full h-[600px]">
-            <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=1920&h=1080&auto=format&fit=crop" class="w-full h-full object-cover object-top" alt="Sale Banner">
+            <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=1920&fit=crop" class="w-full h-full object-cover object-top" alt="Sale Banner">
             <div class="absolute inset-0 hero-gradient"></div>
         </div>
         
-        <!-- Product Grid Header -->
         <div class="relative z-10 -mt-[350px] px-4 md:px-8 mb-4">
-            <h1 class="text-3xl font-extrabold text-gray-900 drop-shadow-sm mb-2">Deals of the Day</h1>
+            <h1 id="gridTitle" class="text-3xl font-extrabold text-gray-900 drop-shadow-sm mb-2">Deals of the Day</h1>
             <p class="text-sm text-red-700 font-bold flex items-center gap-1"><i class="fa-solid fa-clock animate-pulse"></i> Offers end soon. Limit 1 per customer.</p>
         </div>
 
@@ -88,7 +91,6 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-nav-sub text-white mt-10">
         <div class="bg-[#37475a] text-center py-4 cursor-pointer hover:bg-gray-600 transition" onclick="window.scrollTo(0,0)">
             <span class="text-sm font-bold">Back to top</span>
@@ -127,7 +129,6 @@
         </div>
     </footer>
 
-    <!-- Intercept Modal -->
     <div id="modal" class="fixed inset-0 modal-overlay z-50 flex items-center justify-center hidden" onclick="closeModal(event)">
         <div class="bg-white rounded-lg shadow-2xl p-6 w-11/12 max-w-lg text-center transform transition-all relative border-t-8 border-red-600" onclick="event.stopPropagation()">
             <button onclick="closeModal(event, true)" class="absolute top-2 right-4 text-gray-400 hover:text-gray-800 text-2xl font-bold">&times;</button>
@@ -136,7 +137,7 @@
             </h2>
             <p id="modalMsg" class="text-lg font-medium text-gray-800 mb-6 px-4"></p>
             <div class="bg-black rounded overflow-hidden mb-6 flex items-center justify-center" style="min-height: 250px;">
-                <img id="modalGif" src="" alt="Reaction" class="w-full h-auto max-h-[300px] object-contain">
+                <img id="modalGif" src="" referrerpolicy="no-referrer" alt="Reaction" class="w-full h-auto max-h-[300px] object-contain">
             </div>
             <button onclick="closeModal(event, true)" class="w-full bg-amz-yellow text-black font-bold py-3 rounded-md border border-yellow-500 shadow-sm hover:bg-yellow-500 transition text-lg">
                 Close & Save Money
@@ -144,65 +145,62 @@
         </div>
     </div>
 
-    <!-- Logic Script -->
     <script>
-        // High-volume brand variations across different product areas
         const brands = [
             "BoAt", "Noise", "Mivi", "SanDisk", "Logitech", "Giva", "Zaveri Pearls", 
             "LEGO", "Hot Wheels", "Barbie", "Penguin Books", "HarperCollins", 
             "Philips", "Prestige", "Puma", "Red Tape", "OnePlus", "Realme", "Samsung", "Mi"
         ];
         
-        // Expanded 20 trending product sets covering Jewelry, Kids, Books, Tech, Kitchen & Fashion
+        // Exact curated high-res image sets for beautiful, relevant lookups
         const products = [
-            { name: "Wireless Earbuds", tag: "earphones", cat: "ELECTRONICS" },
-            { name: "18k Gold Plated Pendant Necklace", tag: "pendant", cat: "JEWELRY" },
-            { name: "Educational Building Blocks Set", tag: "toyblocks", cat: "KIDS" },
-            { name: "The Silent Patient (Paperback)", tag: "novel", cat: "BOOKS" },
-            { name: "Smart Fitness Watch", tag: "smartwatch", cat: "MOBILES" },
-            { name: "Premium Crystal Drop Earrings", tag: "earrings", cat: "JEWELRY" },
-            { name: "Remote Control High-Speed Racing Car", tag: "rccar", cat: "KIDS" },
-            { name: "Atomic Habits (Hardcover Edition)", tag: "book", cat: "BOOKS" },
-            { name: "RGB Mechanical Gaming Mouse", tag: "gamingmouse", cat: "ELECTRONICS" },
-            { name: "Silver Adjustable Couple Rings Pack", tag: "silverring", cat: "JEWELRY" },
-            { name: "Plush Soft Teddy Bear (Large)", tag: "teddybear", cat: "KIDS" },
-            { name: "Rich Dad Poor Dad Deluxe", tag: "financebook", cat: "BOOKS" },
-            { name: "Automatic Water Bottle Dispenser Pump", tag: "waterpump", cat: "HOME & KITCHEN" },
-            { name: "Lightweight Ergonomic Running Sneakers", tag: "sneakers", cat: "FASHION" },
-            { name: "10000mAh Compact Power Bank", tag: "powerbank", cat: "MOBILES" },
-            { name: "Non-Stick Die-Cast Deep Kadhai", tag: "kadhai", cat: "HOME & KITCHEN" },
-            { name: "Polarized Retro Sunglasses", tag: "sunglasses", cat: "FASHION" },
-            { name: "High-Speed 4K HDMI Braided Cable", tag: "hdmicable", cat: "ELECTRONICS" },
-            { name: "Stainless Steel Vacuum Insulated Flask", tag: "flask", cat: "HOME & KITCHEN" },
-            { name: "RFID Blocking Leather Wallet", tag: "wallet", cat: "FASHION" }
+            { name: "Wireless Earbuds", cat: "ELECTRONICS", img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=600&auto=format&fit=crop" },
+            { name: "18k Gold Plated Pendant Necklace", cat: "JEWELRY", img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=600&auto=format&fit=crop" },
+            { name: "Educational Building Blocks Set", cat: "KIDS", img: "https://images.unsplash.com/photo-1515488042361-404e9250afef?q=80&w=600&auto=format&fit=crop" },
+            { name: "The Silent Patient (Paperback)", cat: "BOOKS", img: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=600&auto=format&fit=crop" },
+            { name: "Smart Fitness Watch", cat: "MOBILES", img: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=600&auto=format&fit=crop" },
+            { name: "Premium Crystal Drop Earrings", cat: "JEWELRY", img: "https://images.unsplash.com/photo-1635767798638-3e25273a8236?q=80&w=600&auto=format&fit=crop" },
+            { name: "Remote Control High-Speed Racing Car", cat: "KIDS", img: "https://images.unsplash.com/photo-1594787318286-3d835c1d207f?q=80&w=600&auto=format&fit=crop" },
+            { name: "Atomic Habits (Hardcover)", cat: "BOOKS", img: "https://images.unsplash.com/photo-1495640388908-05fa85288e61?q=80&w=600&auto=format&fit=crop" },
+            { name: "RGB Mechanical Gaming Mouse", cat: "ELECTRONICS", img: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=600&auto=format&fit=crop" },
+            { name: "Silver Adjustable Couple Rings Pack", cat: "JEWELRY", img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=600&auto=format&fit=crop" },
+            { name: "Plush Soft Teddy Bear (Large)", cat: "KIDS", img: "https://images.unsplash.com/photo-1559251606-c623743a6d76?q=80&w=600&auto=format&fit=crop" },
+            { name: "Rich Dad Poor Dad Deluxe", cat: "BOOKS", img: "https://images.unsplash.com/photo-1614849963640-9cc74b2a826f?q=80&w=600&auto=format&fit=crop" },
+            { name: "Automatic Water Dispenser Pump", cat: "HOME & KITCHEN", img: "https://images.unsplash.com/photo-1585837575652-267c0ee12122?q=80&w=600&auto=format&fit=crop" },
+            { name: "Lightweight Ergonomic Running Sneakers", cat: "FASHION", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop" },
+            { name: "10000mAh Compact Power Bank", cat: "MOBILES", img: "https://images.unsplash.com/photo-1609592424109-dd9892f1b177?q=80&w=600&auto=format&fit=crop" },
+            { name: "Non-Stick Die-Cast Deep Kadhai", cat: "HOME & KITCHEN", img: "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?q=80&w=600&auto=format&fit=crop" },
+            { name: "Polarized Retro Sunglasses", cat: "FASHION", img: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=600&auto=format&fit=crop" },
+            { name: "High-Speed 4K HDMI Braided Cable", cat: "ELECTRONICS", img: "https://images.unsplash.com/photo-1557853197-aefb550b6fdc?q=80&w=600&auto=format&fit=crop" },
+            { name: "Stainless Steel Vacuum Flask", cat: "HOME & KITCHEN", img: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?q=80&w=600&auto=format&fit=crop" },
+            { name: "RFID Blocking Leather Wallet", cat: "FASHION", img: "https://images.unsplash.com/photo-1627123424574-724758594e93?q=80&w=600&auto=format&fit=crop" }
         ];
 
         const variants = ["Classic Edition", "Pro Ultra", "Turbo-GT Series", "Limited Bundle", "Gen-3 Upgrade", "Premium Pack", "Special Drop", "X-Stealth", "Elite Series", "Neo Edition"];
 
-        // Generate 2000 completely unique trending low-cost items
+        // Interleaving mapping logic ensures that item strings and combinations never replicate across the 2,000 slots
         const allProducts = Array.from({ length: 2000 }, (_, i) => {
-            // Using a cleanly structured interleaved index pattern ensures adjacent slots are distinct categories
             const product = products[i % products.length];
             const brand = brands[(Math.floor(i / products.length) + i) % brands.length];
             const variant = variants[(Math.floor(i / (products.length * brands.length)) + i) % variants.length];
             
-            const dealPrice = Math.floor(Math.random() * 380) + 169; // Attractive pocket-friendly deals (₹169 - ₹549)
-            const discountPercentage = Math.floor(Math.random() * 21) + 60; // Huge realistic 60% to 80% margins
+            const modelNum = 1000 + i;
+            const dealPrice = Math.floor(Math.random() * 380) + 169; 
+            const discountPercentage = Math.floor(Math.random() * 21) + 60; 
             const originalPrice = Math.floor(dealPrice / (1 - (discountPercentage / 100)));
 
             return {
                 id: i + 1,
-                category: product.cat + " DEAL",
-                title: `${brand} ${product.name} (${variant}, Multi-Color)`,
+                category: product.cat,
+                title: `${brand} ${product.name} - ${variant} (Model #${modelNum})`,
                 price: dealPrice.toLocaleString('en-IN'),
                 oldPrice: originalPrice.toLocaleString('en-IN'),
                 discount: discountPercentage,
-                // Refined tags match specific targets cleanly inside loremflickr's 1920x1080 resolution template
-                img: `https://loremflickr.com/1920/1080/${product.tag}?lock=${i + 1}`
+                img: product.img
             };
         });
 
-        // Bypasses Giphy's restricted token filters using the public direct delivery format
+        // Safe Giphy endpoints structured directly to execute alongside the no-referrer security bypass
         const safeGifs = [
             "https://i.giphy.com/3o85xwxr06YNoFdSbm.gif", 
             "https://i.giphy.com/l41lOugA0qYlO3Wqk.gif",
@@ -211,23 +209,43 @@
             "https://i.giphy.com/wYyTHMm50f4CbJQGuM.gif"
         ];
 
+        let currentActiveSet = allProducts;
+
         function performSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allProducts.filter(p => p.title.toLowerCase().includes(query));
+            const filtered = currentActiveSet.filter(p => p.title.toLowerCase().includes(query));
             renderGrid(filtered);
+        }
+
+        // Handles the top dynamic navigation filtering seamlessly out-of-the-box
+        function filterCategory(category) {
+            if (category === 'ALL') {
+                currentActiveSet = allProducts;
+                document.getElementById('gridTitle').innerText = "Deals of the Day";
+            } else {
+                currentActiveSet = allProducts.filter(p => p.category === category);
+                document.getElementById('gridTitle').innerText = `${category.charAt(0) + category.slice(1).toLowerCase()} Deals`;
+            }
+            document.getElementById('searchInput').value = ""; // reset lookup
+            renderGrid(currentActiveSet);
         }
 
         function renderGrid(itemsToRender = allProducts) {
             const grid = document.getElementById('productGrid');
             
-            // Displays first 8 mixed matching items to guarantee instant performance
+            if(itemsToRender.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center py-10 text-gray-500 font-medium">No active lightning deals found matching your choice.</p>`;
+                return;
+            }
+
+            // Slices top 8 dynamically to preserve layout style and boost execution speed
             grid.innerHTML = itemsToRender.slice(0, 8).map(item => `
             <div class="bg-white p-5 flex flex-col justify-between shadow-sm relative rounded-sm hover:shadow-md transition">
                 <div class="absolute top-2 left-2 bg-red-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-tight z-10">
                     Limited Time Deal
                 </div>
                 <div class="flex-1 flex flex-col justify-between mb-2 cursor-pointer mt-5">
-                    <img src="${item.img}" class="w-full h-44 object-cover mb-3 rounded-xs" alt="${item.title}">
+                    <img src="${item.img}" referrerpolicy="no-referrer" class="w-full h-44 object-cover mb-3 rounded-xs" alt="${item.title}">
                     <p class="text-sm text-gray-900 font-medium line-clamp-2 mb-1 leading-tight hover:text-orange-700">${item.title}</p>
                     
                     <div class="flex items-baseline gap-2 my-1">
