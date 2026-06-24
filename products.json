@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "category": "ELECTRONICS",
+    "title": "BoAt Airdopes 141 Bluetooth Wireless Earbuds (Cyan Cider)",
+    "price": "1,299",
+    "oldPrice": "4,490",
+    "discount": 71,
+    "img": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=1920&fit=crop"
+  },
+  {
+    "id": 2,
+    "category": "JEWELRY",
+    "title": "GIVA 925 Sterling Silver Classic Zircon Pendant with Chain",
+    "price": "1,499",
+    "oldPrice": "2,999",
+    "discount": 50,
+    "img": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1920&fit=crop"
+  },
+  {
+    "id": 3,
+    "category": "KIDS",
+    "title": "LEGO Classic Creative Bricks Building Blocks Toy Set (99 Pieces)",
+    "price": "849",
+    "oldPrice": "1,199",
+    "discount": 29,
+    "img": "https://images.unsplash.com/photo-1515488042361-404e9250afef?q=80&w=1920&fit=crop"
+  },
+  {
+    "id": 4,
+    "category": "BOOKS",
+    "title": "Atomic Habits by James Clear (Paperback, Deluxe Edition)",
+    "price": "430",
+    "oldPrice": "799",
+    "discount": 46,
+    "img": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1920&fit=crop"
+  },
+  {
+    "id": 5,
+    "category": "MOBILES",
+    "title": "Noise ColorFit Pulse Smartwatch with 1.4\" Full Touch Display",
+    "price": "1,599",
+    "oldPrice": "4,999",
+    "discount": 68,
+    "img": "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=1920&fit=crop"
+  },
+  {
+    "id": 6,
+    "category": "HOME & KITCHEN",
+    "title": "Prestige Iris Plus 750 Watt Powerful Mixer Grinder (3 Jars)",
+    "price": "3,299",
+    "oldPrice": "6,295",
+    "discount": 47,
+    "img": "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?q=80&w=1920&fit=crop"
+  },
+  {
+    "id": 7,
+    "category": "FASHION",
+    "title": "Puma Men's Firefly IDP Lightweight Running Shoes (Black)",
+    "price": "1,800",
+    "oldPrice": "3,999",
+    "discount": 55,
+    "img": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1920&fit=crop"
+  },
+  {
+    "id": 8,
+    "category": "JEWELRY",
+    "title": "Zaveri Pearls Kundan & Pearls Choker Necklace Set with Earrings",
+    "price": "495",
+    "oldPrice": "1,995",
+    "discount": 75,
+    "img": "https://images.unsplash.com/photo-1635767798638-3e25273a8236?q=80&w=1920&fit=crop"
+  }
+]
