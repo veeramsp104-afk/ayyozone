@@ -1,328 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayyozone.in - Limited Time Deals</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #e3e6e6; }
-        .bg-nav-main { background-color: #131921; }
-        .bg-nav-sub { background-color: #232f3e; }
-        .bg-amz-yellow { background-color: #ffd814; }
-        .bg-amz-yellow:hover { background-color: #f7ca00; }
-        .bg-amz-orange { background-color: #febd69; }
-        .bg-amz-orange:hover { background-color: #f3a847; }
-        .link-hover:hover { border: 1px solid white; border-radius: 2px; }
-        .modal-overlay { background: rgba(0, 0, 0, 0.85); }
-        .hidden { display: none; }
-        .hero-gradient { background: linear-gradient(to bottom, transparent 50%, #e3e6e6 100%); }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayyozone - Meme Deals</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    /* 1. PRODUCT GRID LAYOUT (Inspired by image_7f037e.jpg) */
+    .product-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+    .badge {
+      background-color: #cc0c39;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 8px;
+      position: absolute;
+      top: 10px; left: 10px;
+      border-radius: 2px;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      margin-top: 15px;
+    }
+
+    .product-title {
+      font-size: 14px;
+      color: #333;
+      margin: 10px 0 5px 0;
+      font-weight: bold;
+      text-align: left;
+      height: 40px;
+      overflow: hidden;
+    }
+
+    .price-tag {
+      font-size: 18px;
+      font-weight: bold;
+      color: #111;
+      text-align: left;
+      margin: 5px 0;
+    }
+
+    /* 2. MEME MODAL POP-UP STYLES */
+    .modal-overlay {
+      display: none; 
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 450px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px; right: 20px;
+      font-size: 35px; cursor: pointer; color: #666;
+    }
+
+    #modalGif {
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin: 15px 0;
+    }
+
+    #modalTenglishLine {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #e63946;
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .modal-close-btn {
+      background: #ffcc00;
+      border: none; 
+      padding: 12px 25px;
+      font-weight: bold; 
+      font-size: 14px;
+      border-radius: 8px; 
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <header class="bg-nav-main text-white flex flex-col">
-        <div class="flex items-center justify-between px-4 py-2 h-16">
-            <div class="flex items-center link-hover p-1 cursor-pointer" onclick="filterCategory('ALL')">
-                <span class="text-2xl font-bold tracking-tighter">ayyozone<span class="text-yellow-400">.in</span></span>
-            </div>
-            <div class="hidden md:flex items-center link-hover p-1 cursor-pointer ml-4">
-                <i class="fa-solid fa-location-dot mt-2 mr-1"></i>
-                <div class="flex flex-col leading-tight">
-                    <span class="text-xs text-gray-300">Delivering to Narasaraopeta</span>
-                    <span class="text-sm font-bold">Update location</span>
-                </div>
-            </div>
-            <div class="flex flex-1 mx-6 h-10 rounded overflow-hidden">
-                <select class="bg-gray-100 text-black text-xs px-2 border-r border-gray-300 outline-none w-16">
-                    <option>All</option>
-                </select>
-                <input type="text" id="searchInput" oninput="performSearch()" class="flex-1 px-3 text-black outline-none placeholder-gray-500" placeholder="Search Ayyozone.in for over 2,000+ lightning deals...">
-                <button class="bg-amz-orange text-black px-4 flex items-center justify-center">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div class="link-hover p-1 cursor-pointer hidden lg:flex flex-col leading-tight">
-                    <span class="text-xs">Hello, sign in</span>
-                    <span class="text-sm font-bold">Account & Lists <i class="fa-solid fa-caret-down text-gray-400 text-xs"></i></span>
-                </div>
-                <div class="link-hover p-1 cursor-pointer hidden lg:flex flex-col leading-tight">
-                    <span class="text-xs">Returns</span>
-                    <span class="text-sm font-bold">& Orders</span>
-                </div>
-                <div class="link-hover p-1 cursor-pointer flex items-center">
-                    <div class="relative">
-                        <i class="fa-solid fa-cart-shopping text-2xl"></i>
-                        <span class="absolute -top-1 -right-2 text-amz-orange font-bold text-sm bg-nav-main rounded-full px-1">0</span>
-                    </div>
-                    <span class="text-sm font-bold mt-2 ml-1 hidden sm:block">Cart</span>
-                </div>
-            </div>
-        </div>
-        <div class="bg-nav-sub h-10 flex items-center px-4 space-x-4 text-sm whitespace-nowrap overflow-x-auto hide-scrollbar text-gray-200">
-            <div onclick="filterCategory('ALL')" class="link-hover p-1 cursor-pointer font-bold flex items-center text-white"><i class="fa-solid fa-bars mr-1"></i> All</div>
-            <div onclick="filterCategory('ALL')" class="link-hover p-1 cursor-pointer text-yellow-400 font-semibold">🔥 Limited Time Deals</div>
-            <div onclick="filterCategory('ELECTRONICS')" class="link-hover p-1 cursor-pointer">Electronics</div>
-            <div onclick="filterCategory('HOME & KITCHEN')" class="link-hover p-1 cursor-pointer">Home & Kitchen</div>
-            <div onclick="filterCategory('FASHION')" class="link-hover p-1 cursor-pointer">Fashion</div>
-            <div onclick="filterCategory('MOBILES')" class="link-hover p-1 cursor-pointer">Mobiles</div>
-            <div onclick="filterCategory('JEWELRY')" class="link-hover p-1 cursor-pointer">Jewelry</div>
-            <div onclick="filterCategory('KIDS')" class="link-hover p-1 cursor-pointer">Kids</div>
-            <div onclick="filterCategory('BOOKS')" class="link-hover p-1 cursor-pointer">Books</div>
-        </div>
-    </header>
 
-    <main class="relative w-full max-w-[1500px] mx-auto mb-10">
-        <div class="relative w-full h-[500px]">
-            <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=1920&fit=crop" class="w-full h-full object-cover object-top" alt="Sale Banner">
-            <div class="absolute inset-0 hero-gradient"></div>
-        </div>
-        
-        <div class="relative z-10 -mt-[280px] px-4 md:px-8 mb-4">
-            <h1 id="gridTitle" class="text-3xl font-extrabold text-gray-900 drop-shadow-sm mb-2">Deals of the Day</h1>
-            <p class="text-sm text-red-700 font-bold flex items-center gap-1"><i class="fa-solid fa-clock animate-pulse"></i> Offers end soon. Limit 1 per customer.</p>
-        </div>
+  <h2 style="text-align: center; color: #222;">⚡ Lightning Meme Deals ⚡</h2>
 
-        <div class="relative z-10 px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="productGrid"></div>
+  <!-- PRODUCT GRID -->
+  <div class="product-container">
 
-        <div class="text-center mt-12 relative z-10" id="loadMoreSection">
-            <button onclick="loadNextBatch()" class="bg-white hover:bg-gray-100 text-gray-800 font-bold py-3 px-12 border border-gray-400 rounded shadow-xs transition inline-flex items-center gap-2">
-                Show More Unique Deals <i class="fa-solid fa-chevron-down text-xs"></i>
-            </button>
-        </div>
-    </main>
-
-    <footer class="bg-nav-sub text-white mt-20">
-        <div class="bg-[#37475a] text-center py-4 cursor-pointer hover:bg-gray-600 transition" onclick="window.scrollTo(0,0)">
-            <span class="text-sm font-bold">Back to top</span>
-        </div>
-        <div class="bg-nav-main py-6 text-center text-xs text-gray-400">
-            <p>&copy; 2026, Ayyozone.in - Save your money.</p>
-        </div>
-    </footer>
-
-    <div id="modal" class="fixed inset-0 modal-overlay z-50 flex items-center justify-center hidden" onclick="closeModal(event)">
-        <div class="bg-white rounded-lg shadow-2xl p-6 w-11/12 max-w-lg text-center relative border-t-8 border-red-600" onclick="event.stopPropagation()">
-            <button onclick="closeModal(event, true)" class="absolute top-2 right-4 text-gray-400 hover:text-gray-800 text-2xl font-bold">&times;</button>
-            <h2 class="text-3xl font-extrabold text-red-600 mb-2 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-triangle-exclamation"></i> STOP!
-            </h2>
-            <p id="modalMsg" class="text-lg font-medium text-gray-800 mb-6 px-4 leading-relaxed"></p>
-            
-            <div class="bg-black rounded overflow-hidden mb-6 flex items-center justify-center border" style="min-height: 250px;">
-                <img id="modalGif" src="" class="w-full h-auto max-h-[300px] object-contain" alt="Savings Alert">
-            </div>
-
-            <button onclick="closeModal(event, true)" class="w-full bg-amz-yellow text-black font-bold py-3 rounded-md border border-yellow-500 shadow-sm hover:bg-yellow-500 transition text-lg">
-                Close & Save Money
-            </button>
-        </div>
+    <!-- Card 1: Samsung S26 Ultra -->
+    <div class="product-card" onclick="openMeme('Samsung Galaxy S26 Ultra', 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z0N3Z4eWZ6bXpsY3g2Nm81NmxtbWJ5OHd6bXoxb3Y4M3I0dms2ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiVyM/giphy.gif', '1.3 Lakhs ah?! Single kidney tho avvadhu mawa, rendu ammali!')">
+      <div class="badge">6% OFF</div>
+      <img class="product-image" src="https://m.media-amazon.com/images/I/71RVuS3q9iL._SL1500_.jpg" alt="S26 Ultra">
+      <div class="product-title">Samsung Galaxy S26 Ultra 5G (Sky Blue, 12GB RAM, 256GB Storage)</div>
+      <div class="price-tag">₹1,30,999.00</div>
     </div>
 
-    <script>
-        // High-fidelity extracted dataset from Scrapped_Products.csv with accurate item contexts and precise matching image targets
-        let databaseRaw = [];
-        
-        // Dynamic procedural generation to inject the 2000 actual products without cluttering raw code source lines
-        function initializeScrapedDatabase() {
-            const categories = ["ELECTRONICS", "HOME & KITCHEN", "FASHION", "MOBILES", "JEWELRY", "KIDS", "BOOKS"];
-            const descriptors = ["Premium Wireless", "Ultra Durable", "Ergonomic Edition", "Limited Luxury", "Classic Comfort", "High Performance"];
-            const imageTerms = {
-                "ELECTRONICS": "laptop,mouse,headphones",
-                "HOME & KITCHEN": "bottle,container,mug",
-                "FASHION": "shoes,lipstick,apparel",
-                "MOBILES": "smartphone,phone",
-                "JEWELRY": "watch,ring,necklace",
-                "KIDS": "boardgame,toy",
-                "BOOKS": "book,storybook"
-            };
-            
-            // Re-generating data matrix built squarely from the row records of your product source
-            for(let i = 1; i <= 2000; i++) {
-                let currentCat = categories[i % categories.length];
-                let kw = imageTerms[currentCat];
-                let disc = 15 + (i % 65);
-                let offerPrice = 149 + ((i * 23) % 4800);
-                let realPrice = Math.floor(offerPrice * (1 + (disc/100)));
-                
-                // Varied product names mapping accurately to the column rows
-                let baseTitle = "";
-                if(currentCat === "FASHION") baseTitle = i % 2 === 0 ? "Matte Sensational Waterproof Long-Stay Lipstick" : "Premium Sports Lightweight Breathable Shoes";
-                else if(currentCat === "ELECTRONICS") baseTitle = i % 2 === 0 ? "Core Intel i7 Heavy Duty Multi-Tasking Laptop" : "Optical Mechanical Gamer Mouse RGB Lighted";
-                else if(currentCat === "MOBILES") baseTitle = "5G High Definition Dual SIM Android Smartphone";
-                else if(currentCat === "JEWELRY") baseTitle = "Luxury Quartz Water Resistant Analog Stylish Watch";
-                else if(currentCat === "HOME & KITCHEN") baseTitle = "Stainless Steel Insulated Vacuum Thermos Water Bottle";
-                else if(currentCat === "KIDS") baseTitle = "Educational Family Board Game Activity Kit Pack";
-                else baseTitle = "Illustrated Kids Fairy Tales Moral Short Bedtime Stories Book";
+    <!-- Card 2: Lenovo LOQ -->
+    <div class="product-card" onclick="openMeme('Lenovo LOQ 2024', 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmszdnd4Ym81NmxtbWJ5OHd6bXoxb3Y4M3I0dms2ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l378gK7YgX8fU4w5q/giphy.gif', 'RTX graphics undi mawa! Renderings and loops continuous ga aypothay.')">
+      <div class="badge">20% OFF</div>
+      <img class="product-image" src="https://m.media-amazon.com/images/I/61V6Hl2I6TL._SL1000_.jpg" alt="Lenovo LOQ">
+      <div class="product-title">Lenovo LOQ 2024 Intel Core i5-12450HX (NVIDIA RTX 3050)</div>
+      <div class="price-tag">₹76,990.00</div>
+    </div>
 
-                databaseRaw.push({
-                    id: i,
-                    category: currentCat,
-                    title: `${descriptors[i % descriptors.length]} ${baseTitle} - Model ${i + 450}`,
-                    price: offerPrice.toLocaleString('en-IN'),
-                    oldPrice: realPrice.toLocaleString('en-IN'),
-                    discount: disc,
-                    img: `https://loremflickr.com/500/400/${kw}?random=${i}`
-                });
-            }
-        }
+    <!-- Card 3: Treadmill -->
+    <div class="product-card" onclick="openMeme('Lifelong Treadmill', 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3BtN3Z4eWZ6bXpsY3g2Nm81NmxtbWJ5OHd6bXoxb3Y4M3I0dms2ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l2JIk0sWj9sUfCsr6/giphy.gif', 'Kinedi jogging ki... kani final ga vadedi battalu areskodanike!')">
+      <div class="badge">76% OFF</div>
+      <img class="product-image" src="https://m.media-amazon.com/images/I/61bK6DAtGXL._SL1500_.jpg" alt="Treadmill">
+      <div class="product-title">Lifelong 5HP Peak Motorized Treadmill for Home Automation</div>
+      <div class="price-tag">₹18,999.00</div>
+    </div>
 
-        initializeScrapedDatabase();
+    <!-- Card 4: OnePlus 13 -->
+    <div class="product-card" onclick="openMeme('OnePlus 13', 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3d0N3Z4eWZ6bXpsY3g2Nm81NmxtbWJ5OHd6bXoxb3Y4M3I0dms2ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/U2nN0ridM4lPy/giphy.gif', 'OnePlus AI updates thope... kani green line rakunte anthe chalu mawa!')">
+      <div class="badge">19% OFF</div>
+      <img class="product-image" src="https://m.media-amazon.com/images/I/6175bBQC63L._SL1500_.jpg" alt="OnePlus 13">
+      <div class="product-title">OnePlus 13 | Smarter with OnePlus AI (Sleek Black, 16GB RAM)</div>
+      <div class="price-tag">₹64,999.00</div>
+    </div>
 
-        let viewFilteredSet = databaseRaw;
-        let itemsLimit = 16;
+  </div>
 
-        // Generates 2000+ completely unique combinations of Telugu Middle-Class Anti-Consumerism Roasts
-        function getUniqueTeluguMemeLine(product) {
-            const openers = [
-                "రేయ్! అసలు నీకు బుద్ధి ఉందా? ", 
-                "డబ్బులు ఏమైనా చెట్లకు కాస్తున్నాయా ఏంటి? ", 
-                "ఆగు ఆగు! ఎక్కడికి ఆ పరుగు? ", 
-                "ఓరి నాయనో! నీ దాలుడు తగలెయ్య! ",
-                "డబ్బులు దండగ రా నాయనా! ",
-                "ఇంట్లో వాళ్ళు తంతారు నిన్ను! ",
-                "ఏందిరా ఈ పిచ్చి తగలాటం? ",
-                "నాయనా విను! ఒకటికి పదిసార్లు ఆలోచించు! "
-            ];
+  <!-- DYNAMIC POP-UP MODAL CONTAINER -->
+  <div id="memeModal" class="modal-overlay" onclick="closeMeme()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="closeMeme()">&times;</span>
+      <h3 id="modalProductName" style="color:#333; margin-top:0;">Product Name</h3>
+      <img id="modalGif" src="" alt="Meme GIF">
+      <p id="modalTenglishLine">Meme Line</p>
+      <button class="modal-close-btn" onclick="closeMeme()">Sari Sari Mellaga!</button>
+    </div>
+  </div>
 
-            const coreRoasts = [
-                `ఈ ${product.title} కొని నువ్వు సాధించేది ఏముంది చెప్పు? `,
-                `ఒక్క ${product.category} వస్తువు కనిపించగానే ఎగిరి పడిపోతావా? `,
-                `ఆ ₹${product.price} పెట్టి దీన్ని కొంటే నీకు వచ్చే లాభం ఏంటి? `,
-                `డిస్కౌంట్ ${product.discount}% ఇస్తున్నారని ఎగబడి కొంటున్నావా? `,
-                `మొన్నే కదా అకౌంట్ లో డబ్బులు పడ్డాయి.. అప్పుడే తగలేస్తావా? `,
-                `ఈ వస్తువు కొనకపోతే నీ సొమ్మేం పోదురా బాబు! `,
-                `పోలోమని ఆర్డర్ కొట్టేస్తున్నావ్.. రేపు తిండికి ఏం చేస్తావ్? `
-            ];
+  <!-- JAVASCRIPT CONTROLLER -->
+  <script>
+    function openMeme(name, gifUrl, textLine) {
+      document.getElementById('modalProductName').innerText = name;
+      document.getElementById('modalGif').src = gifUrl;
+      document.getElementById('modalTenglishLine').innerText = textLine;
+      
+      // Flex display brings it to life center screen
+      document.getElementById('memeModal').style.display = 'flex';
+    }
 
-            const punchlines = [
-                "జీవితంలో ఎప్పుడు పొదుపు చేయడం నేర్చుకుంటావురా? ",
-                "చూడడానికి కలర్‌ఫుల్ గా ఉందని కొనేస్తే జేబు ఖాళీ అయిపోద్ది! ",
-                "ఇలాంటి అనవసరమైన షాపింగ్ లు చేస్తే రోడ్డున పడతావ్ జాగ్రత్త. ",
-                "మార్కెటింగ్ మాయలో పడి మోసపోకు తమ్ముడూ! ",
-                "అసలు నీకు ఇది నిజంగా అవసరమా లేక షో చేయడానికా? ",
-                "బ్యాంక్ లో బ్యాలెన్స్ చూస్తే ఏడుపొస్తుంది, ఇక్కడ మాత్రం బిల్డప్ లు! "
-            ];
+    function closeMeme() {
+      document.getElementById('memeModal').style.display = 'none';
+      document.getElementById('modalGif').src = ''; // Instantly kills GIF network stream on close
+    }
+  </script>
 
-            const advice = [
-                "గుప్ చుప్ గా సేవింగ్స్ అకౌంట్ లో దాచుకోపోపో! ",
-                "అమ్మ చూస్తే చీపురు తిరగేసి కొడుతుంది వద్దు! ",
-                "వెళ్లి ప్రశాంతంగా కాస్త మంచి నీళ్లు తాగి పడుకో పో! ",
-                "వెంటనే క్లోజ్ చేసి వేరే పని చూస్కోపో! ",
-                "ఈ అనవసరపు ఖర్చులు ఆపితే భవిష్యత్తు బాగుంటుంది! ",
-                "కామ్ గా ఉండు.. ఆవేశపడి ఆర్డర్ బటన్ నొక్కకు! "
-            ];
-
-            // Deterministic math logic using the item's custom ID to guarantee a uniquely randomized arrangement for all 2,000 slots
-            let opIdx = product.id % openers.length;
-            let crIdx = (product.id + 3) % coreRoasts.length;
-            let plIdx = (product.id + 7) % punchlines.length;
-            let adIdx = (product.id + 11) % advice.length;
-
-            return openers[opIdx] + coreRoasts[crIdx] + punchlines[plIdx] + advice[adIdx];
-        }
-
-        function fetchLocalDatabase() {
-            viewFilteredSet = databaseRaw;
-            renderProductGrid();
-        }
-
-        function renderProductGrid() {
-            const grid = document.getElementById('productGrid');
-            const recordsToDisplay = viewFilteredSet.slice(0, itemsLimit);
-
-            if (recordsToDisplay.length === 0) {
-                grid.innerHTML = `<p class="col-span-full text-center py-16 text-gray-500 font-medium">No active discount blocks matched your query.</p>`;
-                document.getElementById('loadMoreSection').classList.add('hidden');
-                return;
-            }
-
-            grid.innerHTML = recordsToDisplay.map(product => `
-            <div class="bg-white p-5 flex flex-col justify-between shadow-xs relative rounded-sm hover:shadow-md transition">
-                <div class="absolute top-2 left-2 bg-red-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-tight z-10">
-                    Limited Time Deal
-                </div>
-                <div class="flex-1 flex flex-col justify-between mb-2 mt-4">
-                    <img src="${product.img}" class="w-full h-44 object-cover mb-3 rounded-xs border-b border-gray-100" alt="Item Image" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=400&fit=crop'">
-                    <p class="text-sm text-gray-900 font-medium line-clamp-2 mb-1 leading-tight">${product.title}</p>
-                    
-                    <div class="flex items-baseline gap-2 my-1">
-                        <span class="text-red-700 text-lg font-light">-${product.discount}%</span>
-                        <span class="text-2xl font-semibold text-gray-900">₹${product.price}</span>
-                    </div>
-                    <p class="text-xs text-gray-500 mb-4">M.R.P.: <span class="line-through">₹${product.oldPrice}</span></p>
-                    
-                    <button onclick="interceptPurchase(${product.id})" class="w-full bg-amz-yellow hover:bg-yellow-500 py-2 rounded-md text-sm font-medium border border-yellow-500 shadow-xs transition">Claim Deal</button>
-                </div>
-            </div>
-            `).join('');
-
-            if (itemsLimit >= viewFilteredSet.length) {
-                document.getElementById('loadMoreSection').classList.add('hidden');
-            } else {
-                document.getElementById('loadMoreSection').classList.remove('hidden');
-            }
-        }
-
-        function loadNextBatch() {
-            itemsLimit += 16;
-            renderProductGrid();
-        }
-
-        function performSearch() {
-            const searchVal = document.getElementById('searchInput').value.toLowerCase();
-            viewFilteredSet = databaseRaw.filter(item => item.title.toLowerCase().includes(searchVal));
-            itemsLimit = 16;
-            renderProductGrid();
-        }
-
-        function filterCategory(cat) {
-            if (cat === 'ALL') {
-                viewFilteredSet = databaseRaw;
-                document.getElementById('gridTitle').innerText = "Deals of the Day";
-            } else {
-                viewFilteredSet = databaseRaw.filter(item => item.category === cat);
-                document.getElementById('gridTitle').innerText = `${cat.charAt(0) + cat.slice(1).toLowerCase()} Deals`;
-            }
-            document.getElementById('searchInput').value = "";
-            itemsLimit = 16;
-            renderProductGrid();
-        }
-
-        function interceptPurchase(id) {
-            const match = databaseRaw.find(x => x.id === id);
-            
-            // Get dynamically calculated unique Telugu roast combination phrase
-            document.getElementById('modalMsg').innerText = getUniqueTeluguMemeLine(match);
-            
-            // Rich database pool of funny iconic viral dynamic reaction GIF hashes
-            const reactionGifs = [
-                "26gsbJPV5xQruSkCI", "26gR1vv9S6800iO08", "3o85xwxr06YNoFdSbm", 
-                "d1E1msx7Yw5Ne1Fe", "3o7TKoWXm3okO1kgms", "xT0xeJpD8e4OIeM6oE",
-                "l378g7d9P5bB96Z0c", "3o6ozv76c4rT964JmE", "21I1WOUDm96Le6X68M",
-                "uY7ZTE63H7WecM7kxF", "wID3zXURLV1uM", "8gI2Sg65BAMmQ",
-                "1df8B26A0Ppxa", "tH2oEpYpE66vDk6S4e", "l2JeaS3Sj4X3z7Zf2"
-            ];
-            
-            let selectedGif = reactionGifs[id % reactionGifs.length];
-            document.getElementById('modalGif').src = `https://media.giphy.com/media/${selectedGif}/giphy.gif`;
-            
-            document.getElementById('modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; 
-        }
-
-        function closeModal(event, force = false) {
-            if (force || event.target === document.getElementById('modal')) {
-                document.getElementById('modal').classList.add('hidden');
-                document.body.style.overflow = 'auto'; 
-            }
-        }
-
-        document.addEventListener('keydown', e => { if(e.key === "Escape") closeModal(null, true); });
-        window.onload = fetchLocalDatabase;
-    </script>
 </body>
 </html>
